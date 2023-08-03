@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="polos">#FAFAFA</color>
+
+    <color name="colorShape">#5579C6</color>
+
+    <color name="colorShape2">#1260CC</color>
+
+    <color name="edit_text">#E5E5E5</color>
+
+    <color name="bg_signin">#1260CC</color>
+
+    <color name="checkbox">#5579C6</color>
+
+    <color name="checkbox_regis_on">#5579C6</color>
+
+    <color name="checkbox_regis_off">#E5E5E5</color>
+
+    <color name="stroke_color1">#5579C6</color>
+
+    <color name="text_playlist1">#FFFFFF</color>
+    <color name="text_playlist2">#5579C6</color>
+
+    <color name="thumb_tint">#5579C6</color>
+
+    <color name="background_bantuan">#E0EAFF</color>
+
+    <color name="header_screening">#5579C6</color>
+    <color name="font_timescreening">#9E9E9E</color>
+</resources>

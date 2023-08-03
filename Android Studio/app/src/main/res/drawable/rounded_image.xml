@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#00000000" /> <!-- Warna latar belakang, gunakan #00000000 untuk latar belakang transparan -->
+    <corners android:radius="120dp" /> <!-- Radius sudut, sesuaikan dengan preferensi Anda -->
+</shape>
