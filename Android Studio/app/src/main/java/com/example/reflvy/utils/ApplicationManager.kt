@@ -1,17 +1,20 @@
-package com.example.reflvy
+package com.example.reflvy.utils
 
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
+import com.example.reflvy.data.EventScreening
 import com.example.reflvy.data.Music
 import com.example.reflvy.data.News
 import com.example.reflvy.data.News.Companion.newsList
+import com.example.reflvy.data.SaveDataScreening
 import com.example.reflvy.data.Screening
-import com.example.reflvy.data.User
+import com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 
 class ApplicationManager : Application() {
     private val db = Firebase.firestore
@@ -83,14 +86,6 @@ class ApplicationManager : Application() {
     fun loadMusic() {
         var index : Int = 0;
 
-//        if (Music.isMusicAvailable(0)) {
-//            // Music sudah tersedia, lakukan tindakan yang sesuai
-//            // Misalnya, tidak perlu menambahkan data Music dengan playlistIDToCheck ke playList lagi.
-//            Toast.makeText(this, "Sudah Tersedia", Toast.LENGTH_SHORT).show()
-//        } else {
-//            Toast.makeText(this, "Belum Tesedia", Toast.LENGTH_SHORT).show()
-//        }
-
         db.collection("music")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -147,9 +142,8 @@ class ApplicationManager : Application() {
                     val nilai = documentSnapshot.get("nilai") as? List<Int> ?: emptyList()
                     val chatUser = documentSnapshot.get("chatuser") as? List<String> ?: emptyList()
                     val event = documentSnapshot.get("event") as? List<Int> ?: emptyList()
-                    val eventRespon = documentSnapshot.get("eventrespon") as? List<String> ?: emptyList()
 
-                    val data = Screening(pertanyaan, soal, jawaban, nilai, chatUser, event , eventRespon )
+                    val data = Screening(pertanyaan, soal, jawaban, nilai, chatUser, event)
                     Screening.screenData.add(data)
 
                     index = index + 1
@@ -160,4 +154,83 @@ class ApplicationManager : Application() {
             }
     }
 
+    fun loadEventScreeningData(ind : Int) {
+        val collectionNames = arrayOf("eventrespon", "screening2", "screening3")
+
+        val collectionSelect = collectionNames[ind]
+
+        var index : Int
+        index = 0;
+
+        db.collection(collectionSelect)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+
+                for (documentSnapshot in querySnapshot) {
+                    val pertanyaan = index + 1
+                    val eventRespon1 = documentSnapshot.get("respon0") as? List<String> ?: emptyList()
+                    val eventRespon2 = documentSnapshot.get("respon1") as? List<String> ?: emptyList()
+                    val eventRespon3 = documentSnapshot.get("respon2") as? List<String> ?: emptyList()
+                    val opsiRespon = documentSnapshot.get("jawaban") as? List<String> ?: emptyList()
+                    val tampilanRespon = documentSnapshot.get("responbalik") as? List<String> ?: emptyList()
+
+                    val data = EventScreening(pertanyaan, eventRespon1, eventRespon2, eventRespon3, opsiRespon, tampilanRespon)
+                    EventScreening.eventScreenData.add(data)
+
+                    index = index + 1
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
+//    fun LoadScreeningData(context: Context){
+//
+//        SharedPrefsManager.loadScreeningDataFromSharedPreferences(context)
+//        SharedPrefsManager.loadEventScreeningDataFromSharedPreferences(context)
+//    }
+//
+//    fun SaveDataScreening(context: Context){
+//        SharedPrefsManager.clearScreeningDataFromSharedPreferences(context)
+//
+//        SharedPrefsManager.saveScreeningDataToSharedPreferences(context)
+//        SharedPrefsManager.saveEventScreeningDataToSharedPreferences(context)
+//    }
+
+    object SharedPrefsManager {
+
+        private const val PREFS_NAME = "newsFrefs"
+        private const val SCREENING_KEY = "musicData"
+
+        private fun getSharedPreferences(context: Context): SharedPreferences {
+            return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        }
+
+        fun SaveScreenData(context: Context, dataList: List<Screening>) {
+            val sharedPreferences = getSharedPreferences(context)
+            val editor = sharedPreferences.edit()
+            val gson = Gson()
+            val dataListJson = gson.toJson(dataList)
+            editor.putString(SCREENING_KEY, dataListJson)
+            editor.apply()
+        }
+
+        fun LoadScreenData(context: Context): List<Screening> {
+            val sharedPreferences = getSharedPreferences(context)
+            val dataListJson = sharedPreferences.getString(SCREENING_KEY, null)
+            val gson = Gson()
+            val itemType = object : TypeToken<List<SaveDataScreening>>() {}.type
+            return gson.fromJson(dataListJson, itemType) ?: emptyList()
+        }
+
+        fun RemoveDataByKey(context: Context) {
+            SaveDataScreening.lastData.clear()
+            val sharedPreferences = getSharedPreferences(context)
+            val editor = sharedPreferences.edit()
+            editor.remove(SCREENING_KEY)
+            editor.apply()
+        }
+    }
 }

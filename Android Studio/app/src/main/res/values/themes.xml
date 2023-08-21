@@ -43,5 +43,18 @@
         <item name="android:background">#1260CC</item>
     </style>
 
+    <style name="background_sendchat">
+        <item name="android:background">#FAFAFA</item>
+    </style>
+
+    <style name="bg_nilai">
+        <item name="android:background">#80919191</item>
+    </style>
+
+    <style name="BoldText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000000</item> <!-- Hitam -->
+    </style>
+
     <style name="Theme.Reflvy" parent="Base.Theme.Reflvy" />
 </resources>

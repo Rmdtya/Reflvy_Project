@@ -6,24 +6,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputFilter.LengthFilter
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import androidx.compose.material3.ProgressIndicatorDefaults
+import com.example.reflvy.data.User
 import com.example.reflvy.databinding.ActivitySigninBinding
-import com.example.reflvy.databinding.ActivitySignupBinding
+import com.example.reflvy.utils.ApplicationManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 
 class SigninActivity : AppCompatActivity() {
 
@@ -77,6 +73,8 @@ class SigninActivity : AppCompatActivity() {
 
                         val intent = Intent(this, MenuActivity::class.java)
                         startActivity(intent)
+
+                        UpdateInfoUser()
 
                         progressDialog.dismiss()
                         SetEmailUser()
@@ -132,10 +130,35 @@ class SigninActivity : AppCompatActivity() {
                 val userID = currentUser?.uid ?: ""
                 val email = currentUser?.email ?: "" // Dapatkan email dari hasil sign in
 
-                val editor = sharedPreferences.edit()
-                editor.putString("userId", userID)
-                editor.putString("userEmail", email)
-                editor.apply()
+
+                val userDocRef = db.collection("users").document(userID)
+                userDocRef.get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        if (documentSnapshot.exists()) {
+                            val screening = documentSnapshot.get("screeningHistory") as? ArrayList<String>
+                            val userName = documentSnapshot.getString("name") ?: ""
+                            val gender = documentSnapshot.getString("gender") ?: ""
+                            val tglLahir = documentSnapshot.getString("tanggalLahir") ?: ""
+                            val telepon = documentSnapshot.getString("telepon") ?: ""
+
+                            val gson = Gson()
+                            val screeningJson = gson.toJson(screening)
+
+                            val editor = sharedPreferences.edit()
+                            editor.putString("userId", userID)
+                            editor.putString("userEmail", email)
+                            editor.putString("userName", userName)
+                            editor.putString("userGender", gender)
+                            editor.putString("tanggalLahir", tglLahir)
+                            editor.putString("telepon", telepon)
+                            editor.putString("userScreening", screeningJson) // Simpan JSON string
+                            editor.apply()
+                        }
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Gagal Menload", LENGTH_SHORT).show()
+                    }
+
 
                 CheckOrCreateUserDocument(userID, email)
 
@@ -144,6 +167,8 @@ class SigninActivity : AppCompatActivity() {
                 val editorLogin = sharedPreferencesLogin.edit()
                 editorLogin.putBoolean("isLoggedIn", true)
                 editorLogin.apply()
+
+                UpdateInfoUser()
 
                 finishAffinity()
             }
@@ -167,7 +192,17 @@ class SigninActivity : AppCompatActivity() {
                 } else {
                     // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
                     val userData = hashMapOf(
-                        "name" to email
+                        "name" to email,
+                        "email" to email,
+                        "gender" to null, // Field gender dengan tipe data string yang masih null
+                        "telepon" to null, // Field telepon dengan tipe data string yang masih null
+                        "tanggalLahir" to null, // Field telepon dengan tipe data string yang masih null
+                        "historyvpn" to null, // Field historyvpn dengan tipe data array string yang masih null
+                        "activityHistory" to null, // Field activityHistory dengan tipe data array string yang masih null
+                        "deteksijarak" to null, // Field deteksijarak dengan tipe data array string yang masih null
+                        "screeningHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                        "dailyPoint" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                        "linkHistory" to null // Field screeningHistory dengan tipe data array int yang masih null
                     )
                     userDocument.set(userData)
                         .addOnSuccessListener {
@@ -192,6 +227,12 @@ class SigninActivity : AppCompatActivity() {
         val userEmail : String = email.toString()
 
         ApplicationManager.instance.setEmail(userEmail)
+    }
+
+    private fun UpdateInfoUser(){
+        var sharedPreferences: SharedPreferences
+        sharedPreferences = getSharedPreferences("USER_INFO", Context.MODE_PRIVATE)
+        User.userData.loadFromSharedPreferences(sharedPreferences)
     }
 
 }

@@ -41,5 +41,13 @@
     <style name="footerbg">
         <item name="android:background">#0C0C0D</item>
     </style>
+
+    <style name="bg_nilai">
+        <item name="android:background">#060606</item>
+    </style>
+
+    <style name="background_sendchat">
+        <item name="android:background">#1C1B20</item>
+    </style>
 </resources>
 

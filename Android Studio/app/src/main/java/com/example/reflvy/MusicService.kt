@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Build
@@ -22,6 +23,7 @@ class MusicService : Service() {
     private lateinit var handler: Handler
     private lateinit var updateSeekBarRunnable: Runnable
     private var lastPlaybackPosition: Int = 0
+    private lateinit var sharedPreferencesService : SharedPreferences
 
     private var notificationManager: NotificationManager? = null
 
@@ -37,7 +39,7 @@ class MusicService : Service() {
         var CHANNEL_ID = "MyMusicChannel"
         var isWaiting = false
         var totalLagu : Int = 0
-        private const val NOTIFICATION_ID = 1
+        private const val NOTIFICATION_ID = 2
         var stopping : Boolean = false
 
         fun isServiceRunning(context: Context): Boolean {
@@ -101,6 +103,11 @@ class MusicService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        sharedPreferencesService = getSharedPreferences("SERVICE", Context.MODE_PRIVATE)
+
+        val editor = sharedPreferencesService.edit()
+        editor.putBoolean("musicStart", true)
+        editor.apply()
 
 //        val sharedPreferences = getSharedPreferences("LOAD_LAYOUT", Context.MODE_PRIVATE)
 //        val editor = sharedPreferences.edit()
@@ -219,20 +226,27 @@ class MusicService : Service() {
         val stopActionIcon = R.drawable.baseline_stop_24
 
         // Tambahkan notifikasi yang akan ditampilkan saat foreground service berjalan
-        val notificationIntent = PlayerActivity.getPlayerActivityPendingIntent(this, playlistID, indexMusic)
-        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Music Service")
-            .setContentText("Playing music : " + Music.playList[playlistID].title[indexMusic])
-            .setSmallIcon(R.drawable.reflvy_logo)
-            .setContentIntent(notificationIntent)
-            .setSound(null)
-            .setSilent(true)
-            .addAction(playPauseActionIcon, playPauseAction, playPausePendingIntent)
-            .addAction(stopActionIcon, "Stop", stopPendingIntent) // Tambahkan tindakan stop
-            .build()
 
-        // Mulai foreground service dengan notifikasi yang dibuat di atas
-        startForeground(NOTIFICATION_ID, notificationBuilder)
+
+        var musicShared = sharedPreferencesService.getBoolean("musicStart", true)
+
+        if(musicShared){
+            val notificationIntent = PlayerActivity.getPlayerActivityPendingIntent(this, playlistID, indexMusic)
+            val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Music Service")
+                .setContentText("Playing music : " + Music.playList[playlistID].title[indexMusic])
+                .setSmallIcon(R.drawable.reflvy_logo)
+                .setContentIntent(notificationIntent)
+                .setSound(null)
+                .setSilent(true)
+                .addAction(playPauseActionIcon, playPauseAction, playPausePendingIntent)
+                .addAction(stopActionIcon, "Stop", stopPendingIntent) // Tambahkan tindakan stop
+                .build()
+
+            // Mulai foreground service dengan notifikasi yang dibuat di atas
+            startForeground(NOTIFICATION_ID, notificationBuilder)
+        }
+
     }
 
     private fun WaitingNextSong() {
@@ -273,6 +287,10 @@ class MusicService : Service() {
         // Hentikan layanan dan musik ketika tindakan stop ditekan pada notifikasi
         stopForeground(true)
         stopSelf()
+
+        val editor = sharedPreferencesService.edit()
+        editor.putBoolean("musicStart", false)
+        editor.apply()
     }
 
     override fun onDestroy() {

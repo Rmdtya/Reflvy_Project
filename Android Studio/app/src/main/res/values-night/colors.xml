@@ -10,6 +10,7 @@
     <color name="colorShape2">#1260CC</color>
 
     <color name="edit_text">#2C2B31</color>
+    <color name="edit_textDisable">#1E1E20</color>
 
     <color name="bg_signin">#3E6DD1</color>
 
@@ -30,5 +31,11 @@
 
     <color name="header_screening">#3E6DD1</color>
     <color name="font_timescreening">#9E9E9E</color>
+
+    <color name="bg_sendchat">#1C1B20</color>
+
+    <color name="bg_nilai">#1C1B20</color>
+
+    <color name="bg_jawab">#1C1B20</color>
 </resources>
 

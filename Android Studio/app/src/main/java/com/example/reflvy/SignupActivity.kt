@@ -13,13 +13,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.reflvy.databinding.ActivitySignupBinding
+import com.example.reflvy.utils.EmailSender
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -35,6 +34,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var password:String
     private lateinit var confirmPass:String
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var checkBox : CheckBox
 
     private lateinit var otpCode:String
 
@@ -46,6 +46,7 @@ class SignupActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         sharedPreferences = getSharedPreferences("USER_INFO", Context.MODE_PRIVATE)
+        checkBox = findViewById(R.id.checkBox)
 
         binding.haveAccount.setOnClickListener {
             val intent = Intent(this, SigninActivity::class.java)
@@ -53,95 +54,101 @@ class SignupActivity : AppCompatActivity() {
         }
 
         binding.button.setOnClickListener {
-            email = binding.emailInp.text.toString()
-            password = binding.passwordInp.text.toString()
-            confirmPass = binding.confirmInp.text.toString()
 
-            fun isPasswordValid(password: String): Boolean {
-                val pattern = "^(?=.*[A-Z]).{8,}$".toRegex()
-                return pattern.matches(password)
-            }
+            if(checkBox.isChecked){
+                email = binding.emailInp.text.toString()
+                password = binding.passwordInp.text.toString()
+                confirmPass = binding.confirmInp.text.toString()
 
-            firebaseAuth.fetchSignInMethodsForEmail(email)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val signInMethods = task.result?.signInMethods
-                        if (signInMethods != null && signInMethods.isNotEmpty()) {
-                            Toast.makeText(this, "Email Sudah Terdaftar", Toast.LENGTH_SHORT).show()
-                        } else {
+                fun isPasswordValid(password: String): Boolean {
+                    val pattern = "^(?=.*[A-Z]).{8,}$".toRegex()
+                    return pattern.matches(password)
+                }
 
-                            if (email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty()) {
-                                if (password == confirmPass) {
-                                    if (isPasswordValid(password)) {
-                                        showVerificationLayout()
+                firebaseAuth.fetchSignInMethodsForEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val signInMethods = task.result?.signInMethods
+                            if (signInMethods != null && signInMethods.isNotEmpty()) {
+                                Toast.makeText(this, "Email Sudah Terdaftar", Toast.LENGTH_SHORT).show()
+                            } else {
 
-                                        binding.emailInp.visibility = View.GONE
-                                        binding.emailInp.visibility = View.GONE
-                                        binding.confirmInp.visibility = View.GONE
-                                        binding.button.visibility = View.GONE
+                                if (email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty()) {
+                                    if (password == confirmPass) {
+                                        if (isPasswordValid(password)) {
+                                            showVerificationLayout()
+
+                                            binding.emailInp.visibility = View.GONE
+                                            binding.emailInp.visibility = View.GONE
+                                            binding.confirmInp.visibility = View.GONE
+                                            binding.button.visibility = View.GONE
 
 
-                                        AddOTP()
+                                            AddOTP()
+                                        } else {
+                                            Toast.makeText(
+                                                this,
+                                                "Password memuat minimal satu kapital dan angka serta 8 karakter",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     } else {
                                         Toast.makeText(
                                             this,
-                                            "Password memuat minimal satu kapital dan angka serta 8 karakter",
+                                            "Password Tidak Sesuai",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
                                 } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Password Tidak Sesuai",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this, "Field Harus Terisi", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
-                            } else {
-                                Toast.makeText(this, "Field Harus Terisi", Toast.LENGTH_SHORT)
-                                    .show()
                             }
-                        }
 
-                    } else {
-                        val exception = task.exception
-                        if (exception is FirebaseAuthInvalidUserException) {
-                            if (email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty()) {
-                                if (password == confirmPass) {
-                                    if (isPasswordValid(password)) {
-                                        showVerificationLayout()
+                        } else {
+                            val exception = task.exception
+                            if (exception is FirebaseAuthInvalidUserException) {
+                                if (email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty()) {
+                                    if (password == confirmPass) {
+                                        if (isPasswordValid(password)) {
+                                            showVerificationLayout()
 
-                                        binding.emailInp.visibility = View.GONE
-                                        binding.emailInp.visibility = View.GONE
-                                        binding.confirmInp.visibility = View.GONE
-                                        binding.button.visibility = View.GONE
+                                            binding.emailInp.visibility = View.GONE
+                                            binding.emailInp.visibility = View.GONE
+                                            binding.confirmInp.visibility = View.GONE
+                                            binding.button.visibility = View.GONE
 
 
-                                        AddOTP()
+                                            AddOTP()
+                                        } else {
+                                            Toast.makeText(
+                                                this,
+                                                "Password memuat minimal satu kapital dan angka serta 8 karakter",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     } else {
                                         Toast.makeText(
                                             this,
-                                            "Password memuat minimal satu kapital dan angka serta 8 karakter",
+                                            "Password Tidak Sesuai",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
                                 } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Password Tidak Sesuai",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this, "Field Harus Terisi", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
-                            } else {
-                                Toast.makeText(this, "Field Harus Terisi", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
 
-                        } else {
-                            Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT)
+                            } else {
+                                Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT)
+                            }
                         }
                     }
-                }
+            }else{
+                Toast.makeText(this, "Mohon Setujui Syarat dan Ketentuan", Toast.LENGTH_SHORT).show()
+            }
         }
+
     }
 
     fun CreateAccount(){
@@ -160,8 +167,9 @@ class SignupActivity : AppCompatActivity() {
 
                 CheckOrCreateUserDocument(userID, email)
 
-                val intent = Intent(this, SigninActivity::class.java)
+                val intent = Intent(this, RegistrasiSuccesActivity::class.java)
                 startActivity(intent)
+                finishAffinity()
             }else{
                 Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
             }
@@ -180,7 +188,17 @@ class SignupActivity : AppCompatActivity() {
                 } else {
                     // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
                     val userData = hashMapOf(
-                        "name" to email
+                        "name" to email,
+                        "email" to email,
+                        "gender" to null, // Field gender dengan tipe data string yang masih null
+                        "telepon" to null, // Field telepon dengan tipe data string yang masih null
+                        "tanggalLahir" to null, // Field telepon dengan tipe data string yang masih null
+                        "historyvpn" to null, // Field historyvpn dengan tipe data array string yang masih null
+                        "activityHistory" to null, // Field activityHistory dengan tipe data array string yang masih null
+                        "deteksijarak" to null, // Field deteksijarak dengan tipe data array string yang masih null
+                        "screeningHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                        "dailyPoint" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                        "linkHistory" to null // Field screeningHistory dengan tipe data array int yang masih null
                     )
                     userDocument.set(userData)
                         .addOnSuccessListener {

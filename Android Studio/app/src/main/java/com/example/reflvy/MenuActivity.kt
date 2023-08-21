@@ -1,13 +1,12 @@
 package com.example.reflvy
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import kotlin.math.log
+import com.example.reflvy.utils.ApplicationManager
 
 class MenuActivity : AppCompatActivity() {
 
@@ -34,6 +33,12 @@ class MenuActivity : AppCompatActivity() {
 
 //        val vpnHandler = VPNHandler.getInstance(this) // 'this' adalah konteks dari Activity
 //        vpnHandler.startRepeatedFunction()
+
+        val menu1: ImageView = findViewById(R.id.menu1)
+        menu1.setOnClickListener {
+            val intent = Intent(this, ManualChatBotActivity::class.java)
+            startActivity(intent)
+        }
 
         val menu2: ImageView = findViewById(R.id.menu2)
         menu2.setOnClickListener {

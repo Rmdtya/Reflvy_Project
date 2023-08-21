@@ -19,6 +19,21 @@
         android:theme="@style/Theme.Reflvy"
         tools:targetApi="31">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManualChatBotActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatBotActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatUsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ScreeningActivity"
             android:exported="false" />
         <activity
@@ -33,7 +48,7 @@
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name=".VPNHandler"
+            android:name=".utils.VPNHandler"
             android:enabled="true"
             android:exported="false" />
         <service
@@ -41,7 +56,7 @@
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name=".OnExitApplication"
+            android:name=".utils.OnExitApplication"
             android:enabled="true"
             android:exported="false" />
 
@@ -49,7 +64,7 @@
             android:name=".NewsActivity"
             android:exported="false" />
         <activity
-            android:name=".ApplicationManager"
+            android:name=".utils.ApplicationManager"
             android:exported="false" />
         <activity
             android:name=".PlaylistActivity"

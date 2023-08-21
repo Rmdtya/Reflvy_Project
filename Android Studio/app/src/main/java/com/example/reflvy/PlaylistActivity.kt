@@ -1,19 +1,15 @@
 package com.example.reflvy
 
-import SliderAdapter
-import android.content.Context
+import com.example.reflvy.utils.SliderAdapter
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -21,7 +17,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.reflvy.data.Music
-import com.example.reflvy.data.News
+import com.example.reflvy.utils.SliderModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlin.math.abs
@@ -30,7 +26,7 @@ class PlaylistActivity : AppCompatActivity() {
 
     lateinit var isViewImage:ViewPager2
     lateinit var isList:ArrayList<SliderModel>
-    lateinit var adapter:SliderAdapter
+    lateinit var adapter: SliderAdapter
     val sliderHandler = Handler()
     private val db = Firebase.firestore
     lateinit var linearContainer : LinearLayout

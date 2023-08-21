@@ -13,11 +13,12 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.reflvy.data.EventScreening
 import com.example.reflvy.data.SaveDataScreening
 import com.example.reflvy.data.Screening
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,15 +32,21 @@ class ScreeningActivity : AppCompatActivity() {
     private lateinit var inflater: LayoutInflater
     private lateinit var seekBar: SeekBar
     private lateinit var persentasiBar: TextView
+    private lateinit var template_nilai : ConstraintLayout
+    private lateinit var textNilai : TextView
     private var historyChat : MutableList<String> = mutableListOf()
     private var fromBot : MutableList<Boolean> = mutableListOf()
     private var timeText : MutableList<Boolean> = mutableListOf()
+    private var historyTime : MutableList<String> = mutableListOf()
+    private var showIcon : MutableList<Boolean> = mutableListOf()
+    private var loadTimeIndex: Int = 0
 
     val handler = Handler(Looper.getMainLooper())
 
     companion object{
         var indexKe : Int = 0
         var maxValue : Int = 0
+        var nilaiScreening : Int = 0
     }
 
     private lateinit var jawabContainer : LinearLayout
@@ -53,15 +60,57 @@ class ScreeningActivity : AppCompatActivity() {
         inflater = LayoutInflater.from(this)
         seekBar = findViewById(R.id.progres_bar)
 
+        template_nilai = findViewById(R.id.template_nilai)
+        textNilai = findViewById(R.id.text_nilai)
+
         persentasiBar = findViewById(R.id.persentasi)
         persentasiBar.text = "0%"
 
-        LoadData(this)
-
         indexKe = 0
         maxValue = Screening.screenData.size
-        ShowChatBot(indexKe, true)
+
+        Toast.makeText(this, maxValue.toString(), Toast.LENGTH_SHORT).show()
+
+        template_nilai.visibility = View.GONE
+
+        LoadData(this)
         SetSeekbar(maxValue)
+
+        val iconBot : ImageView = findViewById(R.id.icon_bot)
+
+        iconBot.setOnClickListener {
+            SharedPrefsUtil.RemoveDataByKey(this)
+            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show()
+            indexKe = 0
+        }
+    }
+
+    private fun ShowTemplateBot(text : String, icon : Boolean, time : Boolean){
+
+        val templateChatbot: View = inflater.inflate(R.layout.template_chatbot, null)
+        linearContainer.addView(templateChatbot)
+
+        val soal : TextView = templateChatbot.findViewById(R.id.answer_bot)
+        val iconBot: ImageView = templateChatbot.findViewById(R.id.icon_bot)
+        val textTime: TextView = templateChatbot.findViewById(R.id.time_bot)
+
+        val stringTime = GetTime()
+        soal.text = text
+        textTime.text = stringTime
+
+        if(!icon){
+            iconBot.visibility = View.INVISIBLE
+        }
+
+        if(!time){
+            textTime.visibility = View.GONE
+        }
+
+        showIcon.add(icon)
+        timeText.add(time)
+        historyChat.add(text)
+        historyTime.add(stringTime)
+        fromBot.add(true)
     }
 
     private fun ShowChatBot(ind : Int, icon : Boolean){
@@ -69,63 +118,24 @@ class ScreeningActivity : AppCompatActivity() {
         val jumlahData = Screening.screenData[ind].soalbot.size - 1
 
         if (jumlahData == 0 && icon == true){
-            val templateChatbot: View = inflater.inflate(R.layout.template_chatbot, null)
-            linearContainer.addView(templateChatbot)
-            val soal : TextView = templateChatbot.findViewById(R.id.answer)
             val theText = Screening.screenData[ind].soalbot[0]
-            soal.text = theText
 
-            val textTime: TextView = templateChatbot.findViewById(R.id.time)
-            textTime.text = GetTime()
-
-            historyChat.add(theText)
-            fromBot.add(true)
-            timeText.add(true)
+            ShowTemplateBot(theText, true, true)
 
         }else if(jumlahData >= 1) {
             for (i in Screening.screenData[ind].soalbot.indices) {
-                val templateChatbot: View = inflater.inflate(R.layout.template_chatbot, null)
 
                 var theText = Screening.screenData[ind].soalbot[i]
 
                 if (i == 0) {
-                    linearContainer.addView(templateChatbot)
-                    val textTime: TextView = templateChatbot.findViewById(R.id.time)
-                    textTime.visibility = View.GONE
-
-                    val soal : TextView = templateChatbot.findViewById(R.id.answer)
-                    soal.text = theText
-                    timeText.add(false)
+                    ShowTemplateBot(theText, true, false)
 
                 } else if (i == jumlahData) {
-                    linearContainer.addView(templateChatbot)
-                    val iconBot: ImageView = templateChatbot.findViewById(R.id.icon_bot)
-                    iconBot.visibility = View.INVISIBLE
-
-                    val textTime: TextView = templateChatbot.findViewById(R.id.time)
-                    textTime.text = GetTime()
-
-                    val soal : TextView = templateChatbot.findViewById(R.id.answer)
-                    soal.text = theText
-
-                    timeText.add(true)
+                    ShowTemplateBot(theText, false, true)
 
                 } else {
-                    linearContainer.addView(templateChatbot)
-                    val iconBot: ImageView = templateChatbot.findViewById(R.id.icon_bot)
-                    iconBot.visibility = View.INVISIBLE
-
-                    val textTime: TextView = templateChatbot.findViewById(R.id.time)
-                    textTime.visibility = View.GONE
-
-                    val soal : TextView = templateChatbot.findViewById(R.id.answer)
-                    soal.text = theText
-
-                    timeText.add(false)
+                    ShowTemplateBot(theText, false, false)
                 }
-
-                historyChat.add(theText)
-                fromBot.add(true)
             }
         }
         JawabSoal(ind)
@@ -161,15 +171,19 @@ class ScreeningActivity : AppCompatActivity() {
 
         var theText = Screening.screenData[ind].jawabUser[ke]
 
-        val text : TextView = templateChatuser.findViewById(R.id.answer)
+        nilaiScreening += Screening.screenData[ind].nilai[ke]
+
+        val text : TextView = templateChatuser.findViewById(R.id.answer_user)
         text.text = theText
 
-        val textTime : TextView = templateChatuser.findViewById(R.id.time)
+        val textTime : TextView = templateChatuser.findViewById(R.id.time_user)
         textTime.text = GetTime()
 
         historyChat.add(theText)
         fromBot.add(false)
         timeText.add(true)
+        historyTime.add(GetTime())
+        showIcon.add(false)
 
         handler.postDelayed({
             // Fungsi yang akan dijalankan setelah jeda 2 detik
@@ -178,95 +192,169 @@ class ScreeningActivity : AppCompatActivity() {
     }
 
     private fun NextEventDialog(ind : Int, ke: Int){
-        if(Screening.screenData[ind].event[ke] == 1){
-            ShowEventRespon(ind, ke)
-        }else{
-            indexKe++
-            SetProgresSeekbar(indexKe)
+        var eventNumber : Int = Screening.screenData[ind].event[ke]
 
-            if(indexKe >= maxValue){
-                Toast.makeText(this, "Selesai yang 1", Toast.LENGTH_SHORT).show()
-            }else{
-                ShowChatBot(indexKe, true)
+        if( eventNumber == -1){
+            Toast.makeText(this, "Sesi Selesai", Toast.LENGTH_SHORT).show()
+        }else if(eventNumber == 1){
+            ShowEventRespon1(ind)
+        }else if(eventNumber == 2){
+            ShowEventRespon2(ind)
+        }
+        else{
+            ShowEventRespon0(ind)
+        }
+    }
+
+    private fun ShowEventRespon0(ind : Int){
+
+        if(EventScreening.eventScreenData[ind].eventRespon0 == null){
+
+        }else {
+
+            val jumlahData = EventScreening.eventScreenData[ind].eventRespon0.size - 1
+
+            if (jumlahData == 0) {
+                var theText = EventScreening.eventScreenData[ind].eventRespon0[0]
+
+                ShowTemplateBot(theText, true, true)
+
+            } else if (jumlahData >= 1) {
+                for (i in EventScreening.eventScreenData[ind].eventRespon0.indices) {
+                    var theText: String = EventScreening.eventScreenData[ind].eventRespon0[i]
+
+                    if (i == 0) {
+                        ShowTemplateBot(theText, true, false)
+
+                    } else if (i == jumlahData) {
+                        ShowTemplateBot(theText, false, true)
+
+                    } else {
+                        ShowTemplateBot(theText, false, false)
+                    }
+                }
+            }
+        }
+
+        CheckNextIndex(ind)
+    }
+
+    private fun ShowEventRespon1(ind : Int){
+
+        if(EventScreening.eventScreenData[ind].eventRespon1 == null){
+
+        }else {
+
+            val jumlahData = EventScreening.eventScreenData[ind].eventRespon1.size - 1
+
+            if (jumlahData == 0) {
+                var theText = EventScreening.eventScreenData[ind].eventRespon1[0]
+
+                ShowTemplateBot(theText, true, true)
+
+            } else if (jumlahData >= 1) {
+                for (i in EventScreening.eventScreenData[ind].eventRespon1.indices) {
+                    var theText: String = EventScreening.eventScreenData[ind].eventRespon1[i]
+
+                    if (i == 0) {
+                        ShowTemplateBot(theText, true, false)
+
+                    } else if (i == jumlahData) {
+                        ShowTemplateBot(theText, false, true)
+
+                    } else {
+                        ShowTemplateBot(theText, false, false)
+                    }
+                }
+            }
+        }
+
+        CheckNextIndex(ind)
+    }
+
+    private fun ShowEventRespon2(ind : Int){
+
+        if(EventScreening.eventScreenData[ind].eventRespon2 == null){
+
+        }else {
+
+            val jumlahData = EventScreening.eventScreenData[ind].eventRespon2.size - 1
+
+            if (jumlahData == 0) {
+                var theText = EventScreening.eventScreenData[ind].eventRespon2[0]
+
+                ShowTemplateBot(theText, true, true)
+
+            } else if (jumlahData >= 1) {
+                for (i in EventScreening.eventScreenData[ind].eventRespon2.indices) {
+                    var theText: String = EventScreening.eventScreenData[ind].eventRespon2[i]
+
+                    if (i == 0) {
+                        ShowTemplateBot(theText, true, false)
+
+                    } else if (i == jumlahData) {
+                        ShowTemplateBot(theText, false, true)
+
+                    } else {
+                        ShowTemplateBot(theText, false, false)
+                    }
+                }
+            }
+            JawabEventSoal(ind)
+        }
+    }
+
+    private fun JawabEventSoal(ind : Int){
+        for (i in EventScreening.eventScreenData[ind].opsiRespon.indices) {
+            val templateJawab : View = inflater.inflate(R.layout.template_jawabchat, null)
+            jawabContainer.addView(templateJawab)
+
+            val textJawab : TextView = templateJawab.findViewById(R.id.jawaban)
+            textJawab.text = EventScreening.eventScreenData[ind].opsiRespon[i]
+
+            templateJawab.setOnClickListener{
+                TampilkanEventJawaban(ind, i)
+                jawabContainer.removeAllViews()
             }
         }
     }
 
-    private fun ShowEventRespon(ind : Int, ke : Int){
-        val jumlahData = Screening.screenData[ind].eventRespon.size - 1
 
-        if (jumlahData == 0){
-            val templateChatbot: View = inflater.inflate(R.layout.template_chatbot, null)
-            linearContainer.addView(templateChatbot)
+    private fun TampilkanEventJawaban(ind : Int , ke : Int){
+        val templateChatuser: View = inflater.inflate(R.layout.template_chatuser, null)
+        linearContainer.addView(templateChatuser)
 
-            var theText = Screening.screenData[ind].eventRespon[0]
-            val soal : TextView = templateChatbot.findViewById(R.id.answer)
-            soal.text = theText
+        var theText = EventScreening.eventScreenData[ind].tampilanRespon[ke]
+        val text : TextView = templateChatuser.findViewById(R.id.answer_user)
+        text.text = theText
 
-            val textTime: TextView = templateChatbot.findViewById(R.id.time)
-            textTime.text = GetTime()
+        val textTime : TextView = templateChatuser.findViewById(R.id.time_user)
+        textTime.text = GetTime()
 
-            historyChat.add(theText)
-            fromBot.add(true)
-            timeText.add(true)
+        historyChat.add(theText)
+        fromBot.add(false)
+        timeText.add(true)
+        historyTime.add(GetTime())
+        showIcon.add(false)
 
-        }else if(jumlahData >= 1) {
-            for (i in Screening.screenData[ind].eventRespon.indices) {
-                val templateChatbot: View = inflater.inflate(R.layout.template_chatbot, null)
+        handler.postDelayed({
+            // Fungsi yang akan dijalankan setelah jeda 2 detik
+            CheckNextIndex(ind)
+        }, 2000)
+    }
 
-                if (i == 0) {
-                    linearContainer.addView(templateChatbot)
-                    val textTime: TextView = templateChatbot.findViewById(R.id.time)
-                    textTime.visibility = View.GONE
+    private fun CheckNextIndex(ind : Int){
+        indexKe++
+        Toast.makeText(this, indexKe.toString(), Toast.LENGTH_SHORT).show()
+        handler.postDelayed({
+            SetProgresSeekbar(indexKe)
 
-                    val soal : TextView = templateChatbot.findViewById(R.id.answer)
-                    soal.text = Screening.screenData[ind].eventRespon[i]
-
-                    timeText.add(false)
-
-                } else if (i == jumlahData) {
-                    linearContainer.addView(templateChatbot)
-                    val iconBot: ImageView = templateChatbot.findViewById(R.id.icon_bot)
-                    iconBot.visibility = View.INVISIBLE
-
-                    val textTime: TextView = templateChatbot.findViewById(R.id.time)
-                    textTime.text = GetTime()
-
-                    val soal : TextView = templateChatbot.findViewById(R.id.answer)
-                    soal.text = Screening.screenData[ind].eventRespon[i]
-
-                    timeText.add(true)
-
-                } else {
-                    linearContainer.addView(templateChatbot)
-                    val iconBot: ImageView = templateChatbot.findViewById(R.id.icon_bot)
-                    iconBot.visibility = View.INVISIBLE
-
-                    val textTime: TextView = templateChatbot.findViewById(R.id.time)
-                    textTime.visibility = View.GONE
-
-                    val soal : TextView = templateChatbot.findViewById(R.id.answer)
-                    soal.text = Screening.screenData[ind].eventRespon[i]
-
-                    timeText.add(false)
-                }
-            }
-        }
-
-        if(ind == 0){
-            Toast.makeText(this, "Sesi Selesai", Toast.LENGTH_SHORT).show()
-        }else if(ind != 0){
-            handler.postDelayed({
-                indexKe++
-                SetProgresSeekbar(indexKe)
-
-                if(indexKe >= maxValue){
-                    Toast.makeText(this, "Selesai", Toast.LENGTH_SHORT).show()
-                }else{
-                    ShowChatBot(indexKe, true)
-                }
-            }, 7000)
-        }
+            if(indexKe >= maxValue){
+                Toast.makeText(this, "Selesai", Toast.LENGTH_SHORT).show()
+                TampilkanNilai()
+            }else{
+                ShowChatBot(indexKe, true)
+            } }, 5000)
     }
 
     private fun SetSeekbar(value : Int){
@@ -284,6 +372,11 @@ class ScreeningActivity : AppCompatActivity() {
         }
         val percentage = (currentValue.toDouble() / maxValue) * 100
         return if (percentage > 100.0) 100.0 else percentage
+    }
+
+    fun TampilkanNilai(){
+        template_nilai.visibility = View.VISIBLE
+        textNilai.text = nilaiScreening.toString()
     }
 
     object SharedPrefsUtil {
@@ -330,32 +423,33 @@ class ScreeningActivity : AppCompatActivity() {
             // Membersihkan lastData sebelum menambahkan data baru
             SaveDataScreening.lastData.clear()
 
-            var index = 0
             for (data in loadedDataList) {
                 val saveData = SaveDataScreening(
                     pertanyaan = data.pertanyaan,
                     historyObrolan = data.historyObrolan,
                     fromBot = data.fromBot,
                     textTime = data.textTime,
+                    getTime = data.getTime,
+                    icon = data.icon,
                     nilaiTerakir = data.nilaiTerakir
                 )
 
-                Toast.makeText(this, index.toString(), Toast.LENGTH_SHORT).show()
-
-                index++
-
+                indexKe = data.pertanyaan
                 SaveDataScreening.lastData.add(saveData)
 
                 println("Pertanyaan : " + SaveDataScreening.lastData[0].pertanyaan)
-                println("History Obrolan: " + SaveDataScreening.lastData[0].historyObrolan[1])
+                println("History Obrolan: " + SaveDataScreening.lastData[0].historyObrolan)
                 println("From Bot ?:" + SaveDataScreening.lastData[0].fromBot)
                 println("textTime ?: + " + SaveDataScreening.lastData[0].textTime)
                 println("nilai Terakhir: " + SaveDataScreening.lastData[0].nilaiTerakir)
                 println("--------------------")
+
             }
+            ShowLoadHistory()
         } else {
             // Data tidak ditemukan di SharedPreferences
             println("Data tidak ditemukan.")
+            ShowChatBot(indexKe, true)
         }
 
     }
@@ -367,6 +461,8 @@ class ScreeningActivity : AppCompatActivity() {
             historyObrolan = historyChat,
             fromBot = fromBot,
             textTime = timeText,
+            getTime = historyTime,
+            icon = showIcon,
             nilaiTerakir = 100 // Ganti dengan nilai terakhir yang sesuai
         )
         SharedPrefsUtil.RemoveDataByKey(this)
@@ -374,10 +470,90 @@ class ScreeningActivity : AppCompatActivity() {
         SavingData(this)
     }
 
+    private fun ShowLoadHistory(){
+        loadTimeIndex = 0
+        for (i in SaveDataScreening.lastData[0].historyObrolan.indices) {
+            if(SaveDataScreening.lastData[0].fromBot[i] == true){
+
+                if(SaveDataScreening.lastData[0].textTime[i] == true){
+                    ShowLoadBotChat(i, SaveDataScreening.lastData[0].icon[i], true)
+                    loadTimeIndex++
+                }else{
+                    ShowLoadBotChat(i, SaveDataScreening.lastData[0].icon[i], false)
+                }
+
+            }else if(SaveDataScreening.lastData[0].fromBot[i] == false){
+                ShowLoadUserChat(i)
+            }
+        }
+        if(indexKe >= maxValue){
+            Toast.makeText(this, "Sesi Telah Selesai", Toast.LENGTH_SHORT).show()
+        }else{
+            JawabSoal(indexKe)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         // Panggil fungsi yang ingin Anda eksekusi ketika activity dihancurkan di sini
         // Misalnya, menyimpan data terakhir ke SharedPreferences atau melakukan pembersihan
-        InsertIntoSaveData()
+        if(indexKe == 0){
+            SharedPrefsUtil.RemoveDataByKey(this)
+        }else if(indexKe >= 1){
+            InsertIntoSaveData()
+        }
+    }
+
+    private fun ShowLoadBotChat(index : Int, icon : Boolean, time : Boolean){
+        val templateChatbot: View = inflater.inflate(R.layout.template_chatbot, null)
+        linearContainer.addView(templateChatbot)
+
+        val soal : TextView = templateChatbot.findViewById(R.id.answer_bot)
+        val iconBot: ImageView = templateChatbot.findViewById(R.id.icon_bot)
+        val textTime: TextView = templateChatbot.findViewById(R.id.time_bot)
+
+        val theText = SaveDataScreening.lastData[0].historyObrolan[index]
+
+        val getTheTime : String = SaveDataScreening.lastData[0].getTime[loadTimeIndex]
+
+        soal.text = theText
+        textTime.text = getTheTime
+
+        if(!icon){
+            iconBot.visibility = View.INVISIBLE
+        }
+
+        if(!time){
+            textTime.visibility = View.GONE
+        }else{
+            textTime.text = SaveDataScreening.lastData[0].getTime[loadTimeIndex]
+            historyTime.add(getTheTime)
+        }
+
+        showIcon.add(icon)
+        timeText.add(time)
+        historyChat.add(theText)
+        fromBot.add(true)
+    }
+
+    private fun ShowLoadUserChat(index : Int){
+        val templateChatuser: View = inflater.inflate(R.layout.template_chatuser, null)
+        linearContainer.addView(templateChatuser)
+
+        var theText = SaveDataScreening.lastData[0].historyObrolan[index]
+
+        val text : TextView = templateChatuser.findViewById(R.id.answer_user)
+        text.text = theText
+
+        val getTheTime : String = SaveDataScreening.lastData[0].getTime[loadTimeIndex]
+
+        val textTime : TextView = templateChatuser.findViewById(R.id.time_user)
+        textTime.text = getTheTime
+
+        historyChat.add(theText)
+        fromBot.add(false)
+        timeText.add(true)
+        historyTime.add(getTheTime)
+        showIcon.add(false)
     }
 }

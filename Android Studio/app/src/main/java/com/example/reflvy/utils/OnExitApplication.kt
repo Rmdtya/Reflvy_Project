@@ -1,18 +1,17 @@
-package com.example.reflvy
+package com.example.reflvy.utils
 
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.reflvy.R
 import com.example.reflvy.SplashScreen
 
 class OnExitApplication : Service() {

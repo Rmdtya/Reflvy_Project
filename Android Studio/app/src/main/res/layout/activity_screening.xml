@@ -98,6 +98,7 @@
             android:id="@+id/chat_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="250dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -117,6 +118,7 @@
         android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         android:gravity="center"
+        android:background="@color/bg_jawab"
         app:layout_constraintBottom_toTopOf="@id/footer">
 
     </LinearLayout>
@@ -303,6 +305,120 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.88" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/template_nilai"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        style="@style/bg_nilai"
+        app:layout_constraintTop_toBottomOf="@id/horizontal03"
+        app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/popupln1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/popupln2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/popupln3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/popupln4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_nilai"
+            app:layout_constraintTop_toBottomOf="@id/popupln1"
+            app:layout_constraintBottom_toTopOf="@id/popupln2"
+            app:layout_constraintStart_toStartOf="@id/popupln3"
+            app:layout_constraintEnd_toEndOf="@id/popupln4"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/rounded_angkascreen"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/text_nilai"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="25"
+                    android:textSize="30sp"
+                    style="@style/fontcolor1"
+                    android:fontFamily="@font/martel"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kamu Normal, Keren"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                style="@style/fontcolor2"
+                android:fontFamily="@font/martel"
+                android:layout_marginBottom="2dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:text="Kamu tidak perlu khawatir karena masih dalam batas wajar"
+                android:textSize="12sp"
+                style="@style/fontcolor2"
+                android:fontFamily="@font/martel"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="@drawable/roundedbutton">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ayo Mulai"
+                    android:textSize="15sp"
+                    style="@style/fontcolor1"
+                    android:padding="8dp"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

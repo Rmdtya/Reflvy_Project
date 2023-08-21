@@ -60,7 +60,7 @@ Silahkan Klik tombol dibawah untuk masuk ke aplikasi"
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="40dp"
         android:background="@drawable/roundedbutton"
         android:fontFamily="@font/martel"
         android:gravity="center"
@@ -76,8 +76,7 @@ Silahkan Klik tombol dibawah untuk masuk ke aplikasi"
         android:autoSizeStepGranularity="8dp"
         app:layout_constraintStart_toStartOf="@id/verstart"
         app:layout_constraintEnd_toEndOf="@id/verend"
-        app:layout_constraintTop_toBottomOf="@+id/guideline6"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"/>
+        app:layout_constraintTop_toBottomOf="@+id/guideline6"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"

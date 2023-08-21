@@ -25,7 +25,7 @@
             app:srcCompat="@drawable/icon_bot"/>
 
         <TextView
-            android:id="@+id/answer"
+            android:id="@+id/answer_bot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/martel"
@@ -46,7 +46,7 @@
         android:layout_marginBottom="10dp">
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/time_bot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/martel"

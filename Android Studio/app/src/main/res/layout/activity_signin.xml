@@ -11,14 +11,12 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:padding="15dp"
         app:layout_constraintStart_toStartOf="@id/verticalgl1"
         app:layout_constraintEnd_toEndOf="@id/verticalgl2"
         app:layout_constraintTop_toTopOf="@id/guideline1"
         app:layout_constraintBottom_toTopOf="@id/guideline2"
-        app:srcCompat="@drawable/loginicon" />
+        app:srcCompat="@drawable/img_login" />
 
     <TextView
         android:id="@+id/textView2"
@@ -190,21 +188,6 @@
         app:layout_constraintEnd_toEndOf="@id/verticalgl2"
         app:layout_constraintTop_toBottomOf="@+id/guideline13"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"/>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:drawableTint="#7A2121"
-        android:fontFamily="@font/martel"
-        android:text="Atau Login Dengan"
-        android:textAlignment="center"
-        style="@style/fontcolor2"
-        android:textStyle="bold"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="10dp"
-        android:autoSizeMaxTextSize="20sp"
-        android:autoSizeStepGranularity="1dp" />
 
     <ImageView
         android:layout_width="0dp"

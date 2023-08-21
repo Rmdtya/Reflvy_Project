@@ -11,6 +11,8 @@
 
     <color name="edit_text">#E5E5E5</color>
 
+    <color name="edit_textDisable">#C6C6C6</color>
+
     <color name="bg_signin">#1260CC</color>
 
     <color name="checkbox">#5579C6</color>
@@ -30,4 +32,11 @@
 
     <color name="header_screening">#5579C6</color>
     <color name="font_timescreening">#9E9E9E</color>
+
+    <color name="bg_sendchat">#FAFAFA</color>
+
+    <color name="bg_nilai">#FAFAFA</color>
+
+    <color name="bg_jawab">#FAFAFA</color>
+
 </resources>

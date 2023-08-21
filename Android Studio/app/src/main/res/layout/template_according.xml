@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/answer"
+        android:id="@+id/answer_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/martel"

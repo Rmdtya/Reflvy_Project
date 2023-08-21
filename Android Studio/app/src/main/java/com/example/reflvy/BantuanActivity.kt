@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 
 class BantuanActivity : AppCompatActivity() {
@@ -63,7 +62,7 @@ class BantuanActivity : AppCompatActivity() {
             accordion3.visibility = View.GONE
 
             layout.visibility = View.VISIBLE
-            val question3: TextView = layout.findViewById(R.id.answer)
+            val question3: TextView = layout.findViewById(R.id.answer_user)
             icon.setImageResource(R.drawable.iconlist_on)
             background.setBackgroundColor(colorBackground)
 
@@ -80,15 +79,15 @@ class BantuanActivity : AppCompatActivity() {
     }
 
     private fun SetText(){
-        val answer1: TextView = accordion1.findViewById(R.id.answer)
+        val answer1: TextView = accordion1.findViewById(R.id.answer_user)
         answer1.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a nunc auctor, porttitor lectus in, finibus magna. Donec pharetra rutrum venenatis. Etiam enim metus, interdum et diam eu, maximus pretium purus. Nunc bibendum eu risus ut placerat."
 
 
-        val answer2: TextView = accordion2.findViewById(R.id.answer)
+        val answer2: TextView = accordion2.findViewById(R.id.answer_user)
         answer2.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a nunc auctor, porttitor lectus in, finibus magna. Donec pharetra rutrum venenatis. Etiam enim metus, interdum et diam eu, maximus pretium purus. Nunc bibendum eu risus ut placerat."
 
 
-        val answer3: TextView = accordion3.findViewById(R.id.answer)
+        val answer3: TextView = accordion3.findViewById(R.id.answer_user)
         answer3.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a nunc auctor, porttitor lectus in, finibus magna. Donec pharetra rutrum venenatis. Etiam enim metus, interdum et diam eu, maximus pretium purus. Nunc bibendum eu risus ut placerat."
 
     }
