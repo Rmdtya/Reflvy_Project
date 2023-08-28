@@ -2,6 +2,7 @@ package com.example.reflvy
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -43,7 +44,6 @@ class MyBackgroundService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // Lakukan pekerjaan Anda di sini
 
         // Memulai layanan sebagai foreground service
         val channelId = "vpn_channel"
@@ -64,7 +64,7 @@ class MyBackgroundService : Service() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Reflvy Service"
+            val name = "Reflvy Services"
             val descriptionText = "Service is running.."
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel("vpn_channel", name, importance).apply {

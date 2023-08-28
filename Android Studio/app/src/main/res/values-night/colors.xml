@@ -5,6 +5,9 @@
 
     <color name="polos">#1C1B20</color>
 
+    <color name="primary_color1">#3E6DD1</color>
+    <color name="transparant">#00FFFFFF</color>
+
     <color name="colorShape">#3E6DD1</color>
 
     <color name="colorShape2">#1260CC</color>
@@ -37,5 +40,7 @@
     <color name="bg_nilai">#1C1B20</color>
 
     <color name="bg_jawab">#1C1B20</color>
+
+    <color name="bg_screen">#1C1B20</color>
 </resources>
 

@@ -155,7 +155,7 @@ class ChatBotActivity : AppCompatActivity() {
         val jsonObject = JSONObject()
         jsonObject.put("model", "text-davinci-003")
         jsonObject.put("prompt", query)
-        jsonObject.put("max_tokens", 100)
+        jsonObject.put("max_tokens", 200)
         jsonObject.put("temperature", 0)
 
         Toast.makeText(this, "what the", Toast.LENGTH_SHORT).show()

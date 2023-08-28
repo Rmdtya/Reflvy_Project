@@ -69,7 +69,8 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val intent = Intent(this, MenuActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
-        finish() // Optional: Menutup activity saat ini agar tidak kembali lagi dengan tombol kembali
+        finish()
     }
 }

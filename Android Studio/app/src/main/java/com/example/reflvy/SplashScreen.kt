@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.ui.Modifier
 import com.example.reflvy.data.Music
 import com.example.reflvy.data.News
 import com.example.reflvy.data.User
+import com.example.reflvy.data.YoutubeVideo
 import com.example.reflvy.utils.ApplicationManager
 
 class SplashScreen : AppCompatActivity() {
@@ -23,20 +21,25 @@ class SplashScreen : AppCompatActivity() {
         supportActionBar?.hide()
 
         val sharedPreferencesPengaturan = getSharedPreferences("PENGATURAN", Context.MODE_PRIVATE)
-        var vpnFromPref = sharedPreferencesPengaturan.getBoolean("vpnMode", true)
+        val editor = sharedPreferencesPengaturan.edit()
+        editor.putBoolean("hasIn", true)
+        editor.apply()
 
-        val nightModeFromPref = sharedPreferencesPengaturan.getBoolean("nightMode", false)
-        if(nightModeFromPref){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }else{
-
-        }
-
-        if (vpnFromPref){
-            startService(Intent(this, MyBackgroundService::class.java))
-        }else{
-
-        }
+//        val sharedPreferencesPengaturan = getSharedPreferences("PENGATURAN", Context.MODE_PRIVATE)
+//        var vpnFromPref = sharedPreferencesPengaturan.getBoolean("vpnMode", true)
+//
+//        val nightModeFromPref = sharedPreferencesPengaturan.getBoolean("nightMode", false)
+//
+//        val currentNightMode = AppCompatDelegate.getDefaultNightMode()
+//        if (nightModeFromPref && currentNightMode != AppCompatDelegate.MODE_NIGHT_YES) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        }
+//
+//        if (vpnFromPref){
+//            startService(Intent(this, MyBackgroundService::class.java))
+//        }else{
+//
+//        }
 
 //        val sharedPreferencesLoad = getSharedPreferences("LOAD_LAYOUT", Context.MODE_PRIVATE)
 //        val isLoaded = sharedPreferencesLoad.getBoolean("isLoaded", false)
@@ -55,9 +58,11 @@ class SplashScreen : AppCompatActivity() {
 
             Music.playList.clear()
             News.newsList.clear()
+            YoutubeVideo.videoList.clear()
 
             ApplicationManager.instance.loadNewsData()
             ApplicationManager.instance.loadMusic()
+            ApplicationManager.instance.LoadVideoData()
 
 //            if(isLoaded){
 //                Toast.makeText(this, "Sudah Terload", Toast.LENGTH_SHORT).show()
@@ -97,6 +102,7 @@ class SplashScreen : AppCompatActivity() {
                 User.userData.loadFromSharedPreferences(sharedPreferences)
 
                 val intent = Intent(this, MenuActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
 
             } else {

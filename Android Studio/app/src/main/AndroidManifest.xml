@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.CHANGE_CONFIGURATION"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +21,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Reflvy"
         tools:targetApi="31">
+        <activity
+            android:name=".DasboardDailyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SchedullingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DailyCheckin"
+            android:exported="false" />
+        <activity
+            android:name=".VideoActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
@@ -95,8 +111,10 @@
             android:name=".SigninActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
-            android:exported="true">
+            android:name=".utils.PreLoader"
+            android:configChanges="uiMode"
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -105,8 +123,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SplashScreen"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

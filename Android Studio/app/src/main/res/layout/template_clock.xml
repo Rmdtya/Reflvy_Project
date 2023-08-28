@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="3dp"
+    android:paddingEnd="3dp"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <me.tankery.lib.circularseekbar.CircularSeekBar
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:id="@+id/seekBar"
+        android:rotation="90"
+        android:layout_centerInParent="true"
+        app:cs_circle_style = "butt"
+        app:cs_progress = "30"
+        app:cs_max = "720"
+        app:cs_negative_enabled = "false"
+        app:cs_move_outside_circle = "true"
+        app:cs_maintain_equal_circle = "true"
+        app:cs_use_custom_radii = "false"
+        app:cs_lock_enabled = "true"
+        app:cs_circle_x_radius = "0dp"
+        app:cs_circle_y_radius = "0dp"
+        app:cs_circle_stroke_width = "70dp"
+        app:cs_disable_pointer = "false"
+        app:cs_pointer_stroke_width = "0dp"
+        app:cs_pointer_halo_width = "0dp"
+        app:cs_pointer_halo_border_width = "10dp"
+        app:cs_circle_fill = "@color/bg_screen"
+        app:cs_circle_color = "#00FFFFFF"
+        app:cs_circle_progress_color = "#962e24"
+        app:cs_pointer_color = "#1A516E"
+        app:cs_pointer_halo_color = "#00FFFFFF"
+        app:cs_pointer_halo_color_ontouch = "#00FFFFFF"
+        app:cs_pointer_alpha_ontouch = "0"
+        />
+
+</LinearLayout>

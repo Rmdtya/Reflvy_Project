@@ -11,6 +11,7 @@ import com.example.reflvy.data.News
 import com.example.reflvy.data.News.Companion.newsList
 import com.example.reflvy.data.SaveDataScreening
 import com.example.reflvy.data.Screening
+import com.example.reflvy.data.YoutubeVideo
 import com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -115,8 +116,35 @@ class ApplicationManager : Application() {
             }
     }
 
+    fun LoadVideoData() {
+
+        db.collection("video")
+            .document("youtubevideo")
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val url = documentSnapshot.get("url") as? List<String> ?: emptyList()
+                val playlist = documentSnapshot.get("playlist") as? List<Int> ?: emptyList()
+
+                for (index in url.indices) {
+                    val link = url[index]
+                    val setPly = playlist[index]
+                    // Lakukan sesuatu dengan link dan setPly
+
+                    val video = YoutubeVideo(index, link, setPly)
+                    YoutubeVideo.videoList.add(video)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("MenuInfoActivity", "Error getting document: ", exception)
+                Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
     fun ExitApplication(){
         newsList.clear()
+
+        YoutubeVideo.videoList.clear()
     }
 
     fun LoadUserData() {

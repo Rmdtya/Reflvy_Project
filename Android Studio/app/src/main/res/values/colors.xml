@@ -5,6 +5,9 @@
 
     <color name="polos">#FAFAFA</color>
 
+    <color name="primary_color1">#5579C6</color>
+    <color name="transparant">#00FFFFFF</color>
+
     <color name="colorShape">#5579C6</color>
 
     <color name="colorShape2">#1260CC</color>
@@ -38,5 +41,7 @@
     <color name="bg_nilai">#FAFAFA</color>
 
     <color name="bg_jawab">#FAFAFA</color>
+
+    <color name="bg_screen">#FFFFFF</color>
 
 </resources>

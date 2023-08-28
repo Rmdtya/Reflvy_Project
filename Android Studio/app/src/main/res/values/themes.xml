@@ -6,6 +6,12 @@
 
     </style>
 
+    <style name="DarkTheme" parent="Theme.AppCompat.DayNight">
+        <item name="android:background">#1C1B20</item>
+        <!-- Atur atribut-atribut khusus mode gelap -->
+        <!-- Contoh: teks warna, dll. -->
+    </style>
+
     <style name="button_background1">
         <item name="android:background">#5579C6</item>
     </style>
@@ -21,6 +27,10 @@
 
     <style name="splashscreen">
         <item name="android:background">#5579C6</item>
+    </style>
+
+    <style name="darktheme">
+        <item name="android:background">#1C1B20</item>
     </style>
 
     <style name="mainscreen">

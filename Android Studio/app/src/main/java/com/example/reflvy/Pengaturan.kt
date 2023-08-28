@@ -24,11 +24,6 @@ class Pengaturan : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences("PENGATURAN", Context.MODE_PRIVATE)
 
-        // Cek mode saat memulai aktivitas dan atur status toggle berdasarkan mode saat itu
-        val currentNightMode = AppCompatDelegate.getDefaultNightMode()
-        switchTheme.isChecked = currentNightMode == AppCompatDelegate.MODE_NIGHT_YES
-
-
         // Atur status toogle berdasarkan mode saat itu
         val nightModeFromPref = sharedPreferences.getBoolean("nightMode", false)
         switchTheme.isChecked = nightModeFromPref
@@ -50,8 +45,8 @@ class Pengaturan : AppCompatActivity() {
             editor.putBoolean("nightMode", isChecked)
             editor.apply()
 
+
             // Re-create the activity to apply the new theme
-            recreate()
         }
 
         switchVPN.setOnCheckedChangeListener { _, isChecked ->

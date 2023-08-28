@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.reflvy.utils.ApplicationManager
@@ -42,7 +43,7 @@ class MenuActivity : AppCompatActivity() {
 
         val menu2: ImageView = findViewById(R.id.menu2)
         menu2.setOnClickListener {
-            val intent = Intent(this, DailyActivity::class.java)
+            val intent = Intent(this, DasboardDailyActivity::class.java)
             startActivity(intent)
         }
 
@@ -58,6 +59,12 @@ class MenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val menu7: LinearLayout = findViewById(R.id.menu7)
+        menu7.setOnClickListener {
+            val intent = Intent(this, VideoActivity::class.java)
+            startActivity(intent)
+        }
+
         val settings: ImageView = findViewById(R.id.setting_icon)
         settings.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
@@ -66,11 +73,12 @@ class MenuActivity : AppCompatActivity() {
 
         val logout: ImageView = findViewById(R.id.logout_icon)
         logout.setOnClickListener {
-            finishAffinity()
+            val intent = Intent(this, DailyCheckin::class.java)
+            startActivity(intent)
         }
 
         textScreenning.setOnClickListener{
-            val intent = Intent(this, ScreeningActivity::class.java)
+            val intent = Intent(this, SchedullingActivity::class.java)
             startActivity(intent)
         }
     }
