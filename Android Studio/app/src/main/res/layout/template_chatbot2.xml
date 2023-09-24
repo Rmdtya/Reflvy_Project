@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icon_bot"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@id/icongl"
+            app:layout_constraintEnd_toEndOf="@id/namegl"
+            app:layout_constraintTop_toBottomOf="@id/horizontaltop"
+            app:layout_constraintBottom_toTopOf="@id/horizontal02"
+            app:srcCompat="@drawable/bot_icon1"/>
+
+        <TextSwitcher
+            android:id="@+id/answer_bot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/martel"
+            android:background="@drawable/roundedchat_bg"
+            android:padding="8dp"
+            android:layout_marginStart="13dp"
+            style="@style/fontcolor1"
+            android:text="Halo, Anton! Kutebak kamu belum melakukan screening nih. Yuk ikut screening dulu. 😁"
+            android:textStyle="bold"
+            android:textSize="9sp"
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="7dp">
+
+        <TextView
+            android:id="@+id/time_bot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/martel"
+            android:padding="3dp"
+            android:layout_marginStart="53dp"
+            android:textColor="@color/font_timescreening"
+            android:text="12.13 am"
+            android:textStyle="bold"
+            android:textSize="9sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

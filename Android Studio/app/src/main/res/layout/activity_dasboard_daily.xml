@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
+        android:padding="4dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/verticalglstart"
         app:layout_constraintTop_toTopOf="@id/horizontaltop"
@@ -58,6 +59,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/btn_dashboard"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_marginTop="15dp"
@@ -67,19 +69,19 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:layout_weight="0.45">
 
                         <ImageView
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/shape_rounded"/>
 
                         <ImageView
                             android:id="@+id/img_mood"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
                             android:scaleType="centerCrop"
                             android:padding="20dp"
                             android:src="@drawable/mood_first"/>
@@ -99,7 +101,7 @@
                             android:layout_height="wrap_content"
                             android:text="Status"
                             android:fontFamily="@font/martel"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             style="@style/fontcolor1"/>
 
@@ -109,7 +111,7 @@
                             android:layout_height="wrap_content"
                             android:text="Bahagia Banget"
                             android:fontFamily="@font/martel"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="10dp"
                             style="@style/fontcolor1"/>
@@ -138,17 +140,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:text="Kegiatan Terakhir"
                         android:fontFamily="@font/martel"
                         android:textStyle="bold"
                         style="@style/fontcolor2"/>
 
                     <TextView
+                        android:id="@+id/btn_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:textSize="15sp"
+                        android:textSize="13sp"
                         android:gravity="end"
                         android:text="Lihat Semua"
                         android:fontFamily="@font/martel"
@@ -167,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:textSize="15sp"
+                        android:textSize="12sp"
                         android:gravity="end"
                         android:text="Yang belum kamu kerjakan hari ini"
                         android:fontFamily="@font/martel"
@@ -179,9 +182,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+                    </LinearLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:textSize="12sp"
+                        android:gravity="end"
+                        android:text="Yang sudah kamu kerjakan hari ini"
+                        android:fontFamily="@font/martel"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="10dp"
+                        style="@style/fontcolor2"/>
 
-
+                    <LinearLayout
+                        android:id="@+id/container_sudah"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="10dp">
                     </LinearLayout>
 
                 </LinearLayout>
@@ -189,56 +209,11 @@
 
             </LinearLayout>
 
-            <!-- Konten Anda di sini -->
 
         </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/footertop"
-        app:layout_constraintBottom_toTopOf="@id/footerbot"
-        style="@style/footerbg">
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/menu_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toTopOf="@id/nav_gl1"
-        app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/home_icon"
-        app:layout_constraintStart_toStartOf="@id/vericon1"
-        app:layout_constraintEnd_toEndOf="@id/vericon2"/>
-
-
-    <ImageView
-        android:id="@+id/setting_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toTopOf="@id/nav_gl1"
-        app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/setting_icon"
-        app:layout_constraintStart_toStartOf="@id/vericon3"
-        app:layout_constraintEnd_toEndOf="@id/vericon4"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalglstart"
@@ -246,34 +221,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.06" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.215" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.36" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.64" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.785" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalglend"
@@ -322,35 +269,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
+        app:layout_constraintGuide_end="60dp"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/footertop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/footerbot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="1" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/nav_gl1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.935" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/nav_gl2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.985" />
-
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_style1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

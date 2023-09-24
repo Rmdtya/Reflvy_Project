@@ -449,7 +449,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="@id/nav_gl1"
         app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/home_icon"
+        app:srcCompat="@drawable/icon_home"
         app:layout_constraintStart_toStartOf="@id/vericon1"
         app:layout_constraintEnd_toEndOf="@id/vericon2"/>
 
@@ -462,7 +462,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="@id/nav_gl1"
         app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/setting_icon"
+        app:srcCompat="@drawable/icon_setting"
         app:layout_constraintStart_toStartOf="@id/vericon3"
         app:layout_constraintEnd_toEndOf="@id/vericon4"/>
 

@@ -5,10 +5,14 @@
 
     <color name="polos">#1C1B20</color>
 
+    <color name="footerbg">#0C0C0D</color>
+    <color name="footeractive">#D9D9D9</color>
+
     <color name="primary_color1">#3E6DD1</color>
     <color name="transparant">#00FFFFFF</color>
 
     <color name="colorShape">#3E6DD1</color>
+    <color name="colorShapeTransparancy">#663E6DD1</color>
 
     <color name="colorShape2">#1260CC</color>
 
@@ -42,5 +46,28 @@
     <color name="bg_jawab">#1C1B20</color>
 
     <color name="bg_screen">#1C1B20</color>
+
+    <color name="textday_nonaktif">#FFFFFF</color>
+    <color name="textday_aktif">#FFFFFF</color>
+
+    <color name="kuisjenis_aktif">#2C2B31</color>
+    <color name="stroke_shapekuis">#1C1B20</color>
+    <color name="bg_kuisgameplay">#1C1B20</color>
+    <color name="struk_opsi">#1260CC</color>
+
+    <color name="hint_bg1">#E61C1B20</color>
+
+    <color name="mission_bg1">#3E6DD1</color>
+
+    <color name="mission_activemenu">#3E6DD1</color>
+    <color name="mission_nonactivemenu">#FFFFFF</color>
+
+    <color name="mission_strokeactive">#FFFFFF</color>
+    <color name="mission_strokenonactive">#FFFFFF</color>
+
+    <color name="mission_templatetext">#FFFFFF</color>
+    <color name="mission_fontcolor1">#3E6DD1</color>
+
+
 </resources>
 

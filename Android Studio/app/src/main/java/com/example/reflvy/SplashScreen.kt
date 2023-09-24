@@ -3,15 +3,26 @@ package com.example.reflvy
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
+import com.example.reflvy.data.ActiveLogin
+import com.example.reflvy.data.DataDaily
+import com.example.reflvy.data.DataNotification
 import com.example.reflvy.data.Music
 import com.example.reflvy.data.News
+import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.data.User
 import com.example.reflvy.data.YoutubeVideo
 import com.example.reflvy.utils.ApplicationManager
+import com.example.reflvy.utils.MusicService
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,29 +36,35 @@ class SplashScreen : AppCompatActivity() {
         editor.putBoolean("hasIn", true)
         editor.apply()
 
-//        val sharedPreferencesPengaturan = getSharedPreferences("PENGATURAN", Context.MODE_PRIVATE)
-//        var vpnFromPref = sharedPreferencesPengaturan.getBoolean("vpnMode", true)
-//
-//        val nightModeFromPref = sharedPreferencesPengaturan.getBoolean("nightMode", false)
-//
-//        val currentNightMode = AppCompatDelegate.getDefaultNightMode()
-//        if (nightModeFromPref && currentNightMode != AppCompatDelegate.MODE_NIGHT_YES) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//        }
-//
-//        if (vpnFromPref){
-//            startService(Intent(this, MyBackgroundService::class.java))
-//        }else{
-//
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getCurrentDnsServers(this)
+        }
 
-//        val sharedPreferencesLoad = getSharedPreferences("LOAD_LAYOUT", Context.MODE_PRIVATE)
-//        val isLoaded = sharedPreferencesLoad.getBoolean("isLoaded", false)
-//
-//        if(!isLoaded){
-//            ApplicationManager.instance.loadNewsData()
-//            ApplicationManager.instance.loadMusic()
-//        }
+        ApplicationManager.instance.LoadDataLogin(this)
+
+//        Toast.makeText(this, "tanggal kemarin" + ActiveLogin.infoActive.lastActive, Toast.LENGTH_SHORT).show()
+
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val tglNow = dateFormat.format(currentDate).trim()
+
+//        Toast.makeText(this, "tanggal sekarang" + tglNow, Toast.LENGTH_SHORT).show()
+
+        if(ActiveLogin.infoActive.lastActive == tglNow){
+
+        }else{
+            ActiveLogin.infoActive.activeNow = false
+            for (data in DataDaily.dataKegiatan) {
+                data.proses = false
+            }
+
+            NotifyChat.notifChat.clear()
+            ApplicationManager.instance.ClearNotifChat(this)
+            ApplicationManager.instance.clearSharedPreferencesNotif(this)
+            ApplicationManager.instance.UpdateStatusIfCompleted()
+            ApplicationManager.instance.SaveKegiatan(this@SplashScreen)
+        }
+
 
         val screeningSharedPreferences = getSharedPreferences("SCREENING_DATA", Context.MODE_PRIVATE)
         val isLoaded = screeningSharedPreferences.getBoolean("isLoaded", false)
@@ -64,26 +81,12 @@ class SplashScreen : AppCompatActivity() {
             ApplicationManager.instance.loadMusic()
             ApplicationManager.instance.LoadVideoData()
 
-//            if(isLoaded){
-//                Toast.makeText(this, "Sudah Terload", Toast.LENGTH_SHORT).show()
-//
-//                val sharedPreferencesLogin = getSharedPreferences("SCREENING_DATA", Context.MODE_PRIVATE)
-//                val editorLogin = sharedPreferencesLogin.edit()
-//                editorLogin.putBoolean("isLoaded", false)
-//                editorLogin.apply()
-//
-//            }else{
-//                Toast.makeText(this, "Belum Terload", Toast.LENGTH_SHORT).show()
-//                ApplicationManager.instance.loadScreeningData(0)
-//                ApplicationManager.instance.loadEventScreeningData(0)
-//
-//                ApplicationManager.instance.SaveDataScreening(this)
-//
-//                val sharedPreferencesLogin = getSharedPreferences("SCREENING_DATA", Context.MODE_PRIVATE)
-//                val editorLogin = sharedPreferencesLogin.edit()
-//                editorLogin.putBoolean("isLoaded", true)
-//                editorLogin.apply()
-//            }
+            DataNotification.dataNotifikasi.clear()
+            ApplicationManager.instance.LoadKegiatan(this)
+
+            ApplicationManager.instance.LoadNotifChat(this)
+            ApplicationManager.instance.LoadNotifPrefs(this)
+
         }
 
         //ApplicationManager.instance.OnClearData()
@@ -101,9 +104,17 @@ class SplashScreen : AppCompatActivity() {
                 sharedPreferences = getSharedPreferences("USER_INFO", Context.MODE_PRIVATE)
                 User.userData.loadFromSharedPreferences(sharedPreferences)
 
-                val intent = Intent(this, MenuActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
+                if (User.userData.screeningSatu){
+                    ApplicationManager.instance.LoadDataMisiAplikasi(this)
+                    val intent = Intent(this, MenuActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    startActivity(intent)
+
+                }else{
+                    val intent = Intent(this, ScreeningSatuActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    startActivity(intent)
+                }
 
             } else {
                 if(!isWelcome){
@@ -116,5 +127,16 @@ class SplashScreen : AppCompatActivity() {
             }
             finish()
         }, 3000)
+    }
+
+    fun getCurrentDnsServers(context: Context) {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork
+        val linkProperties = connectivityManager.getLinkProperties(network)
+
+        val dnsServers = linkProperties?.dnsServers
+        for (dnsServer in dnsServers!!) {
+            Toast.makeText(this, dnsServer.toString(), Toast.LENGTH_SHORT).show()
+        }
     }
 }

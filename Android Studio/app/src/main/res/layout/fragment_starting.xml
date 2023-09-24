@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/bg_hint"
+    tools:context=".fragment.StartingFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="top"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="65dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.example.reflvy.utils.NonScrollableNestedScrollView
+                android:id="@+id/scroll_container"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ayo Cek Diri Kamu Sekarang"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/jost"
+                        android:layout_marginTop="10dp"
+                        style="@style/fontcolor2"
+                        android:visibility="invisible"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_hint1"
+                        android:visibility="invisible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginTop="5dp"
+                            style="@style/mainscreen"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <LinearLayout
+                            android:id="@+id/hint1"
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/menubg4"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.6"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.5"
+                                    android:text="Klik Untuk Mulai Screening Sama ChatBot"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:gravity="bottom"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginBottom="6dp"
+                                    android:fontFamily="@font/jost"
+                                    style="@style/fontcolor1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.4"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="Klik Untuk Memulai Screening Sama ChatBot Sekarang"
+                                    android:textSize="10sp"
+                                    style="@style/fontcolor1"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/jost"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/menu_icon1"
+                                    android:padding="12dp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/keterangan1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toBottomOf="@id/hint1">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/hint_arrow1"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="15dp"
+                                android:background="@drawable/hint_bg1"
+                                android:layout_weight="0.5">
+
+                                <TextView
+                                    android:id="@+id/text_keterangan1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fitur Screening : Untuk mengetahui berapa tingkat paparan pornografi pada dirimu "
+                                    style="@style/fontcolor3"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center_vertical"
+                                    android:fontFamily="@font/martel"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_hint2"
+                        android:visibility="invisible"
+                        android:layout_marginTop="-10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="170dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            style="@style/mainscreen"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <LinearLayout
+                            android:id="@+id/hint2"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:background="@drawable/menubg4"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/menu_icon2"
+                                    android:padding="25dp"/>
+
+                                <TextView
+                                    android:id="@+id/text_nilaiscreening"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="100"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/jost"
+                                    style="@style/fontcolor2"/>
+
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.6"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.5"
+                                    android:text="Nilai Kamu Dari Screening Sebelumnya Nih"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:gravity="bottom"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_marginEnd="15dp"
+                                    android:layout_marginBottom="3dp"
+                                    android:fontFamily="@font/jost"
+                                    style="@style/fontcolor1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_marginEnd="20dp"
+                                    android:text="Screening Lagi Untuk Cek Diri Kamu Kembali"
+                                    android:textSize="11sp"
+                                    style="@style/fontcolor1"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/jost"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/keterangan2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toBottomOf="@id/hint2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/hint_arrow1"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="15dp"
+                                android:background="@drawable/hint_bg1"
+                                android:layout_weight="0.5">
+
+                                <TextView
+                                    android:id="@+id/text_keterangan2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fitur Screening : Untuk mengetahui berapa tingkat paparan pornografi pada dirimu "
+                                    style="@style/fontcolor3"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center_vertical"
+                                    android:fontFamily="@font/martel"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ayo Mulai Hidup Sehat Dari Aktifitas Kamu!"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="22dp"
+                        android:fontFamily="@font/jost"
+                        style="@style/fontcolor2"
+                        android:visibility="invisible"/>
+
+
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_hint3"
+                        android:visibility="invisible"
+                        android:layout_marginTop="-105dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/keterangan3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="65dp"
+                                android:padding="15dp"
+                                android:background="@drawable/hint_bg1"
+                                android:layout_weight="0.5">
+
+                                <TextView
+                                    android:id="@+id/text_keterangan3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fitur Screening : Untuk mengetahui berapa tingkat paparan pornografi pada dirimu "
+                                    style="@style/fontcolor3"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center_vertical"
+                                    android:fontFamily="@font/martel"/>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:rotation="180"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/hint_arrow1"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            style="@style/mainscreen"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toBottomOf="@id/keterangan3"/>
+
+                        <LinearLayout
+                            android:id="@+id/hint3"
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:background="@drawable/menubg4"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            app:layout_constraintTop_toBottomOf="@id/keterangan3">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.6"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.5"
+                                    android:text="Aktifitas Harian Buat Bantu Pemulihan Kamu"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:gravity="bottom"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginBottom="4dp"
+                                    android:fontFamily="@font/jost"
+                                    style="@style/fontcolor1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.4"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="Buat Rencana harianmu dan isi dengan kegiatan yang positif"
+                                    android:textSize="11sp"
+                                    style="@style/fontcolor1"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/jost"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/menu_icon3"
+                                    android:padding="7dp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_hint4"
+                        android:visibility="visible"
+                        android:layout_marginBottom="-95dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="170dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            style="@style/mainscreen"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <LinearLayout
+                            android:id="@+id/hint4"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/menubg5"
+                            android:visibility="visible"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.1"
+                                    android:layout_marginLeft="15dp"
+                                    android:src="@drawable/menu_icon4_1"/>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.8"/>
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.1"
+                                    android:layout_marginEnd="15dp"
+                                    android:src="@drawable/menu_icon4_2"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.4"
+                                        android:text="Nilai Kamu Dari Screening Sebelumnya Nih"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:layout_marginTop="10dp"
+                                        android:gravity="center_vertical"
+                                        android:layout_marginStart="20dp"
+                                        android:layout_marginBottom="4dp"
+                                        android:fontFamily="@font/jost"
+                                        style="@style/fontcolor3"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.5"
+                                        android:layout_marginStart="20dp"
+                                        android:text="Screening Lagi Untuk Cek Diri Kamu Kembali"
+                                        android:textSize="11sp"
+                                        style="@style/fontcolor3"
+                                        android:layout_marginTop="2dp"
+                                        android:fontFamily="@font/jost"/>
+
+                                </LinearLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="-15dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_weight="0.4">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/menu_icon2"
+                                        android:padding="30dp"/>
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/icon_playpoddark"
+                                        android:padding="46dp"/>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/keterangan4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="25dp"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toBottomOf="@id/hint4">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/hint_arrow1"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="15dp"
+                                android:background="@drawable/hint_bg1"
+                                android:layout_weight="0.5">
+
+                                <TextView
+                                    android:id="@+id/text_keterangan4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fitur Screening : Untuk mengetahui berapa tingkat paparan pornografi pada dirimu "
+                                    style="@style/fontcolor3"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center_vertical"
+                                    android:fontFamily="@font/martel"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tau Lebih Banyak Seputar Edukasi Pornografi"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="22dp"
+                        android:fontFamily="@font/jost"
+                        style="@style/fontcolor2"
+                        android:visibility="invisible"/>
+
+                    <LinearLayout
+                        android:id="@+id/hint5"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/menubg2"
+                        android:orientation="horizontal"
+                        android:visibility="invisible">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.52"
+                                android:text="Akses Full Menonton Berbagai Video Edukasi"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:gravity="bottom"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/jost"
+                                style="@style/fontcolor3"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.38"
+                                android:layout_marginLeft="20dp"
+                                android:text="Tonton dan Dapatkan Manfaatnya"
+                                android:textSize="11sp"
+                                style="@style/fontcolor3"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/jost"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.4">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/menu_icon5"
+                                android:layout_marginEnd="5dp"
+                                android:padding="4dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/hint6"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:visibility="invisible">
+
+                        <LinearLayout
+                            android:id="@+id/menu_podcast"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/menubg2"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.8"
+                                android:src="@drawable/menu_icon6"
+                                android:padding="15dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.3"
+                                android:text="Dengarkan Berbagai Macam Podcast"
+                                android:textSize="13sp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/jost"
+                                style="@style/fontcolor3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/menu_info"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/menubg2"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.8"
+                                android:src="@drawable/menu_icon7"
+                                android:layout_marginEnd="5dp"
+                                android:padding="15dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.3"
+                                android:text="Akses Berbagai Info Edukasi Terbaru"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/jost"
+                                style="@style/fontcolor3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:visibility="invisible"/>
+
+                </LinearLayout>
+
+            </com.example.reflvy.utils.NonScrollableNestedScrollView>
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintBottom_toTopOf="@id/horizontalbottom"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/btn_prev"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/menubg2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Sebelumnya"
+                android:textSize="14sp"
+                android:fontFamily="@font/martel"
+                style="@style/fontcolor1"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/menubg2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Selanjutnya"
+                android:textSize="14sp"
+                style="@style/fontcolor1"
+                android:fontFamily="@font/martel"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="25dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="25dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="70dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="80dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="70dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontaltop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="35dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="85dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="100dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalbottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="60dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

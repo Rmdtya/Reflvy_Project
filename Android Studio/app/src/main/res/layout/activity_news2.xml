@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/mainscreen"
+    tools:context=".NewsActivity2">
+
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.github.chrisbanes.photoview.PhotoView
+                    android:id="@+id/img_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/icon_back"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="4dp"
+                                android:scaleType="centerCrop"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintStart_toStartOf="@id/verticalglstart"
+                                app:layout_constraintEnd_toEndOf="@id/ver1"
+                                app:layout_constraintTop_toTopOf="@id/horizontaltop"
+                                app:layout_constraintBottom_toTopOf="@id/horizontal02"
+                                app:srcCompat="@drawable/back_icon"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/judul"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:fontFamily="@font/martel"
+                            android:text=""
+                            android:textSize="18sp"
+                            android:gravity="center_vertical"
+                            android:textStyle="bold"
+                            style="@style/fontcolor2"
+                            tools:ignore="Suspicious0dp" />
+
+                        <TextView
+                            android:id="@+id/deskripsi"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:fontFamily="@font/martel"
+                            android:text="Untuk Menjadi Pribadi Yang Sehat, 5 cara ini adalah jurus jitu bagi kamu. Dengan menerapkan pola"
+                            android:textSize="12sp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:textStyle="bold"
+                            style="@style/fontcolor2"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.94" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.165" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontaltop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalbottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="60dp"/>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_style1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:padding="14dp"
+        android:rotation="180"
+        android:padding="4dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/verticalglstart"
         app:layout_constraintTop_toBottomOf="@id/horizontaltop"
@@ -37,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="@id/namegl"
         app:layout_constraintTop_toBottomOf="@id/horizontaltop"
         app:layout_constraintBottom_toTopOf="@id/horizontal02"
-        app:srcCompat="@drawable/icon_bot"/>
+        app:srcCompat="@drawable/bot_icon1"/>
 
     <TextView
         android:id="@+id/cahtbot_name"
@@ -86,78 +87,86 @@
         app:layout_constraintTop_toTopOf="@id/horizontaltop"
         app:layout_constraintBottom_toTopOf="@id/horizontal02"/>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
+        android:layout_height="0dp"
+        android:gravity="top"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="@id/verticalglstart"
         app:layout_constraintEnd_toEndOf="@id/verticalglend"
-        app:layout_constraintTop_toTopOf="@id/horizontal03">
+        app:layout_constraintTop_toBottomOf="@id/horizontal03"
+        app:layout_constraintBottom_toTopOf="@id/container_jawab">
 
-        <LinearLayout
-            android:id="@+id/chat_container"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/schroll_container"
+            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="250dp"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/chat_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/jawab_container"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@color/bg_jawab"
-        app:layout_constraintBottom_toTopOf="@id/footer">
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/footertop"
-        app:layout_constraintBottom_toTopOf="@id/footerbot"
-        style="@style/footerbg">
+        </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/menu_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toTopOf="@id/nav_gl1"
-        app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/home_icon"
-        app:layout_constraintStart_toStartOf="@id/vericon1"
-        app:layout_constraintEnd_toEndOf="@id/vericon2"/>
+    <LinearLayout
+        android:id="@+id/container_jawab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        style="@style/mainscreen"
+        app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
 
-    <ImageView
-        android:id="@+id/setting_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toTopOf="@id/nav_gl1"
-        app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/setting_icon"
-        app:layout_constraintStart_toStartOf="@id/vericon3"
-        app:layout_constraintEnd_toEndOf="@id/vericon4"/>
+        <LinearLayout
+            android:id="@+id/jawab_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            style="@style/mainscreen"
+            app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/jawab_containerbawah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            style="@style/mainscreen"
+            app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalglstart"
@@ -165,34 +174,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.03" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.215" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.36" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.64" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.785" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalglend"
@@ -235,41 +216,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="80dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalbottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/footertop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/footerbot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="1" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/nav_gl1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.935" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/nav_gl2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.985" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/icongl"
@@ -398,16 +344,19 @@
                 android:gravity="center"/>
 
             <LinearLayout
+                android:id="@+id/btn_selesai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
                 android:background="@drawable/roundedbutton">
 
                 <TextView
+                    android:id="@+id/text_selesai"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ayo Mulai"
+                    android:text="Selesai"
                     android:textSize="15sp"
+                    android:fontFamily="@font/martel"
                     style="@style/fontcolor1"
                     android:padding="8dp"
                     android:gravity="center"/>
@@ -416,9 +365,24 @@
 
         </LinearLayout>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalbottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="60dp"/>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalbottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="120dp"/>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_style1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,19 +3,10 @@ package com.example.reflvy.utils
 import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.reflvy.MenuActivity
-import com.example.reflvy.MyBackgroundService
-import com.example.reflvy.R
-import com.example.reflvy.SigninActivity
 import com.example.reflvy.SplashScreen
-import com.example.reflvy.WelcomeScreenActivity
-import com.example.reflvy.data.User
 
 class PreLoader : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +48,9 @@ class PreLoader : AppCompatActivity() {
 
 
         if (vpnFromPref){
-            startService(Intent(this, MyBackgroundService::class.java))
+            if (!MyBackgroundService.isServiceRunning) {
+                startService(Intent(this, MyBackgroundService::class.java))
+            }
         }else{
 
         }

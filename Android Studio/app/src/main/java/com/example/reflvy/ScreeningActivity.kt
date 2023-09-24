@@ -1,6 +1,7 @@
 package com.example.reflvy
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,9 +16,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.reflvy.data.EventScreening
+import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.data.SaveDataScreening
 import com.example.reflvy.data.Screening
+import com.example.reflvy.data.User
 import com.google.common.reflect.TypeToken
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -40,6 +46,7 @@ class ScreeningActivity : AppCompatActivity() {
     private var historyTime : MutableList<String> = mutableListOf()
     private var showIcon : MutableList<Boolean> = mutableListOf()
     private var loadTimeIndex: Int = 0
+    private val db = Firebase.firestore
 
     val handler = Handler(Looper.getMainLooper())
 
@@ -50,13 +57,16 @@ class ScreeningActivity : AppCompatActivity() {
     }
 
     private lateinit var jawabContainer : LinearLayout
+    private lateinit var jawabContainerBawah : LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_screening)
 
+        Footer()
         linearContainer = findViewById(R.id.chat_container)
         jawabContainer = findViewById(R.id.jawab_container)
+        jawabContainerBawah = findViewById(R.id.jawab_containerbawah)
         inflater = LayoutInflater.from(this)
         seekBar = findViewById(R.id.progres_bar)
 
@@ -144,7 +154,11 @@ class ScreeningActivity : AppCompatActivity() {
     private fun JawabSoal(ind : Int){
         for (i in Screening.screenData[ind].textJawab.indices) {
             val templateJawab : View = inflater.inflate(R.layout.template_jawabchat, null)
-            jawabContainer.addView(templateJawab)
+            if(i >= 3){
+                jawabContainerBawah.addView(templateJawab)
+            }else{
+                jawabContainer.addView(templateJawab)
+            }
 
             val textJawab : TextView = templateJawab.findViewById(R.id.jawaban)
             textJawab.text = Screening.screenData[ind].textJawab[i]
@@ -152,10 +166,10 @@ class ScreeningActivity : AppCompatActivity() {
             templateJawab.setOnClickListener{
                 TampilkanJawaban(ind, i)
                 jawabContainer.removeAllViews()
+                jawabContainerBawah.removeAllViews()
             }
         }
     }
-
 
     private fun GetTime(): String {
         val currentTime = Date()
@@ -188,7 +202,7 @@ class ScreeningActivity : AppCompatActivity() {
         handler.postDelayed({
             // Fungsi yang akan dijalankan setelah jeda 2 detik
             NextEventDialog(ind, ke)
-        }, 2000)
+        }, 500)
     }
 
     private fun NextEventDialog(ind : Int, ke: Int){
@@ -300,48 +314,49 @@ class ScreeningActivity : AppCompatActivity() {
                     }
                 }
             }
-            JawabEventSoal(ind)
-        }
-    }
+            //JawabEventSoal(ind)
 
-    private fun JawabEventSoal(ind : Int){
-        for (i in EventScreening.eventScreenData[ind].opsiRespon.indices) {
-            val templateJawab : View = inflater.inflate(R.layout.template_jawabchat, null)
-            jawabContainer.addView(templateJawab)
-
-            val textJawab : TextView = templateJawab.findViewById(R.id.jawaban)
-            textJawab.text = EventScreening.eventScreenData[ind].opsiRespon[i]
-
-            templateJawab.setOnClickListener{
-                TampilkanEventJawaban(ind, i)
-                jawabContainer.removeAllViews()
-            }
-        }
-    }
-
-
-    private fun TampilkanEventJawaban(ind : Int , ke : Int){
-        val templateChatuser: View = inflater.inflate(R.layout.template_chatuser, null)
-        linearContainer.addView(templateChatuser)
-
-        var theText = EventScreening.eventScreenData[ind].tampilanRespon[ke]
-        val text : TextView = templateChatuser.findViewById(R.id.answer_user)
-        text.text = theText
-
-        val textTime : TextView = templateChatuser.findViewById(R.id.time_user)
-        textTime.text = GetTime()
-
-        historyChat.add(theText)
-        fromBot.add(false)
-        timeText.add(true)
-        historyTime.add(GetTime())
-        showIcon.add(false)
-
-        handler.postDelayed({
-            // Fungsi yang akan dijalankan setelah jeda 2 detik
             CheckNextIndex(ind)
-        }, 2000)
+        }
     }
+
+//    private fun JawabEventSoal(ind : Int){
+//        for (i in EventScreening.eventScreenData[ind].opsiRespon.indices) {
+//            val templateJawab : View = inflater.inflate(R.layout.template_jawabchat, null)
+//            jawabContainer.addView(templateJawab)
+//
+//            val textJawab : TextView = templateJawab.findViewById(R.id.jawaban)
+//            textJawab.text = EventScreening.eventScreenData[ind].opsiRespon[i]
+//
+//            templateJawab.setOnClickListener{
+//                TampilkanEventJawaban(ind, i)
+//                jawabContainer.removeAllViews()
+//            }
+//        }
+//    }
+//
+//    private fun TampilkanEventJawaban(ind : Int , ke : Int){
+//        val templateChatuser: View = inflater.inflate(R.layout.template_chatuser, null)
+//        linearContainer.addView(templateChatuser)
+//
+//        var theText = EventScreening.eventScreenData[ind].tampilanRespon[ke]
+//        val text : TextView = templateChatuser.findViewById(R.id.answer_user)
+//        text.text = theText
+//
+//        val textTime : TextView = templateChatuser.findViewById(R.id.time_user)
+//        textTime.text = GetTime()
+//
+//        historyChat.add(theText)
+//        fromBot.add(false)
+//        timeText.add(true)
+//        historyTime.add(GetTime())
+//        showIcon.add(false)
+//
+//        handler.postDelayed({
+//            // Fungsi yang akan dijalankan setelah jeda 2 detik
+//            CheckNextIndex(ind)
+//        }, 2000)
+//    }
 
     private fun CheckNextIndex(ind : Int){
         indexKe++
@@ -354,7 +369,7 @@ class ScreeningActivity : AppCompatActivity() {
                 TampilkanNilai()
             }else{
                 ShowChatBot(indexKe, true)
-            } }, 5000)
+            } }, 500)
     }
 
     private fun SetSeekbar(value : Int){
@@ -377,6 +392,36 @@ class ScreeningActivity : AppCompatActivity() {
     fun TampilkanNilai(){
         template_nilai.visibility = View.VISIBLE
         textNilai.text = nilaiScreening.toString()
+
+
+        val documentReference = db.collection("users").document(User.userData.userID)
+
+        val updateData = hashMapOf(
+            "screeningDua" to true,
+            "nilaiScreening2" to nilaiScreening
+        )
+
+        documentReference.set(updateData, SetOptions.merge())
+            .addOnSuccessListener {
+                //UpdateUserInfo(uname, tlp, tgl, selectedGender)
+                //UpdateLayout()
+                UpdateUserInfo(nilaiScreening)
+            }
+            .addOnFailureListener {
+                // Gagal mengganti data
+            }
+    }
+
+    private fun UpdateUserInfo(nilai : Int){
+
+        val sharedPreferences = getSharedPreferences("USER_INFO", Context.MODE_PRIVATE)
+
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("screening2", true)
+        editor.putInt("nilaiScreening2", nilai)
+        editor.apply()
+
+        User.userData.loadFromSharedPreferences(sharedPreferences)
     }
 
     object SharedPrefsUtil {
@@ -435,6 +480,7 @@ class ScreeningActivity : AppCompatActivity() {
                 )
 
                 indexKe = data.pertanyaan
+                nilaiScreening = data.nilaiTerakir
                 SaveDataScreening.lastData.add(saveData)
 
                 println("Pertanyaan : " + SaveDataScreening.lastData[0].pertanyaan)
@@ -463,7 +509,7 @@ class ScreeningActivity : AppCompatActivity() {
             textTime = timeText,
             getTime = historyTime,
             icon = showIcon,
-            nilaiTerakir = 100 // Ganti dengan nilai terakhir yang sesuai
+            nilaiTerakir = nilaiScreening // Ganti dengan nilai terakhir yang sesuai
         )
         SharedPrefsUtil.RemoveDataByKey(this)
         SaveDataScreening.lastData.add(saveData)
@@ -555,5 +601,42 @@ class ScreeningActivity : AppCompatActivity() {
         timeText.add(true)
         historyTime.add(getTheTime)
         showIcon.add(false)
+    }
+
+    private fun Footer(){
+        val includedLayout = findViewById<View>(R.id.footer)
+        val home: ImageView = includedLayout.findViewById(R.id.home_icon)
+        home.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val bot: ImageView = includedLayout.findViewById(R.id.bot_icon)
+        bot.setOnClickListener {
+            val intent = Intent(this, BotActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val settings: ImageView = includedLayout.findViewById(R.id.setting_icon)
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val btn_back : ImageView = findViewById(R.id.icon_back)
+        btn_back.setOnClickListener {
+            onBackPressed()
+        }
+
+        val notifIcon : ImageView = includedLayout.findViewById(R.id.icon_notif)
+
+        if (NotifyChat.notify){
+            notifIcon.visibility = View.VISIBLE
+        }else{
+            notifIcon.visibility = View.INVISIBLE
+        }
     }
 }

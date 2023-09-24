@@ -52,7 +52,7 @@ class VPNHandler : Service() {
         )
 
         val builder = NotificationCompat.Builder(this, notificationChannelId)
-            .setSmallIcon(R.drawable.reflvy_logo)
+            .setSmallIcon(R.drawable.reflvy_64x)
             .setContentTitle("VPN Terdeteksi")
             .setContentText("Yuk Isi Waktumu Dengan Kegiatan Yang Positif!!")
             .setContentIntent(pendingIntent)

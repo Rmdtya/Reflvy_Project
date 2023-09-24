@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparant"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparant"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/line_atas"
+            android:layout_width="6dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginBottom="-16dp"
+            android:background="@drawable/mission_startshape"
+            android:backgroundTint="@color/mission_notclear"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15.5dp"
+            android:layout_marginTop="-10dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/icon_shape"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/mission_roundedshape"
+                    android:orientation="horizontal" />
+
+                <ImageView
+                    android:id="@+id/clear_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="7dp"
+                    android:visibility="invisible"
+                    android:layout_gravity="center"
+                    android:src="@drawable/mission_clearicon"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:padding="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:orientation="vertical"
+                android:background="@drawable/mission_templateimagebg">
+
+                <TextView
+                    android:id="@+id/text_submisi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selesaikan Screening Pertama"
+                    android:maxLines="1"
+                    android:fontFamily="@font/martel"
+                    style="@style/fontcolor1"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/text_progres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status : 0/1"
+                    android:gravity="end"
+                    android:fontFamily="@font/martel"
+                    style="@style/fontcolor1"
+                    android:textSize="11sp"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

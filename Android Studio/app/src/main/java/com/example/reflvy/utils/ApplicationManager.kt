@@ -5,10 +5,15 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
+import com.example.reflvy.data.ActiveLogin
+import com.example.reflvy.data.DataDaily
+import com.example.reflvy.data.DataMisi
+import com.example.reflvy.data.DataNotification
 import com.example.reflvy.data.EventScreening
 import com.example.reflvy.data.Music
 import com.example.reflvy.data.News
 import com.example.reflvy.data.News.Companion.newsList
+import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.data.SaveDataScreening
 import com.example.reflvy.data.Screening
 import com.example.reflvy.data.YoutubeVideo
@@ -16,6 +21,9 @@ import com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ApplicationManager : Application() {
     private val db = Firebase.firestore
@@ -65,14 +73,15 @@ class ApplicationManager : Application() {
             .addOnSuccessListener { querySnapshot ->
 
                 for (documentSnapshot in querySnapshot) {
-                    val description = documentSnapshot.getString("deskripsi") ?: ""
-                    val img = documentSnapshot.getString("image") ?: ""
-                    val title = documentSnapshot.getString("judul") ?: ""
+                    val jenis = documentSnapshot.get("jenis") as? List<Int> ?: emptyList()
+                    val judul = documentSnapshot.get("judul") as? List<String> ?: emptyList()
+                    val deskripsi = documentSnapshot.get("deskripsi") as? List<String> ?: emptyList()
+                    val img = documentSnapshot.get("image") as? List<String> ?: emptyList()
                     val paragraphs = documentSnapshot.get("paragraf") as? List<String> ?: emptyList()
-                    val date = documentSnapshot.getString("tanggal") ?: ""
+                    val date = documentSnapshot.get("tanggal") as? List<String> ?: emptyList()
 
 
-                    val news = News(index, description, img, title, paragraphs, date)
+                    val news = News(jenis, deskripsi, img, judul, paragraphs, date)
                     News.newsList.add(news)
 
                     index = index + 1
@@ -135,8 +144,8 @@ class ApplicationManager : Application() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("MenuInfoActivity", "Error getting document: ", exception)
-                Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
+//                Log.d("MenuInfoActivity", "Error getting document: ", exception)
+//                Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -147,118 +156,351 @@ class ApplicationManager : Application() {
         YoutubeVideo.videoList.clear()
     }
 
-    fun LoadUserData() {
 
+    fun SaveNews(context: Context) {
+        clearSharedPreferencesNews(context) // Hapus semua data sebelum menyimpan
+
+        val sharedPreferences = context.getSharedPreferences("datanews_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        val gson = Gson()
+        val dataKegiatanJson = gson.toJson(DataDaily.dataKegiatan)
+        editor.putString("data_news", dataKegiatanJson)
+
+        editor.apply()
     }
 
-    fun loadScreeningData(ind : Int) {
-        val collectionNames = arrayOf("screening", "screening2", "screening3")
+    fun LoadNews(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datanews_preferences", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val dataKegiatanJson = sharedPreferences.getString("data_news", null)
 
-        val collectionSelect = collectionNames[ind]
+        if (dataKegiatanJson != null) {
+            val type = object : TypeToken<List<News>>() {}.type
+            val dataNewsList: List<News> = gson.fromJson(dataKegiatanJson, type)
+            News.newsList.clear()
+            News.newsList.addAll(dataNewsList)
+        }
+    }
 
-        var index : Int
-        index = 0;
+    fun clearSharedPreferencesNews(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datanews_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
 
-        db.collection(collectionSelect)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
+    fun SaveKegiatan(context: Context) {
+        clearSharedPreferences(context) // Hapus semua data sebelum menyimpan
 
-                for (documentSnapshot in querySnapshot) {
-                    val pertanyaan = index + 1
-                    val soal = documentSnapshot.get("chatbot") as? List<String> ?: emptyList()
-                    val jawaban = documentSnapshot.get("jawaban") as? List<String> ?: emptyList()
-                    val nilai = documentSnapshot.get("nilai") as? List<Int> ?: emptyList()
-                    val chatUser = documentSnapshot.get("chatuser") as? List<String> ?: emptyList()
-                    val event = documentSnapshot.get("event") as? List<Int> ?: emptyList()
+        val sharedPreferences = context.getSharedPreferences("datakegiatan_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
 
-                    val data = Screening(pertanyaan, soal, jawaban, nilai, chatUser, event)
-                    Screening.screenData.add(data)
+        val gson = Gson()
+        val dataKegiatanJson = gson.toJson(DataDaily.dataKegiatan)
+        editor.putString("data_kegiatan", dataKegiatanJson)
 
-                    index = index + 1
+        editor.apply()
+    }
+
+    fun LoadKegiatan(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datakegiatan_preferences", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val dataKegiatanJson = sharedPreferences.getString("data_kegiatan", null)
+
+        if (dataKegiatanJson != null) {
+            val type = object : TypeToken<List<DataDaily>>() {}.type
+            val dataKegiatanList: List<DataDaily> = gson.fromJson(dataKegiatanJson, type)
+            DataDaily.dataKegiatan.clear()
+            DataDaily.dataKegiatan.addAll(dataKegiatanList)
+        }
+    }
+
+    fun clearSharedPreferences(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datakegiatan_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
+
+
+    fun SaveDataLogin(context: Context) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+        editor.putInt("totalActive", ActiveLogin.infoActive.totalActive)
+        editor.putBoolean("activeNow", ActiveLogin.infoActive.activeNow)
+        editor.putString("lastActive", ActiveLogin.infoActive.lastActive)
+        editor.putString("moodNow", ActiveLogin.infoActive.moodNow)
+
+        editor.apply()
+    }
+
+    fun LoadDataLogin(context: Context) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
+
+        val totalActive = sharedPreferences.getInt("totalActive", 0)
+        val activeNow = sharedPreferences.getBoolean("activeNow", false)
+        val lastActive = sharedPreferences.getString("lastActive", "")
+        val moodNow = sharedPreferences.getString("moodNow", "")
+
+        ActiveLogin.infoActive.totalActive = totalActive
+        ActiveLogin.infoActive.activeNow = activeNow
+        ActiveLogin.infoActive.lastActive = lastActive.toString()
+        ActiveLogin.infoActive.moodNow = moodNow.toString()
+    }
+
+    fun SaveDataDailyActivity(context: Context){
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+        editor.putInt("totalSpendTime", ActiveLogin.infoActive.totalSpendTime)
+        editor.putInt("kegiatan1", ActiveLogin.infoActive.kegiatan1Bekerja)
+        editor.putInt("kegiatan2", ActiveLogin.infoActive.kegiatan2BelajarFormal)
+        editor.putInt("kegiatan3", ActiveLogin.infoActive.kegiatan3Membaca)
+        editor.putInt("kegiatan4", ActiveLogin.infoActive.kegiatan4Bersantai)
+        editor.putInt("kegiatan5", ActiveLogin.infoActive.kegiatan5Istirahat)
+        editor.putInt("kegiatan6", ActiveLogin.infoActive.kegiatan6Belanja)
+        editor.putInt("kegiatan7", ActiveLogin.infoActive.kegiatan7Bermusik)
+        editor.putInt("kegiatan8", ActiveLogin.infoActive.kegiatan8Beribadah)
+        editor.putInt("kegiatan9", ActiveLogin.infoActive.kegiatan9BermainGame)
+        editor.putInt("kegiatan10", ActiveLogin.infoActive.kegiatan10HiburanDigital)
+        editor.putInt("kegiatan11", ActiveLogin.infoActive.kegiatan11OperasiKomputer)
+        editor.putInt("kegiatan12", ActiveLogin.infoActive.kegiatan12PekerjaanRumah)
+        editor.putInt("kegiatan13", ActiveLogin.infoActive.kegiatan13Komunitas)
+        editor.putInt("kegiatan14", ActiveLogin.infoActive.kegiatan14Bersosialisasi)
+        editor.putInt("kegiatan15", ActiveLogin.infoActive.kegiatan15Healing)
+        editor.putInt("kegiatan16", ActiveLogin.infoActive.kegiatan16Olahraga)
+        editor.putInt("kegiatan17", ActiveLogin.infoActive.kegiatan17Liburan)
+        editor.putInt("kegiatan18", ActiveLogin.infoActive.kegiatan18Lainnya)
+
+        editor.apply()
+    }
+
+    fun LoadDataDailyActivity(context: Context) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
+
+        val totalSpendTime = sharedPreferences.getInt("totalSpendTime", 0)
+        val k1 = sharedPreferences.getInt("kegiatan1", 0)
+        val k2 = sharedPreferences.getInt("kegiatan2", 0)
+        val k3 = sharedPreferences.getInt("kegiatan3", 0)
+        val k4 = sharedPreferences.getInt("kegiatan4", 0)
+        val k5 = sharedPreferences.getInt("kegiatan5", 0)
+        val k6 = sharedPreferences.getInt("kegiatan6", 0)
+        val k7 = sharedPreferences.getInt("kegiatan7", 0)
+        val k8 = sharedPreferences.getInt("kegiatan8", 0)
+        val k9 = sharedPreferences.getInt("kegiatan9", 0)
+        val k10 = sharedPreferences.getInt("kegiatan10", 0)
+        val k11 = sharedPreferences.getInt("kegiatan11", 0)
+        val k12 = sharedPreferences.getInt("kegiatan12", 0)
+        val k13 = sharedPreferences.getInt("kegiatan13", 0)
+        val k14 = sharedPreferences.getInt("kegiatan14", 0)
+        val k15 = sharedPreferences.getInt("kegiatan15", 0)
+        val k16 = sharedPreferences.getInt("kegiatan16", 0)
+        val k17 = sharedPreferences.getInt("kegiatan17", 0)
+        val k18 = sharedPreferences.getInt("kegiatan18", 0)
+
+        ActiveLogin.infoActive.totalSpendTime = totalSpendTime
+        ActiveLogin.infoActive.kegiatan1Bekerja = k1
+        ActiveLogin.infoActive.kegiatan2BelajarFormal = k2
+        ActiveLogin.infoActive.kegiatan3Membaca = k3
+        ActiveLogin.infoActive.kegiatan4Bersantai = k4
+        ActiveLogin.infoActive.kegiatan5Istirahat = k5
+        ActiveLogin.infoActive.kegiatan6Belanja = k6
+        ActiveLogin.infoActive.kegiatan7Bermusik = k7
+        ActiveLogin.infoActive.kegiatan8Beribadah = k8
+        ActiveLogin.infoActive.kegiatan9BermainGame = k9
+        ActiveLogin.infoActive.kegiatan10HiburanDigital = k10
+        ActiveLogin.infoActive.kegiatan11OperasiKomputer = k11
+        ActiveLogin.infoActive.kegiatan12PekerjaanRumah = k12
+        ActiveLogin.infoActive.kegiatan13Komunitas = k13
+        ActiveLogin.infoActive.kegiatan14Bersosialisasi = k14
+        ActiveLogin.infoActive.kegiatan15Healing = k15
+        ActiveLogin.infoActive.kegiatan16Olahraga = k16
+        ActiveLogin.infoActive.kegiatan17Liburan = k17
+        ActiveLogin.infoActive.kegiatan18Lainnya = k18
+    }
+
+
+    fun UpdateStatusIfCompleted() {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -1) // Mengurangkan satu hari dari tanggal saat ini
+        val kemarin = calendar.time
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val tglKemarin = dateFormat.format(kemarin).trim()
+
+        for (data in DataDaily.dataKegiatan) {
+            if(data.status == "belum"){
+                if (data.progresNow >= data.lamaKegiatan) {
+                    data.status = "selesai"
+                    data.tanggalSelesai = tglKemarin
                 }
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
-            }
+        }
     }
 
-    fun loadEventScreeningData(ind : Int) {
-        val collectionNames = arrayOf("eventrespon", "screening2", "screening3")
 
-        val collectionSelect = collectionNames[ind]
+    fun SaveNotifikasiKegiatan(context: Context) {
+        clearSharedPreferencesNotikasiKegiatan(context) // Hapus semua data sebelum menyimpan
 
-        var index : Int
-        index = 0;
+        val sharedPreferences = context.getSharedPreferences("notifikasi_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
 
-        db.collection(collectionSelect)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
+        val gson = Gson()
+        val dataKegiatanJson = gson.toJson(DataNotification.dataNotifikasi)
+        editor.putString("data_notifikasi", dataKegiatanJson)
 
-                for (documentSnapshot in querySnapshot) {
-                    val pertanyaan = index + 1
-                    val eventRespon1 = documentSnapshot.get("respon0") as? List<String> ?: emptyList()
-                    val eventRespon2 = documentSnapshot.get("respon1") as? List<String> ?: emptyList()
-                    val eventRespon3 = documentSnapshot.get("respon2") as? List<String> ?: emptyList()
-                    val opsiRespon = documentSnapshot.get("jawaban") as? List<String> ?: emptyList()
-                    val tampilanRespon = documentSnapshot.get("responbalik") as? List<String> ?: emptyList()
-
-                    val data = EventScreening(pertanyaan, eventRespon1, eventRespon2, eventRespon3, opsiRespon, tampilanRespon)
-                    EventScreening.eventScreenData.add(data)
-
-                    index = index + 1
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
-            }
-
+        editor.apply()
     }
 
-//    fun LoadScreeningData(context: Context){
-//
-//        SharedPrefsManager.loadScreeningDataFromSharedPreferences(context)
-//        SharedPrefsManager.loadEventScreeningDataFromSharedPreferences(context)
-//    }
-//
-//    fun SaveDataScreening(context: Context){
-//        SharedPrefsManager.clearScreeningDataFromSharedPreferences(context)
-//
-//        SharedPrefsManager.saveScreeningDataToSharedPreferences(context)
-//        SharedPrefsManager.saveEventScreeningDataToSharedPreferences(context)
-//    }
+    fun LoadNotifikasiKegiatan(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("notifikasi_preferences", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val dataKegiatanJson = sharedPreferences.getString("data_notifikasi", null)
 
-    object SharedPrefsManager {
-
-        private const val PREFS_NAME = "newsFrefs"
-        private const val SCREENING_KEY = "musicData"
-
-        private fun getSharedPreferences(context: Context): SharedPreferences {
-            return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        if (dataKegiatanJson != null) {
+            val type = object : TypeToken<List<DataNotification>>() {}.type
+            val dataKegiatanList: List<DataNotification> = gson.fromJson(dataKegiatanJson, type)
+            DataNotification.dataNotifikasi.clear()
+            DataNotification.dataNotifikasi.addAll(dataKegiatanList)
         }
+    }
 
-        fun SaveScreenData(context: Context, dataList: List<Screening>) {
-            val sharedPreferences = getSharedPreferences(context)
-            val editor = sharedPreferences.edit()
-            val gson = Gson()
-            val dataListJson = gson.toJson(dataList)
-            editor.putString(SCREENING_KEY, dataListJson)
-            editor.apply()
-        }
+    fun clearSharedPreferencesNotikasiKegiatan(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("notifikasi_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
 
-        fun LoadScreenData(context: Context): List<Screening> {
-            val sharedPreferences = getSharedPreferences(context)
-            val dataListJson = sharedPreferences.getString(SCREENING_KEY, null)
-            val gson = Gson()
-            val itemType = object : TypeToken<List<SaveDataScreening>>() {}.type
-            return gson.fromJson(dataListJson, itemType) ?: emptyList()
-        }
+    fun ActiveNotif(context: Context){
+        val sharedPreferences = context.getSharedPreferences("notif_prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putBoolean("activeNotif", true)
+        NotifyChat.notify = true
 
-        fun RemoveDataByKey(context: Context) {
-            SaveDataScreening.lastData.clear()
-            val sharedPreferences = getSharedPreferences(context)
-            val editor = sharedPreferences.edit()
-            editor.remove(SCREENING_KEY)
-            editor.apply()
+        editor.apply()
+    }
+
+    fun NonActiveNotif(context: Context){
+        val sharedPreferences = context.getSharedPreferences("notif_prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putBoolean("activeNotif", false)
+        NotifyChat.notify = false
+
+        editor.apply()
+    }
+
+    fun LoadNotifChat(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("notif_prefs", Context.MODE_PRIVATE)
+        val activeNotif = sharedPreferences.getBoolean("activeNotif", false)
+
+        NotifyChat.notify = activeNotif
+    }
+
+    fun ClearNotifChat(context: Context){
+        val sharedPreferences = context.getSharedPreferences("notif_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
+
+    fun SaveNotifPrefs(context: Context) {
+        clearSharedPreferencesNotif(context) // Hapus semua data sebelum menyimpan
+
+        val sharedPreferences = context.getSharedPreferences("DataNotif_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        val gson = Gson()
+        val dataKegiatanJson = gson.toJson(NotifyChat.notifChat)
+        editor.putString("data_notif", dataKegiatanJson)
+
+        editor.apply()
+    }
+
+    fun LoadNotifPrefs(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("DataNotif_prefs", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val dataNotif = sharedPreferences.getString("data_notif", null)
+
+        if (dataNotif != null) {
+            val type = object : TypeToken<List<NotifyChat>>() {}.type
+            val dataNotifyList: List<NotifyChat> = gson.fromJson(dataNotif, type)
+            NotifyChat.notifChat.clear()
+            NotifyChat.notifChat.addAll(dataNotifyList)
         }
+    }
+
+    fun clearSharedPreferencesNotif(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("DataNotif_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
+
+    //---------------------------------------------------------Misi Aplikasi----------------------------------------------------------------------------
+    fun AddFirstMissionApplication(context: Context){
+        val misi1 = DataMisi(
+            0,
+            "Ekspedisi Pertama",
+            "Selesaikan semua misinya dan rasakan manfaatnya",
+            1,
+            listOf("Selesaikan Screening Pertama", "Lakukan Screening kedua untuk mengetahui tingkat kecanduanmu", "Buat Jadwal Keseharianmnu", "Selesaikan 20 Kegiatan Harian", "Login selama 5 hari"),
+            listOf("Lakukan Screening Pertama Saat User Pertama kali menggunakan aplikasi", "Screening 2 dilakukan untuk mengetahui tingkat kecanduan seseorang terhadap pornografi", "Atur dan tambahkan jadwal keseharianmu untuk harimu yang lebih baik", "Selesaikan semua kegiatanmu untuk masa depan yang lebih cerah", "Cek mood mu hari ini dalam dailycheck - in"),
+            listOf(0, 0, 0, 0, 0),
+            listOf(1, 1, 5, 10, 3),
+            listOf(false, false, false, false, false),
+            listOf("", "Screening2", "Schedulling", "Schedulling", "")
+        )
+        DataMisi.dataMisiAplikasi.add(misi1)
+
+        val misi2 = DataMisi(
+        1,
+        "Ekspedisi Kedua",
+        "Selesaikan semua misinya dan rasakan manfaatnya",
+        3,
+        listOf("Selesaikan Screening Pertama", "Lakukan Screening kedua untuk mengetahui tingkat kecanduanmu", "Buat Jadwal Keseharianmnu", "Selesaikan 20 Kegiatan Harian", "Login selama 5 hari"),
+        listOf("Lakukan Screening Pertama Saat User Pertama kali menggunakan aplikasi", "Screening 2 dilakukan untuk mengetahui tingkat kecanduan seseorang terhadap pornografi", "Atur dan tambahkan jadwal keseharianmu untuk harimu yang lebih baik", "Selesaikan semua kegiatanmu untuk masa depan yang lebih cerah", "Cek mood mu hari ini dalam dailycheck - in"),
+        listOf(0, 0, 0, 0, 0),
+        listOf(1, 1, 5, 10, 3),
+        listOf(false, false, false, false, false),
+        listOf("", "Screening2", "Schedulling", "Schedulling", "")
+        )
+        DataMisi.dataMisiAplikasi.add(misi2)
+
+        SaveDataMisiAplkasi(context)
+    }
+    fun SaveDataMisiAplkasi(context: Context) {
+        clearSharedPreferencesMisiAplikasi(context) // Hapus semua data sebelum menyimpan
+
+        val sharedPreferences = context.getSharedPreferences("datamisiaplikasi_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        val gson = Gson()
+        val dataKegiatanJson = gson.toJson(DataMisi.dataMisiAplikasi)
+        editor.putString("data_misiaplikasi", dataKegiatanJson)
+
+        editor.apply()
+    }
+
+    fun LoadDataMisiAplikasi(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datamisiaplikasi_preferences", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val dataMisiJson = sharedPreferences.getString("data_misiaplikasi", null)
+
+        if (dataMisiJson != null) {
+            val type = object : TypeToken<List<DataMisi>>() {}.type
+            val dataMisiList: List<DataMisi> = gson.fromJson(dataMisiJson, type)
+            DataMisi.dataMisiAplikasi.clear()
+            DataMisi.dataMisiAplikasi.addAll(dataMisiList)
+        }
+    }
+
+    fun clearSharedPreferencesMisiAplikasi(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datamisiaplikasi_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
     }
 }

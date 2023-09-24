@@ -1,9 +1,22 @@
 package com.example.reflvy
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
+import com.example.reflvy.data.ActiveLogin
+import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.databinding.ActivityDailyCheckinBinding
+import com.example.reflvy.databinding.FooterStyle1Binding
+import com.example.reflvy.utils.ApplicationManager
 import me.tankery.lib.circularseekbar.CircularSeekBar
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class DailyCheckin : AppCompatActivity() {
 
@@ -13,6 +26,8 @@ class DailyCheckin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDailyCheckinBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Footer()
 
         binding.seekBar.setOnSeekBarChangeListener(object : CircularSeekBar.OnCircularSeekBarChangeListener{
             override fun onProgressChanged(
@@ -85,5 +100,116 @@ class DailyCheckin : AppCompatActivity() {
 
         })
 
+        binding.btnConfirm.setOnClickListener {
+            if(binding.moodText.text.toString().trim() == "Pilih Mood Mu"){
+                Toast.makeText(this@DailyCheckin, "Silahkan pilih mood mu hari ini", Toast.LENGTH_SHORT).show()
+            }else{
+                val mood: String = binding.moodText.text.toString()
+
+                val currentDate = Calendar.getInstance().time
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val tglNow = dateFormat.format(currentDate).trim()
+
+                ActiveLogin.infoActive.totalActive++
+                ActiveLogin.infoActive.activeNow = true
+                ActiveLogin.infoActive.lastActive = tglNow
+                ActiveLogin.infoActive.moodNow = mood
+
+                //ActiveLogin.infoActive.updateInfo( ActiveLogin.infoActive.totalActive++, true, tglNow, mood)
+
+                ApplicationManager.instance.SaveDataLogin(this@DailyCheckin)
+                GetNotifChat(mood)
+
+                val intent = Intent(this, DasboardDailyActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
+            }
+        }
+
+        binding.btnBack.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+    }
+
+    private fun GetNotifChat(mood : String){
+        if(mood == "Gelisah"){
+            val chat1 = NotifyChat("Kamu Gelisah Hari Ini? Apa karena masalah akademik atau masalah dalam diri kamu?", "bot", true, false, "", false, "")
+            NotifyChat.notifChat.add(chat1)
+
+            val chat2 = NotifyChat("Aku Saranin kamu membaca artikel berikut. Mungkin setelah membaca ini rasa gelisah kamu mereda. <i><b>Klik Disini</b></i>.", "bot", false, false, "", true, "artikel")
+            NotifyChat.notifChat.add(chat2)
+
+            val time : String = GetTime()
+            val chat3 = NotifyChat("Atau Mungkin Kamu butuh teman untuk berbagi cerita, aku bisa dengerin curhatan kamu.", "bot", false, true, time, false, "")
+            NotifyChat.notifChat.add(chat3)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
+
+        }else if(mood == "Marah"){
+
+        }else if(mood == "Sedih"){
+
+        }else if(mood == "Kecewa"){
+
+        }else if(mood == "Bosan"){
+
+        }else if(mood == "Seperti Biasa"){
+
+        }else if(mood == "Senang"){
+
+        }else if(mood == "Bersemangat"){
+
+        }else if(mood == "Riang"){
+
+        }else if(mood == "Bahagia"){
+
+        }else{
+
+        }
+
+    }
+
+    private fun GetTime(): String {
+        val currentTime = Date()
+        val format = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val timeString = format.format(currentTime)
+
+        return timeString
+    }
+
+    private fun Footer(){
+        val includedLayout = findViewById<View>(R.id.footer)
+        val home: ImageView = includedLayout.findViewById(R.id.home_icon)
+        home.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val bot: ImageView = includedLayout.findViewById(R.id.bot_icon)
+        bot.setOnClickListener {
+            val intent = Intent(this, BotActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val settings: ImageView = includedLayout.findViewById(R.id.setting_icon)
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val notifIcon : ImageView = includedLayout.findViewById(R.id.icon_notif)
+
+        if (NotifyChat.notify){
+            notifIcon.visibility = View.VISIBLE
+        }else{
+            notifIcon.visibility = View.INVISIBLE
+        }
     }
 }

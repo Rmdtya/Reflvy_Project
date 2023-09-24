@@ -8,10 +8,11 @@
     tools:context=".Pengaturan">
 
     <ImageView
-        android:id="@+id/icon_profile"
+        android:id="@+id/icon_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
+        android:padding="4dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/verticalglstart"
         app:layout_constraintEnd_toEndOf="@id/ver1"
@@ -255,44 +256,7 @@
 
         </LinearLayout>
 
-
     </ScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/footertop"
-        app:layout_constraintBottom_toTopOf="@id/footerbot"
-        style="@style/footerbg">
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/menu_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toTopOf="@id/nav_gl1"
-        app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/home_icon"
-        app:layout_constraintStart_toStartOf="@id/vericon1"
-        app:layout_constraintEnd_toEndOf="@id/vericon2"/>
-
-
-    <ImageView
-        android:id="@+id/setting_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toTopOf="@id/nav_gl1"
-        app:layout_constraintBottom_toTopOf="@id/nav_gl2"
-        app:srcCompat="@drawable/setting_icon"
-        app:layout_constraintStart_toStartOf="@id/vericon3"
-        app:layout_constraintEnd_toEndOf="@id/vericon4"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalglstart"
@@ -300,34 +264,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.06" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.215" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.36" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.64" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vericon4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.785" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalglend"
@@ -376,35 +312,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
+        app:layout_constraintGuide_end="60dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/footertop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/footerbot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="1" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/nav_gl1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.935" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/nav_gl2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.985" />
-
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_style1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

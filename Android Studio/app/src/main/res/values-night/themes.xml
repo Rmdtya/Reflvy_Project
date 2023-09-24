@@ -26,6 +26,10 @@
         <item name="android:background">#1C1B20</item>
     </style>
 
+    <style name="mainscreen2">
+        <item name="android:background">#1C1B20</item>
+    </style>
+
     <style name="fontcolor1">
         <item name="android:textColor">#FFFFFF</item>
     </style>
@@ -43,11 +47,28 @@
     </style>
 
     <style name="bg_nilai">
-        <item name="android:background">#060606</item>
+        <item name="android:background">#B30C0C0D</item>
     </style>
 
     <style name="background_sendchat">
         <item name="android:background">#1C1B20</item>
     </style>
+
+    <style name="hourclock_style">
+        <item name="android:src">@drawable/clock_hourdark</item>
+    </style>
+
+    <style name="minuteclock_style">
+        <item name="android:src">@drawable/clock_minutedark</item>
+    </style>
+
+    <style name="clock_bg">
+        <item name="android:background">@drawable/clock_bgdark</item>
+    </style>
+
+    <style name="bg_hint">
+        <item name="android:background">#E6000000</item>
+    </style>
+
 </resources>
 

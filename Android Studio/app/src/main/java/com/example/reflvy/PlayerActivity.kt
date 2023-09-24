@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.reflvy.data.Music
+import com.example.reflvy.data.NotifyChat
+import com.example.reflvy.utils.MusicService
 
 
 class PlayerActivity : AppCompatActivity() {
@@ -62,19 +64,14 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
+        Footer()
+
         imageCover = findViewById(R.id.img_cover)
         title = findViewById(R.id.title)
         vocal = findViewById(R.id.vocal)
 
-        val homeIcon : ImageView = findViewById(R.id.menu_icon)
-        homeIcon.setOnClickListener {
-            val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
-        }
-
         val index = intent.getIntExtra("INDEX", 0)
         playlistID = intent.getIntExtra("PLAYLIST_ID", 0)
-
 
         currentIndex = index
 
@@ -358,5 +355,42 @@ class PlayerActivity : AppCompatActivity() {
         playIcon.visibility = View.VISIBLE
         pauseIcon.visibility = View.GONE
         MusicService.playStatus = false
+    }
+
+    private fun Footer(){
+        val includedLayout = findViewById<View>(R.id.footer)
+        val home: ImageView = includedLayout.findViewById(R.id.home_icon)
+        home.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val bot: ImageView = includedLayout.findViewById(R.id.bot_icon)
+        bot.setOnClickListener {
+            val intent = Intent(this, BotActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val settings: ImageView = includedLayout.findViewById(R.id.setting_icon)
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val btn_back : ImageView = findViewById(R.id.icon_back)
+        btn_back.setOnClickListener {
+            onBackPressed()
+        }
+
+        val notifIcon : ImageView = includedLayout.findViewById(R.id.icon_notif)
+
+        if (NotifyChat.notify){
+            notifIcon.visibility = View.VISIBLE
+        }else{
+            notifIcon.visibility = View.INVISIBLE
+        }
     }
 }

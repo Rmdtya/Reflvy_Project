@@ -1,5 +1,6 @@
 package com.example.reflvy
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.reflvy.data.NotifyChat
 
 class BantuanActivity : AppCompatActivity() {
     private lateinit var accordion1: LinearLayout
@@ -17,13 +19,13 @@ class BantuanActivity : AppCompatActivity() {
     private lateinit var background2 : LinearLayout
     private lateinit var background3 : LinearLayout
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bantuan)
 
         val colorBackground = ContextCompat.getColor(this, R.color.background_bantuan)
+
+        Footer()
 
         accordion1 = findViewById(R.id.acc_layout1)
         accordion2 = findViewById(R.id.acc_layout2)
@@ -49,6 +51,11 @@ class BantuanActivity : AppCompatActivity() {
         question1.setOnClickListener { toggleAccordion(accordion1, question1, background1) }
         question2.setOnClickListener { toggleAccordion(accordion2, question2, background2) }
         question3.setOnClickListener { toggleAccordion(accordion3, question3, background3) }
+    }
+
+    fun goBack(view: View) {
+        // Kembali ke Activity sebelumnya
+        onBackPressed()
     }
 
     private fun toggleAccordion(layout: LinearLayout, icon : ImageView, background : LinearLayout) {
@@ -90,5 +97,42 @@ class BantuanActivity : AppCompatActivity() {
         val answer3: TextView = accordion3.findViewById(R.id.answer_user)
         answer3.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a nunc auctor, porttitor lectus in, finibus magna. Donec pharetra rutrum venenatis. Etiam enim metus, interdum et diam eu, maximus pretium purus. Nunc bibendum eu risus ut placerat."
 
+    }
+
+    private fun Footer(){
+        val includedLayout = findViewById<View>(R.id.footer)
+        val home: ImageView = includedLayout.findViewById(R.id.home_icon)
+        home.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val bot: ImageView = includedLayout.findViewById(R.id.bot_icon)
+        bot.setOnClickListener {
+            val intent = Intent(this, BotActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val settings: ImageView = includedLayout.findViewById(R.id.setting_icon)
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val btn_back : ImageView = findViewById(R.id.icon_back)
+        btn_back.setOnClickListener {
+            onBackPressed()
+        }
+
+        val notifIcon : ImageView = includedLayout.findViewById(R.id.icon_notif)
+
+        if (NotifyChat.notify){
+            notifIcon.visibility = View.VISIBLE
+        }else{
+            notifIcon.visibility = View.INVISIBLE
+        }
     }
 }

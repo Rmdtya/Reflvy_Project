@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/mainscreen"
+    tools:context=".BantuanActivity">
+
+    <ImageView
+        android:id="@+id/icon_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@id/verticalglstart"
+        app:layout_constraintTop_toTopOf="@id/horizontaltop"
+        app:layout_constraintBottom_toTopOf="@id/horizontal02"
+        app:srcCompat="@drawable/back_icon"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/martel"
+        android:text="Kuis"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="8dp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeStepGranularity="8dp"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        style="@style/fontcolor2"
+        app:layout_constraintStart_toStartOf="@id/ver2"
+        app:layout_constraintEnd_toEndOf="@id/verticalglend"
+        app:layout_constraintTop_toTopOf="@id/horizontaltop"
+        app:layout_constraintBottom_toTopOf="@id/horizontal02"/>
+
+    <LinearLayout
+        android:id="@+id/menu_atas"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="@id/verticalglstart"
+        app:layout_constraintEnd_toEndOf="@id/verticalglend"
+        app:layout_constraintTop_toTopOf="@id/horizontal03"
+        android:background="@drawable/menubg4"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/jenis1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/kuis_bgjenis1"
+            android:backgroundTint="@color/transparant"
+            android:layout_weight="0.33">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:text="Edukasi"
+                android:fontFamily="@font/martel"
+                android:textStyle="bold"
+                style="@style/fontcolor1"
+                android:textSize="13sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/jenis2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/kuis_bgjenis2"
+            android:backgroundTint="@color/transparant"
+            android:layout_weight="0.33">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:text="Ringan"
+                android:fontFamily="@font/martel"
+                android:textStyle="bold"
+                style="@style/fontcolor1"
+                android:textSize="13sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/jenis3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/kuis_bgjenis3"
+            android:backgroundTint="@color/transparant"
+            android:layout_weight="0.33">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:text="Komedi"
+                android:fontFamily="@font/martel"
+                android:textStyle="bold"
+                style="@style/fontcolor1"
+                android:textSize="13sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="top"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/verticalglstart"
+        app:layout_constraintEnd_toEndOf="@id/verticalglend"
+        app:layout_constraintTop_toBottomOf="@id/menu_atas"
+        app:layout_constraintBottom_toBottomOf="@id/horizontalbottom">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true">
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.94" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontaltop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalbottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="60dp"/>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_style1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

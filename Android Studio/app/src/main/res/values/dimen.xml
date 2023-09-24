@@ -6,4 +6,8 @@
     <dimen name="text_view_margin_top">10dp</dimen>
 
     <dimen name="webview_height">200dp</dimen>
+
+
+    <dimen name="star_misionwidth">20dp</dimen>
+    <dimen name="star_misionpadding">1dp</dimen>
 </resources>

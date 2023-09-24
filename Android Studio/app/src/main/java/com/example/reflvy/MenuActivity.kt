@@ -1,19 +1,32 @@
 package com.example.reflvy
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
+import com.example.reflvy.data.ActiveLogin
+import com.example.reflvy.data.NotifyChat
+import com.example.reflvy.data.User
+import com.example.reflvy.fragment.HintListener
+import com.example.reflvy.fragment.StartingFragment
 import com.example.reflvy.utils.ApplicationManager
 
-class MenuActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity(), HintListener {
 
     private var backPressedTime: Long = 0
     private val backPressedInterval = 2000 // Interval waktu dalam milidetik untuk menekan tombol back dua kali
     private val MENU_INFO_REQUEST_CODE = 1001
+
+    private lateinit var scroller : NestedScrollView
+
+    private lateinit var sharedPreferencesLogin : SharedPreferences
 
     override fun onBackPressed() {
         if (backPressedTime + backPressedInterval > System.currentTimeMillis()) {
@@ -30,57 +43,84 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        val textScreenning : TextView = findViewById(R.id.text_menu6_2)
+        scroller = findViewById(R.id.container_scroll)
 
-//        val vpnHandler = VPNHandler.getInstance(this) // 'this' adalah konteks dari Activity
-//        vpnHandler.startRepeatedFunction()
+        sharedPreferencesLogin = getSharedPreferences("login_status", Context.MODE_PRIVATE)
+        val isStarting = sharedPreferencesLogin.getBoolean("isStarting", false)
 
-        val menu1: ImageView = findViewById(R.id.menu1)
-        menu1.setOnClickListener {
-            val intent = Intent(this, ManualChatBotActivity::class.java)
+        Footer(true)
+
+        if(!isStarting){
+            Footer(false)
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            val startingFragment = StartingFragment()
+            fragmentTransaction.replace(R.id.fragment_container, startingFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+
+
+//        val textScreenning : TextView = findViewById(R.id.text_menu6_2)
+
+        val menuScreening: LinearLayout = findViewById(R.id.menu_screening)
+        menuScreening.setOnClickListener {
+            val intent = Intent(this, ScreeningActivity::class.java)
             startActivity(intent)
         }
 
-        val menu2: ImageView = findViewById(R.id.menu2)
-        menu2.setOnClickListener {
-            val intent = Intent(this, DasboardDailyActivity::class.java)
+        val menuScreenAgain: LinearLayout = findViewById(R.id.menu_screeninglagi)
+        menuScreenAgain.setOnClickListener {
+            val intent = Intent(this, ScreeningSatuActivity::class.java)
             startActivity(intent)
         }
 
-        val menu3: ImageView = findViewById(R.id.menu3)
-        menu3.setOnClickListener {
+        val textNilaiScreening : TextView = findViewById(R.id.text_nilaiscreening)
+        textNilaiScreening.text = User.userData.nilaiScreening2.toString()
+
+        val menuDailyActivity: LinearLayout = findViewById(R.id.menu_dailyactivity)
+        menuDailyActivity.setOnClickListener {
+
+            if(ActiveLogin.infoActive.activeNow){
+                val intent = Intent(this, DasboardDailyActivity::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this, DailyCheckin::class.java)
+                startActivity(intent)
+            }
+        }
+
+        val menuSchedulling: LinearLayout = findViewById(R.id.menu_schedulling)
+        menuSchedulling.setOnClickListener {
+
+            if(ActiveLogin.infoActive.activeNow){
+                val intent = Intent(this, SchedullingActivity::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this, DailyCheckin::class.java)
+                startActivity(intent)
+            }
+        }
+
+        val menuVideo: LinearLayout = findViewById(R.id.menu_video)
+        menuVideo.setOnClickListener {
+            val intent = Intent(this, RoadMapsActivity::class.java)
+            startActivity(intent)
+        }
+
+        val menuPodcast: LinearLayout = findViewById(R.id.menu_podcast)
+        menuPodcast.setOnClickListener {
+            val intent = Intent(this, MenuMissionActivity::class.java)
+            startActivity(intent)
+        }
+
+        val menuInfo: LinearLayout = findViewById(R.id.menu_info)
+        menuInfo.setOnClickListener {
             val intent = Intent(this, MenuInfoActivity::class.java)
             startActivity(intent)
         }
 
-        val menu5: ImageView = findViewById(R.id.menu5)
-        menu5.setOnClickListener {
-            val intent = Intent(this, PlaylistActivity::class.java)
-            startActivity(intent)
-        }
-
-        val menu7: LinearLayout = findViewById(R.id.menu7)
-        menu7.setOnClickListener {
-            val intent = Intent(this, VideoActivity::class.java)
-            startActivity(intent)
-        }
-
-        val settings: ImageView = findViewById(R.id.setting_icon)
-        settings.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-        }
-
-        val logout: ImageView = findViewById(R.id.logout_icon)
-        logout.setOnClickListener {
-            val intent = Intent(this, DailyCheckin::class.java)
-            startActivity(intent)
-        }
-
-        textScreenning.setOnClickListener{
-            val intent = Intent(this, SchedullingActivity::class.java)
-            startActivity(intent)
-        }
+        Toast.makeText(this, NotifyChat.notify.toString(), Toast.LENGTH_SHORT).show()
     }
 
 //    fun myFunction() {
@@ -100,4 +140,53 @@ class MenuActivity : AppCompatActivity() {
 //    }
 
 
+    private fun Footer(kondisi : Boolean){
+        val includedLayout = findViewById<View>(R.id.footer)
+
+        val active = includedLayout.findViewById<LinearLayout>(R.id.active1)
+        active.visibility = View.VISIBLE
+
+        val bot: ImageView = includedLayout.findViewById(R.id.bot_icon)
+        bot.setOnClickListener {
+            val intent = Intent(this, BotActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val settings: ImageView = includedLayout.findViewById(R.id.setting_icon)
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val notifIcon : ImageView = includedLayout.findViewById(R.id.icon_notif)
+
+        if (NotifyChat.notify){
+            notifIcon.visibility = View.VISIBLE
+        }else{
+            notifIcon.visibility = View.INVISIBLE
+        }
+
+        bot.isEnabled = kondisi
+        settings.isEnabled = kondisi
+    }
+
+    override fun GetScroll() {
+        scroller.smoothScrollTo(0, 3000)
+    }
+
+    override fun GetBackScroll() {
+        scroller.fullScroll(View.FOCUS_UP)
+    }
+
+    override fun GetEnd() {
+        scroller.fullScroll(View.FOCUS_UP)
+
+        val editorLogin = sharedPreferencesLogin.edit()
+        editorLogin.putBoolean("isStarting", true)
+        editorLogin.apply()
+
+        Footer(true)
+    }
 }

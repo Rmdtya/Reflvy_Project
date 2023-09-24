@@ -4,12 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class News(
-    val newsID: Int,
-    val description: String = "",
-    val img: String = "",
-    val title: String = "",
+    val jenis: List<Int> = emptyList(),
+    val description: List<String> = emptyList(),
+    val img: List<String> = emptyList(),
+    val title: List<String> = emptyList(),
     val paragraphs: List<String> = emptyList(),
-    val date: String = ""
+    val date: List<String> = emptyList()
 ){
     companion object {
         val newsList = mutableListOf<News>()

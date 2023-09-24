@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/footertop"
+        app:layout_constraintBottom_toTopOf="@id/footerbot"
+        android:background="@drawable/footerbg2">
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/home_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="18dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/icon_home"
+        app:layout_constraintTop_toBottomOf="@id/footertop"
+        app:layout_constraintBottom_toBottomOf="@id/footerbot"
+        app:layout_constraintStart_toStartOf="@id/vericon1"
+        app:layout_constraintEnd_toEndOf="@id/vericon2"/>
+
+    <ImageView
+        android:id="@+id/bot_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:padding="18dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/icon_bot"
+        app:layout_constraintTop_toBottomOf="@id/footertop"
+        app:layout_constraintBottom_toBottomOf="@id/footerbot"
+        app:layout_constraintStart_toStartOf="@id/vericon5"
+        app:layout_constraintEnd_toEndOf="@id/vericon6"/>
+
+    <ImageView
+        android:id="@+id/icon_notif"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:padding="16dp"
+        android:visibility="invisible"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/icon_notif"
+        app:layout_constraintTop_toBottomOf="@id/footertop"
+        app:layout_constraintBottom_toBottomOf="@id/notif1"
+        app:layout_constraintStart_toStartOf="@id/notif2"
+        app:layout_constraintEnd_toEndOf="@id/vericon6"/>
+
+    <ImageView
+        android:id="@+id/setting_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:padding="18dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:srcCompat="@drawable/icon_setting"
+        app:layout_constraintTop_toBottomOf="@id/footertop"
+        app:layout_constraintBottom_toBottomOf="@id/footerbot"
+        app:layout_constraintStart_toStartOf="@id/vericon3"
+        app:layout_constraintEnd_toEndOf="@id/vericon4"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vericon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vericon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vericon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.71" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vericon4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.86" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vericon5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.405" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vericon6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.595" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/footertop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="60dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/footerbot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/notif1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="15dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/notif2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <LinearLayout
+        android:id="@+id/active1"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vr1"
+        app:layout_constraintEnd_toEndOf="@id/vr2"
+        android:background="@color/footeractive"/>
+
+    <LinearLayout
+        android:id="@+id/active3"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vr3"
+        app:layout_constraintEnd_toEndOf="@id/vr4"
+        android:background="@color/footeractive"/>
+
+    <LinearLayout
+        android:id="@+id/active2"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vr5"
+        app:layout_constraintEnd_toEndOf="@id/vr6"
+        android:background="@color/footeractive"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vr1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vr2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.31" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vr3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.69" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vr4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.88" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vr5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.385" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vr6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.615" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

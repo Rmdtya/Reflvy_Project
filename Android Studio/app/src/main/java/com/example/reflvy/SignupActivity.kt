@@ -198,7 +198,15 @@ class SignupActivity : AppCompatActivity() {
                         "deteksijarak" to null, // Field deteksijarak dengan tipe data array string yang masih null
                         "screeningHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
                         "dailyPoint" to null, // Field screeningHistory dengan tipe data array int yang masih null
-                        "linkHistory" to null // Field screeningHistory dengan tipe data array int yang masih null
+                        "linkHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                        "screeningSatu" to false,
+                        "screeningDua" to false,
+                        "screeningTiga" to false,
+                        "screeningEmpat" to false,
+                        "nilaiScreening1" to 0,
+                        "nilaiScreening2" to 0,
+                        "nilaiScreening3" to 0,
+                        "nilaiScreening4" to 0
                     )
                     userDocument.set(userData)
                         .addOnSuccessListener {

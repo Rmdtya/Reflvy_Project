@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.reflvy.data.News
+import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.data.Screening
 import com.example.reflvy.data.YoutubeVideo
 import com.example.reflvy.utils.NonScrollWebView
@@ -48,6 +49,7 @@ class VideoActivity : AppCompatActivity() {
     private lateinit var footer : RelativeLayout
     private lateinit var iconMenu : ImageView
     private lateinit var iconSetting : ImageView
+    private lateinit var iconBot : ImageView
     private var originalOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     private val API_KEY = "AIzaSyDJ91qC7p0kEpuQlI9ZkpDGohC1vQWj9C8"
     private var view : Int = 0
@@ -75,9 +77,7 @@ class VideoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video)
 
-        footer = findViewById(R.id.footer)
-        iconMenu = findViewById(R.id.menu_icon)
-        iconSetting = findViewById(R.id.setting_icon)
+        Footer()
 
         textTitle = findViewById(R.id.titleVideo)
         textChannel = findViewById(R.id.channel)
@@ -149,6 +149,7 @@ class VideoActivity : AppCompatActivity() {
                         footer.visibility = View.GONE
                         iconMenu.visibility = View.GONE
                         iconSetting.visibility = View.GONE
+                        iconBot.visibility = View.GONE
 
                         try {
                             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -172,6 +173,7 @@ class VideoActivity : AppCompatActivity() {
                     footer.visibility = View.VISIBLE
                     iconMenu.visibility = View.VISIBLE
                     iconSetting.visibility = View.VISIBLE
+                    iconBot.visibility = View.VISIBLE
                     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
 
                     try {
@@ -249,7 +251,6 @@ class VideoActivity : AppCompatActivity() {
 
         return listDetails
     }
-
 
 
     fun formatViews(viewCount: String): String {
@@ -344,5 +345,42 @@ class VideoActivity : AppCompatActivity() {
         val publishedAt: String,
         val thumbnailUrl: String
     )
+
+    private fun Footer(){
+        val includedLayout = findViewById<View>(R.id.footer)
+        val home: ImageView = includedLayout.findViewById(R.id.home_icon)
+        home.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val bot: ImageView = includedLayout.findViewById(R.id.bot_icon)
+        bot.setOnClickListener {
+            val intent = Intent(this, BotActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val settings: ImageView = includedLayout.findViewById(R.id.setting_icon)
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+        val btn_back : ImageView = findViewById(R.id.icon_back)
+        btn_back.setOnClickListener {
+            onBackPressed()
+        }
+
+        val notifIcon : ImageView = includedLayout.findViewById(R.id.icon_notif)
+
+        if (NotifyChat.notify){
+            notifIcon.visibility = View.VISIBLE
+        }else{
+            notifIcon.visibility = View.INVISIBLE
+        }
+    }
 
 }

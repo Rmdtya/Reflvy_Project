@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/bg_nilai"
+    android:layout_gravity="center"
+    tools:context=".fragment.EditActivityFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/notifgb1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="40dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/roundedredbutton"
+            android:textColorLink="#000000"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:textAllCaps="false"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="9dp"
+            android:src="@drawable/icon_close"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambah Aktivitas"
+            android:fontFamily="@font/martel"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            style="@style/fontcolor2"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Aktivitas"
+            android:fontFamily="@font/martel"
+            android:textSize="13dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            style="@style/fontcolor2"/>
+
+        <EditText
+            android:id="@+id/inp_nama"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:background="@drawable/edit_text1"
+            android:ems="10"
+            android:fontFamily="@font/martel"
+            android:inputType="text"
+            android:labelFor="@id/textView2"
+            android:padding="10dp"
+            android:paddingLeft="12dp"
+            android:gravity="center"
+            android:textAlignment="textStart"
+            tools:ignore="RtlCompat"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lama Aktivitas"
+            android:fontFamily="@font/martel"
+            android:textSize="13dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            style="@style/fontcolor2"/>
+
+        <EditText
+            android:id="@+id/inp_lama"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:background="@drawable/edit_text1"
+            android:ems="10"
+            android:fontFamily="@font/martel"
+            android:inputType="number"
+            android:labelFor="@id/textView2"
+            android:padding="10dp"
+            android:paddingLeft="12dp"
+            android:gravity="center"
+            android:textAlignment="textStart"
+            tools:ignore="RtlCompat"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Mulai Aktivitas"
+                android:fontFamily="@font/martel"
+                android:textSize="13dp"
+                android:layout_marginBottom="5dp"
+                style="@style/fontcolor2"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Aktivitas Selesai"
+                android:fontFamily="@font/martel"
+                android:textSize="13dp"
+                android:layout_marginBottom="5dp"
+                style="@style/fontcolor2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextHour1"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+                <EditText
+                    android:id="@+id/editTextHour2"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=":"
+                    android:textSize="26sp"
+                    android:fontFamily="@font/martel"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/editTextMinute1"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+                <EditText
+                    android:id="@+id/editTextMinute2"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextHour3"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+                <EditText
+                    android:id="@+id/editTextHour4"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=":"
+                    android:textSize="26sp"
+                    android:fontFamily="@font/martel"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/editTextMinute3"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+                <EditText
+                    android:id="@+id/editTextMinute4"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/martel"
+                    android:background="@drawable/edit_text1"
+                    android:maxLength="1"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hari Aktivitas"
+                android:fontFamily="@font/martel"
+                android:textSize="13dp"
+                android:layout_marginBottom="5dp"
+                style="@style/fontcolor2"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/con_senin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.142"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1">
+
+                    <TextView
+                        android:id="@+id/text_senin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="S"
+                        android:paddingTop="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        style="@style/fontcolor2"
+                        android:fontFamily="@font/martel"/>
+
+                    <CheckBox
+                        android:id="@+id/senin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/transparant"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:alpha="0"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/con_selasa"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.142"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1">
+
+                    <TextView
+                        android:id="@+id/text_selasa"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="S"
+                        android:paddingTop="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        style="@style/fontcolor2"
+                        android:fontFamily="@font/martel"/>
+
+                    <CheckBox
+                        android:id="@+id/selasa"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/transparant"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:alpha="0"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/con_rabu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.142"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1">
+
+                    <TextView
+                        android:id="@+id/text_rabu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="R"
+                        android:paddingTop="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        style="@style/fontcolor2"
+                        android:fontFamily="@font/martel"/>
+
+                    <CheckBox
+                        android:id="@+id/rabu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/transparant"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:alpha="0"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/con_kamis"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.142"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1">
+
+                    <TextView
+                        android:id="@+id/text_kamis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="K"
+                        android:paddingTop="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        style="@style/fontcolor2"
+                        android:fontFamily="@font/martel"/>
+
+                    <CheckBox
+                        android:id="@+id/kamis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/transparant"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:alpha="0"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/con_jumat"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.142"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1">
+
+                    <TextView
+                        android:id="@+id/text_jumat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="J"
+                        android:paddingTop="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        style="@style/fontcolor2"
+                        android:fontFamily="@font/martel"/>
+
+                    <CheckBox
+                        android:id="@+id/jumat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/transparant"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:alpha="0"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/con_sabtu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.142"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1">
+
+                    <TextView
+                        android:id="@+id/text_sabtu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="S"
+                        android:paddingTop="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        style="@style/fontcolor2"
+                        android:fontFamily="@font/martel"/>
+
+                    <CheckBox
+                        android:id="@+id/sabtu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/transparant"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:alpha="0"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/con_minggu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.142"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/edit_text1">
+
+                    <TextView
+                        android:id="@+id/text_minggu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="M"
+                        android:paddingTop="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        style="@style/fontcolor2"
+                        android:fontFamily="@font/martel"/>
+
+                    <CheckBox
+                        android:id="@+id/minggu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/transparant"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:alpha="0"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/roundedbutton"
+            android:fontFamily="@font/martel"
+            android:gravity="center"
+            android:text="Konfirmasi"
+            android:textColorHighlight="#952222"
+            android:textColorLink="#000000"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="13sp"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/roundedredbutton"
+            android:fontFamily="@font/martel"
+            android:gravity="center"
+            android:text="Delete"
+            android:textColorHighlight="#952222"
+            android:textColorLink="#000000"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

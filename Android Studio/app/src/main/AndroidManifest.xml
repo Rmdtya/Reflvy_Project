@@ -22,6 +22,33 @@
         android:theme="@style/Theme.Reflvy"
         tools:targetApi="31">
         <activity
+            android:name=".HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MissionAplicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuMissionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RoadMapsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NewsActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".BotActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GameplayKuisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuKuisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OldDailyActivity"
+            android:exported="false" />
+        <activity
             android:name=".DasboardDailyActivity"
             android:exported="false" />
         <activity
@@ -41,13 +68,16 @@
             android:name=".WelcomeScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".ManualChatBotActivity"
+            android:name=".model.ManualChatBotActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatBotActivity"
+            android:name=".model.ChatBotActivity"
             android:exported="false" />
         <activity
             android:name=".ChatUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScreeningSatuActivity"
             android:exported="false" />
         <activity
             android:name=".ScreeningActivity"
@@ -60,7 +90,7 @@
             android:exported="false" />
 
         <service
-            android:name=".MusicService"
+            android:name=".utils.MusicService"
             android:enabled="true"
             android:exported="false" />
         <service
@@ -68,7 +98,7 @@
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name=".MyBackgroundService"
+            android:name=".utils.MyBackgroundService"
             android:enabled="true"
             android:exported="false" />
         <service

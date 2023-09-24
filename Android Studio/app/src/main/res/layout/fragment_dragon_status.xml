@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/bg_nilai"
+    android:layout_gravity="center"
+    tools:context=".fragment.DragonStatusFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/rounded_nilai"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="20dp"
+        android:paddingBottom="40dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/roadmap_framestatus"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="60dp"
+                    android:src="@drawable/roadmap_lv1"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Ancient Dragon Egg"
+                android:textSize="23sp"
+                style="@style/fontcolor2"
+                android:fontFamily="@font/martel"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:text="10"
+                    android:fontFamily="@font/martel"
+                    style="@style/fontcolor2"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:layout_marginStart="25dp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="0.8"
+                    android:padding="5dp">
+
+                    <ProgressBar
+                        android:id="@+id/bar_banar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:max="3"
+                        android:progress="1"
+                        android:progressTint="#18B167"
+                        android:progressBackgroundTint="#DEE1E2"
+                        android:progressBackgroundTintMode="src_over"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_progressbar" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:text="10"
+                    android:fontFamily="@font/martel"
+                    style="@style/fontcolor2"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="25dp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_upgrade"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/roundedbutton"
+            android:fontFamily="@font/martel"
+            android:gravity="center"
+            android:text="Evolusi Dragon"
+            android:textColorHighlight="#952222"
+            android:textColorLink="#000000"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="13sp"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

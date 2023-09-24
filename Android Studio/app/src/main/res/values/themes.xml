@@ -6,6 +6,16 @@
 
     </style>
 
+    <style name="BlueTimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#5579C6</item>
+    </style>
+
+    <style name="CustomTimePickerText" parent="android:Widget.Material.TimePicker">
+        <item name="android:fontFamily">@font/martel</item> <!-- Ganti dengan nama font Anda -->
+        <item name="android:textSize">18sp</item> <!-- Ganti ukuran font sesuai kebutuhan Anda -->
+        <item name="android:textColor">#5579C6</item> <!-- Ganti warna teks sesuai kebutuhan Anda -->
+    </style>
+
     <style name="DarkTheme" parent="Theme.AppCompat.DayNight">
         <item name="android:background">#1C1B20</item>
         <!-- Atur atribut-atribut khusus mode gelap -->
@@ -37,6 +47,10 @@
         <item name="android:background">#FFFFFF</item>
     </style>
 
+    <style name="mainscreen2">
+        <item name="android:background">#5579C6</item>
+    </style>
+
     <style name="fontcolor1">
         <item name="android:textColor">#FFFFFF</item>
     </style>
@@ -64,6 +78,22 @@
     <style name="BoldText">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#000000</item> <!-- Hitam -->
+    </style>
+
+    <style name="hourclock_style">
+        <item name="android:src">@drawable/clock_hour</item>
+    </style>
+
+    <style name="minuteclock_style">
+        <item name="android:src">@drawable/clock_minute</item>
+    </style>
+
+    <style name="clock_bg">
+        <item name="android:background">@drawable/clock_bg</item>
+    </style>
+
+    <style name="bg_hint">
+        <item name="android:background">#E66E6E6E</item>
     </style>
 
     <style name="Theme.Reflvy" parent="Base.Theme.Reflvy" />
