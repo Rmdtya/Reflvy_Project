@@ -1,6 +1,6 @@
 package com.example.reflvy.data
 
-data class HistoryActivity(
+data class DataHistoryActivity(
     var tanggal : String,
     var historyMod : String,
     var totalSpendTime : Int,
@@ -22,4 +22,8 @@ data class HistoryActivity(
     var kegiatan16Olahraga : Int,
     var kegiatan17Liburan : Int,
     var kegiatan18Lainnya : Int,
-)
+){
+    companion object{
+        var dataHistoryActivity = mutableListOf<DataHistoryActivity>()
+    }
+}

@@ -59,12 +59,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Kuis Dasar Seputar Pornografi"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:maxLines="1"
                     style="@style/fontcolor1"
                     android:gravity="bottom"
                     android:textStyle="bold"
-                    android:textSize="11sp"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -79,10 +79,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="10 Soal"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="top"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
 
             </LinearLayout>
 

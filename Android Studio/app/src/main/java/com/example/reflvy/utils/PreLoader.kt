@@ -1,20 +1,25 @@
 package com.example.reflvy.utils
 
+import android.app.AppOpsManager
 import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.reflvy.SplashScreen
 
 class PreLoader : AppCompatActivity() {
+
+    private val USAGE_STATS_REQUEST_CODE = 101
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val sharedPreferencesPengaturan = getSharedPreferences("PENGATURAN", Context.MODE_PRIVATE)
         var vpnFromPref = sharedPreferencesPengaturan.getBoolean("vpnMode", true)
         var hasIn = sharedPreferencesPengaturan.getBoolean("hasIn", false)
+
 
         if (!hasIn){
             val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
@@ -56,6 +61,10 @@ class PreLoader : AppCompatActivity() {
         }
 
 
+
+
+
+
 //        var handler = Handler(Looper.getMainLooper())
 //        handler.postDelayed({
 //
@@ -84,5 +93,37 @@ class PreLoader : AppCompatActivity() {
 //            }
 //            finish()
 //        }, 200)
+    }
+
+    fun requestUsageStatsPermission() {
+        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val mode = appOps.checkOpNoThrow(
+            AppOpsManager.OPSTR_GET_USAGE_STATS,
+            android.os.Process.myUid(),
+            packageName
+        )
+        if (mode != AppOpsManager.MODE_ALLOWED) {
+            val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            startActivityForResult(intent, USAGE_STATS_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == USAGE_STATS_REQUEST_CODE) {
+            val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+            val mode = appOps.checkOpNoThrow(
+                AppOpsManager.OPSTR_GET_USAGE_STATS,
+                android.os.Process.myUid(),
+                packageName
+            )
+            if (mode == AppOpsManager.MODE_ALLOWED) {
+                // Izin diberikan oleh pengguna
+                // Lanjutkan dengan penggunaan "UsageStatsManager" di sini
+            } else {
+                // Izin tidak diberikan oleh pengguna
+                // Tampilkan pesan atau lakukan tindakan yang sesuai
+            }
+        }
     }
 }

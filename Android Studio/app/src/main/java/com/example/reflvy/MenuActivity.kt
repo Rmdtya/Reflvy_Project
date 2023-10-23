@@ -3,13 +3,13 @@ package com.example.reflvy
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.example.reflvy.data.ActiveLogin
 import com.example.reflvy.data.NotifyChat
@@ -25,6 +25,7 @@ class MenuActivity : AppCompatActivity(), HintListener {
     private val MENU_INFO_REQUEST_CODE = 1001
 
     private lateinit var scroller : NestedScrollView
+    private lateinit var textName : TextView
 
     private lateinit var sharedPreferencesLogin : SharedPreferences
 
@@ -50,6 +51,9 @@ class MenuActivity : AppCompatActivity(), HintListener {
 
         Footer(true)
 
+        textName = findViewById(R.id.textname)
+        textName.text = "Halo " + User.userData.userName
+
         if(!isStarting){
             Footer(false)
             val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -58,6 +62,7 @@ class MenuActivity : AppCompatActivity(), HintListener {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
 
 
 
@@ -71,7 +76,7 @@ class MenuActivity : AppCompatActivity(), HintListener {
 
         val menuScreenAgain: LinearLayout = findViewById(R.id.menu_screeninglagi)
         menuScreenAgain.setOnClickListener {
-            val intent = Intent(this, ScreeningSatuActivity::class.java)
+            val intent = Intent(this, ScreeningActivity::class.java)
             startActivity(intent)
         }
 
@@ -104,13 +109,25 @@ class MenuActivity : AppCompatActivity(), HintListener {
 
         val menuVideo: LinearLayout = findViewById(R.id.menu_video)
         menuVideo.setOnClickListener {
+            val intent = Intent(this, VideoActivity::class.java)
+            startActivity(intent)
+        }
+
+        val menuRoadmaps : LinearLayout = findViewById(R.id.menu_roadmaps)
+        menuRoadmaps.setOnClickListener {
             val intent = Intent(this, RoadMapsActivity::class.java)
             startActivity(intent)
         }
 
+//        val menuKuis : LinearLayout = findViewById(R.id.menu_kuis)
+//        menuKuis.setOnClickListener {
+//            val intent = Intent(this, MenuKuisActivity::class.java)
+//            startActivity(intent)
+//        }
+
         val menuPodcast: LinearLayout = findViewById(R.id.menu_podcast)
         menuPodcast.setOnClickListener {
-            val intent = Intent(this, MenuMissionActivity::class.java)
+            val intent = Intent(this, PlaylistActivity::class.java)
             startActivity(intent)
         }
 
@@ -120,7 +137,6 @@ class MenuActivity : AppCompatActivity(), HintListener {
             startActivity(intent)
         }
 
-        Toast.makeText(this, NotifyChat.notify.toString(), Toast.LENGTH_SHORT).show()
     }
 
 //    fun myFunction() {
@@ -173,7 +189,7 @@ class MenuActivity : AppCompatActivity(), HintListener {
     }
 
     override fun GetScroll() {
-        scroller.smoothScrollTo(0, 3000)
+        scroller.smoothScrollTo(0, 1600)
     }
 
     override fun GetBackScroll() {

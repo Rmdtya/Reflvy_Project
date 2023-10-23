@@ -1,10 +1,5 @@
 package com.example.reflvy.data
 
-import android.content.Context
-import android.content.SharedPreferences
-import com.google.common.reflect.TypeToken
-import com.google.gson.Gson
-
 data class NotifyChat(
     val chat : String,
     val from: String,
@@ -12,7 +7,9 @@ data class NotifyChat(
     val time : Boolean,
     val timeString : String,
     val clickable : Boolean,
-    val eventClick : String
+    val eventClick : String,
+    var ditanggapi : Boolean,
+    var index : Int
 ) {
     companion object {
         val notifChat = mutableListOf<NotifyChat>()

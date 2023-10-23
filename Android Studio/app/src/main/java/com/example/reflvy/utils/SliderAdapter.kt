@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.reflvy.R
@@ -36,7 +35,7 @@ class SliderAdapter(var list: ArrayList<SliderModel>, var context: Context):Recy
 
         holder.itemView.setOnClickListener{
 
-            Toast.makeText(context, currentItem.id, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, currentItem.id, Toast.LENGTH_SHORT).show()
         }
 
         holder.disableClick()

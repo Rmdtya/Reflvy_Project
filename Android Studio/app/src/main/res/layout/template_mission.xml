@@ -27,12 +27,12 @@
                     android:id="@+id/text_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:gravity="center"
                     android:text="Ekspedisi Pertama"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:textColor="@color/mission_fontcolor1"
                     android:background="@drawable/mission_templatetextbg"
                     android:textSize="11sp"/>
@@ -46,9 +46,9 @@
                     android:maxLines="2"
                     android:paddingEnd="15dp"
                     android:text="Misi pertama kamu di Reflvy, Selesaikan dan dapatkan manfaatnya"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor2"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
 
 
 

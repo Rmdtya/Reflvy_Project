@@ -1,6 +1,5 @@
 package com.example.reflvy.model
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.RequestQueue
@@ -156,7 +156,7 @@ class ChatBotActivity : AppCompatActivity() {
         jsonObject.put("max_tokens", 200)
         jsonObject.put("temperature", 0)
 
-        Toast.makeText(this, "what the", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "what the", Toast.LENGTH_SHORT).show()
 
         val postRequest =
             object : JsonObjectRequest(Method.POST, url, jsonObject, Response.Listener { response ->

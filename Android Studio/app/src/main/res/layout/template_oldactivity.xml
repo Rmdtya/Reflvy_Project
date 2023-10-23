@@ -35,11 +35,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Olahraga"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="bottom"
                     android:textStyle="bold"
-                    android:textSize="12sp"/>
+                    android:textSize="13sp"/>
 
                 <TextView
                     android:id="@+id/text_status"
@@ -47,11 +47,11 @@
                     android:layout_height="match_parent"
                     android:text="Complete"
                     android:layout_marginEnd="25dp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="bottom|end"
                     android:textStyle="bold"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
 
             </LinearLayout>
 
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="26 Agustus 2023 - 2 September 2023"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="top"
                     android:textSize="11sp"/>

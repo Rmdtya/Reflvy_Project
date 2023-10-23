@@ -2,13 +2,10 @@ package com.example.reflvy.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.reflvy.R
-import com.example.reflvy.databinding.FragmentAddActivityBinding
+import androidx.fragment.app.Fragment
 import com.example.reflvy.databinding.FragmentStartingBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -85,7 +82,7 @@ class StartingFragment : Fragment() {
         constraintHint[index].visibility = View.VISIBLE
 
         if(index == 3){
-            binding.scrollContainer.smoothScrollTo(0, 3000)
+            binding.scrollContainer.smoothScrollTo(0, 1600)
             listener?.GetScroll()
         }else if(index < 3){
             binding.scrollContainer.fullScroll(View.FOCUS_UP)

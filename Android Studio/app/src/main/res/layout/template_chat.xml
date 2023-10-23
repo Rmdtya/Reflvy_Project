@@ -23,7 +23,7 @@
                 android:id="@+id/answer_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:background="@drawable/roundedchatuser_bg"
                 android:padding="8dp"
                 android:layout_gravity="end"
@@ -32,14 +32,14 @@
                 android:layout_weight="1"
                 android:text="Baik, Mari Mulai Sekarang"
                 android:textStyle="bold"
-                android:textSize="9sp"
+                android:textSize="11sp"
                 tools:ignore="RtlCompat" />
 
             <TextView
                 android:id="@+id/time_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:padding="3dp"
                 android:textColor="@color/font_timescreening"
                 android:text="12.13 am"
@@ -80,14 +80,14 @@
             android:id="@+id/answer_bot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:background="@drawable/roundedchat_bg"
             android:padding="8dp"
             android:layout_marginStart="13dp"
             style="@style/fontcolor1"
             android:text="Halo, Anton! Kutebak kamu belum melakukan screening nih. Yuk ikut screening dulu. 😁"
             android:textStyle="bold"
-            android:textSize="9sp" />
+            android:textSize="11sp" />
 
     </LinearLayout>
 
@@ -101,7 +101,7 @@
             android:id="@+id/time_bot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:padding="3dp"
             android:layout_marginStart="53dp"
             android:textColor="@color/font_timescreening"

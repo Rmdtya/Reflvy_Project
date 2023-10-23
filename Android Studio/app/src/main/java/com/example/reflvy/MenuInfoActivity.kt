@@ -1,21 +1,18 @@
 package com.example.reflvy
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.reflvy.data.News
+import com.example.reflvy.data.NotifyChat
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.bumptech.glide.Glide
-import com.example.reflvy.data.NotifyChat
 
 class MenuInfoActivity : AppCompatActivity() {
 
@@ -29,6 +26,7 @@ class MenuInfoActivity : AppCompatActivity() {
     private lateinit var terhangat : LinearLayout
     private lateinit var terurut : LinearLayout
     private lateinit var semua : LinearLayout
+
 
     companion object {
         private var instance: MenuInfoActivity? = null
@@ -59,6 +57,8 @@ class MenuInfoActivity : AppCompatActivity() {
         inflater = LayoutInflater.from(this)
 
         FilterInfo()
+
+
 
     ShowNews()
 

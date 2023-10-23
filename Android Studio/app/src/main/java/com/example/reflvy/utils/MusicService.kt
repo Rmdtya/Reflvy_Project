@@ -13,11 +13,10 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import com.example.reflvy.data.Music
 import com.example.reflvy.PlayerActivity
 import com.example.reflvy.R
+import com.example.reflvy.data.Music
 
 class MusicService : Service() {
 
@@ -99,7 +98,7 @@ class MusicService : Service() {
 
             CreateNotification()
         }
-        Toast.makeText(this, indexMusic.toString(), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, indexMusic.toString(), Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate() {
@@ -204,7 +203,7 @@ class MusicService : Service() {
         var playPauseAction = if (playStatus) "Pause" else "Play"
         val playPauseIntent = Intent(this, MusicService::class.java)
         playPauseIntent.action = if (playStatus) "ACTION_PAUSE_MUSIC" else "ACTION_RESUME_MUSIC"
-        Toast.makeText(this, playStatus.toString(), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, playStatus.toString(), Toast.LENGTH_SHORT).show()
 
         val playPausePendingIntent = PendingIntent.getService(
             this,
@@ -283,7 +282,7 @@ class MusicService : Service() {
 
         stopping = true
 
-        Toast.makeText(this, "Stopping", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Stopping", Toast.LENGTH_SHORT).show()
         val intentStop = Intent("ACTION_STOP_MUSIC")
         sendBroadcast(intentStop)
         // Hentikan layanan dan musik ketika tindakan stop ditekan pada notifikasi

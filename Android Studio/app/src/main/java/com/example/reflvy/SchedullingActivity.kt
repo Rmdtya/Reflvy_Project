@@ -3,7 +3,6 @@ package com.example.reflvy
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -12,8 +11,8 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.android.volley.AuthFailureError
 import com.android.volley.DefaultRetryPolicy
@@ -22,14 +21,18 @@ import com.android.volley.Response
 import com.android.volley.RetryPolicy
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.reflvy.data.ActiveLogin
 import com.example.reflvy.data.DataDaily
 import com.example.reflvy.data.DataNotification
+import com.example.reflvy.data.EfekStatusDragon
 import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.fragment.AddActivityFragment
 import com.example.reflvy.fragment.AddActivityListener
 import com.example.reflvy.fragment.EditActivityFragment
 import com.example.reflvy.fragment.FilterSchedulling
 import com.example.reflvy.utils.ApplicationManager
+import com.example.reflvy.utils.GameEventManager
+import com.example.reflvy.utils.GameManager
 import me.tankery.lib.circularseekbar.CircularSeekBar
 import org.json.JSONArray
 import org.json.JSONException
@@ -162,9 +165,9 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val now = dateFormat.format(currentDate)
 
-        val kegiatan = DataDaily(index, "belum", namaKegiatan, "Olahraga", lama, mulai, selesai, false,0,  senin, selasa, rabu, kamis, jumat, sabtu, minggu, colorCode, now, "", startMinutes, endMinutes)
+        val kegiatan = DataDaily(index, "belum", namaKegiatan, "Olahraga", lama, mulai, selesai, false, false, false, 0,  senin, selasa, rabu, kamis, jumat, sabtu, minggu, colorCode, now, "", startMinutes, endMinutes)
 
-        var query = "Jawab dengan 2 kata : bekerja,belajar formal,membaca,bersantai,istirahat,belanja,bermusik,beribadah,bermain game,hiburan digital,operasi komputer,pekerjaan rumah,komunitas,bersosialisai,healing,olahraga,hiburan,lainnya. dari kategori diatas, $namaKegiatan termasuk atau mendekati mana?"
+        var query = "pilih salah satu dan jawab dengan 1 atau 2 kata : bekerja,belajar formal,membaca,bersantai,istirahat,belanja,bermusik,beribadah,bermain game,akses handphone,operasi komputer,pekerjaan rumah,komunitas,bersosialisai,healing,olahraga,liburan,lainnya. dari kategori diatas, $namaKegiatan termasuk atau mendekati mana?"
         ChatGPT(query, kegiatan)
     }
 
@@ -544,8 +547,8 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
 
         checkBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                DataDaily.dataKegiatan[datadaily.dataNomor - 1].proses = true
-                DataDaily.dataKegiatan[datadaily.dataNomor - 1].progresNow++
+                datadaily.proses = true
+                datadaily.progresNow++
                 checkBox.isClickable = false
                 checkBox.isEnabled = false
 
@@ -553,6 +556,11 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
                 DataNotification.dataNotifikasi.clear()
                 DataNotification.CopyDataKegiatan()
                 ApplicationManager.instance.SaveNotifikasiKegiatan(this)
+
+                val durasi : Int = datadaily.endMinutes - datadaily.startMinute
+                TambahkanKeHistoryActivity(datadaily.kategori, durasi)
+
+
             } else {
                 DataDaily.dataKegiatan[datadaily.dataNomor - 1].proses = false
             }
@@ -759,7 +767,6 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
 
                 stringOutput = "$stringOutput$stringText"
 
-                Toast.makeText(this, stringOutput, Toast.LENGTH_SHORT).show()
 
                 GetCategory(stringOutput, data)
 
@@ -817,8 +824,8 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
         }else if (response.toLowerCase().contains("bermain game")) {
             category = "bermain game"
 
-        }else if (response.toLowerCase().contains("hiburan digital")) {
-            category = "hiburan digital"
+        }else if (response.toLowerCase().contains("akses handphone")) {
+            category = "akses handphone"
 
         }else if (response.toLowerCase().contains("operasi komputer")) {
             category = "operasi komputer"
@@ -845,7 +852,6 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
             category = "lainnya"
         }
 
-        Toast.makeText(this, category, Toast.LENGTH_SHORT).show()
 
         val dataDaily = data.copy(kategori = category)
 
@@ -879,7 +885,7 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
             img.setImageResource(R.drawable.dailyicom_08beribadah)
         }else if (kategori == "bermain game"){
             img.setImageResource(R.drawable.dailyicom_09bermaingame)
-        }else if (kategori == "hiburan digital"){
+        }else if (kategori == "akses handphone"){
             img.setImageResource(R.drawable.dailyicom_10hiburandigital)
         }else if (kategori == "operasi komputer"){
             img.setImageResource(R.drawable.dailyicom_11operasikomputer)
@@ -898,6 +904,266 @@ class SchedullingActivity : AppCompatActivity(), AddActivityListener {
         }else{
             img.setImageResource(R.drawable.dailyicon_lainnya)
         }
+    }
+
+
+    private fun TambahkanKeHistoryActivity(kategori : String, durasi : Int){
+        if (kategori == "bekerja"){
+            ActiveLogin.infoActive.kegiatan1Bekerja += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.05 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.045f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.02f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                -((0.04f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.07f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "belajar formal"){
+            ActiveLogin.infoActive.kegiatan2BelajarFormal += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.02 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.14f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                -((0.02f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                -((0.04f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                -((0.03f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "membaca"){
+            ActiveLogin.infoActive.kegiatan3Membaca += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.02 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.02f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                -((0.015f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "bersantai"){
+            ActiveLogin.infoActive.kegiatan4Bersantai += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                -((0.02f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.025f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.08f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "istirahat"){
+            ActiveLogin.infoActive.kegiatan5Istirahat += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, ((0.02 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.12f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "belanja"){
+            ActiveLogin.infoActive.kegiatan6Belanja += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, ((0.07 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.02f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.09f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "bermusik"){
+            ActiveLogin.infoActive.kegiatan7Bermusik += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.02 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.08f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.09f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.02f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "beribadah"){
+            ActiveLogin.infoActive.kegiatan8Beribadah += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, ((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.11 * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.09f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.01f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "bermain game"){
+            ActiveLogin.infoActive.kegiatan9BermainGame += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                -((0.05f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                -((0.07f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                -((0.09f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.15f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.08f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                -((0.03f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "akses handphone"){
+            ActiveLogin.infoActive.kegiatan10HiburanDigital += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                -((0.03f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                -((0.08f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                -((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.08f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "operasi komputer"){
+            ActiveLogin.infoActive.kegiatan11OperasiKomputer += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.09f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                -((0.01f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.08f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "pekerjaan rumah"){
+            ActiveLogin.infoActive.kegiatan12PekerjaanRumah += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.11f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "komunitas"){
+            ActiveLogin.infoActive.kegiatan13Komunitas += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, ((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.08f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.08f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.21f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "bersosialisasi"){
+            ActiveLogin.infoActive.kegiatan14Bersosialisasi += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, ((0.03 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.24f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "healing"){
+            ActiveLogin.infoActive.kegiatan15Healing += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.01 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.11f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.25f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.22f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.09f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.13f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "olahraga"){
+            ActiveLogin.infoActive.kegiatan16Olahraga += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, -((0.05 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.26f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.06f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.05f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.07f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                -((0.07f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else if (kategori == "liburan"){
+            ActiveLogin.infoActive.kegiatan17Liburan += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, ((0.09 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.04f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.09f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.12f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.15f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.19f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.11f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.09f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+
+        }else{
+            ActiveLogin.infoActive.kegiatan18Lainnya += durasi
+            val status = EfekStatusDragon("", "", 0, 0, false, 0.5f * durasi, 0.5f * durasi,
+                0f, ((0.03 * durasi) + (EfekStatusDragon.efekNow.statLapar * durasi * 1.5f)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statPengetahuan * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanFisik * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statKesehatanMental * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statCinta * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statHiburan * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statIstirahat * durasi * 0.5)).toFloat(),
+                ((0.03f * durasi) + (EfekStatusDragon.efekNow.statSosial * durasi * 0.5)).toFloat())
+
+            GameManager.instance.PlusStatusPoint(status, this)
+        }
+
+        ActiveLogin.infoActive.totalSpendTime += durasi
+        ApplicationManager.instance.SaveDataHistoryActivity(this)
+        GameEventManager.instance.CekEventKegiatanNegatif(this)
     }
 
     private fun Footer(){

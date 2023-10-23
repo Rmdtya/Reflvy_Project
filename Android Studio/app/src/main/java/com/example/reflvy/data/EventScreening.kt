@@ -1,7 +1,5 @@
 package com.example.reflvy.data
 
-import com.google.gson.Gson
-
 data class EventScreening(
     val pertanyaan : Int,
     val eventRespon0 : List<String> = emptyList(),
@@ -13,6 +11,7 @@ data class EventScreening(
     companion object {
         val eventScreenDataSatu = mutableListOf<EventScreening>()
         val eventScreenData = mutableListOf<EventScreening>()
+        val eventScreenTiga = mutableListOf<EventScreening>()
 
         init {
 

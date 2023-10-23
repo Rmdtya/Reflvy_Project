@@ -45,10 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/martel"
+        android:fontFamily="@font/jost"
         android:text="ChatBot Chat"
         android:textSize="40px"
-        android:paddingTop="2dp"
         android:gravity="center_vertical"
         android:textStyle="bold"
         android:maxLines="2"
@@ -75,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/martel"
+        android:fontFamily="@font/jost"
         android:text="100%"
         android:textSize="30px"
         android:paddingTop="1dp"
@@ -315,24 +314,28 @@
                     android:text="25"
                     android:textSize="30sp"
                     style="@style/fontcolor1"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:textStyle="bold"
                     android:gravity="center"/>
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/text_tingkat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kamu Normal, Keren"
+                android:paddingStart="15sp"
+                android:paddingEnd="15sp"
+                android:text="Kecanduanmu sudah tinggi, nih:("
                 android:textSize="20sp"
                 android:textStyle="bold"
                 style="@style/fontcolor2"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:layout_marginBottom="2dp"
                 android:gravity="center"/>
 
             <TextView
+                android:id="@+id/text_keterangantingkat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="20sp"
@@ -340,14 +343,30 @@
                 android:text="Kamu tidak perlu khawatir karena masih dalam batas wajar"
                 android:textSize="12sp"
                 style="@style/fontcolor2"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/btn_selengkapnya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Keterangan Skor"
+                android:textSize="13sp"
+                android:fontFamily="@font/jost"
+                style="@style/fontcolor3"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp"
                 android:gravity="center"/>
 
             <LinearLayout
                 android:id="@+id/btn_selesai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="25dp"
                 android:background="@drawable/roundedbutton">
 
                 <TextView
@@ -356,7 +375,7 @@
                     android:layout_height="wrap_content"
                     android:text="Selesai"
                     android:textSize="15sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:padding="8dp"
                     android:gravity="center"/>
@@ -365,7 +384,171 @@
 
         </LinearLayout>
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/template_ulangi"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        style="@style/bg_nilai"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/horizontal03"
+        app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ulangig1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ulangig2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ulangig3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ulangig4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_nilai"
+            app:layout_constraintTop_toBottomOf="@id/ulangig1"
+            app:layout_constraintBottom_toTopOf="@id/ulangig2"
+            app:layout_constraintStart_toStartOf="@id/ulangig3"
+            app:layout_constraintEnd_toEndOf="@id/ulangig4"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/rounded_angkascreen"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/text_nilaiulangi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="25"
+                    android:textSize="30sp"
+                    style="@style/fontcolor1"
+                    android:fontFamily="@font/jost"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_tingkatulangi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skor Kamu Sebelumnya"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                style="@style/fontcolor2"
+                android:fontFamily="@font/jost"
+                android:layout_marginBottom="2dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/text_keterangantingkatulangi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:text="Ingin Memulai Ulang Screening?"
+                android:textSize="13sp"
+                style="@style/fontcolor2"
+                android:fontFamily="@font/jost"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:orientation="vertical">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    
+                    <TextView
+                        android:id="@+id/ulangi_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Ulangi"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/jost"
+                        style="@style/fontcolor1"
+                        android:layout_marginEnd="5dp"
+                        android:padding="7dp"
+                        android:background="@drawable/roundedbutton"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/ulangi_no"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:text="Tidak"
+                        android:textSize="13sp"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/jost"
+                        style="@style/fontcolor1"
+                        android:padding="7dp"
+                        android:background="@drawable/roundedbutton"
+                        android:gravity="center"/>
+                    
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btn_selengkapnyaulangi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Keterangan Skor"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/jost"
+                    style="@style/fontcolor3"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="-2dp"
+                    android:gravity="end"/>
+
+            </LinearLayout>
+            
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalbottom"

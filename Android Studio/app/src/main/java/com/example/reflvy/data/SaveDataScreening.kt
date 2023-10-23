@@ -12,5 +12,6 @@ data class SaveDataScreening(
 {
     companion object {
         val lastData = mutableListOf<SaveDataScreening>()
+        val lastDataTiga = mutableListOf<SaveDataScreening>()
     }
 }

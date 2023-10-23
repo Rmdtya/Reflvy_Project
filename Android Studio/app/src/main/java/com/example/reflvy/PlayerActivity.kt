@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.reflvy.data.Music
@@ -90,7 +89,6 @@ class PlayerActivity : AppCompatActivity() {
             LoadLayout(playlistID, index)
             updateSeekBar(MusicService.currentPosition, MusicService.musicDuration)
             PlayPauseIcon()
-            Toast.makeText(this, MusicService.playStatus.toString(), Toast.LENGTH_SHORT).show()
         } else {
             if(MusicService.playStatus){
                 MusicService.mediaPlayer?.reset()
@@ -339,6 +337,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(this, PlaylistActivity::class.java)
         startActivity(intent)
+        finishAffinity()
     }
 
     override fun onDestroy() {

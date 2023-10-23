@@ -36,11 +36,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Olahraga"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="bottom"
                     android:textStyle="bold"
-                    android:textSize="12sp"/>
+                    android:textSize="13sp"/>
 
             </LinearLayout>
 
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="23.00 - 23.50 / Senin, Selasa, Kamis, Jumat"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="top"
                     android:textSize="11sp"/>

@@ -3,7 +3,6 @@ package com.example.reflvy
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -15,12 +14,14 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reflvy.databinding.ActivitySignupBinding
 import com.example.reflvy.utils.EmailSender
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.random.Random
 
 class SignupActivity : AppCompatActivity() {
 
@@ -76,15 +77,18 @@ class SignupActivity : AppCompatActivity() {
                                 if (email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty()) {
                                     if (password == confirmPass) {
                                         if (isPasswordValid(password)) {
-                                            showVerificationLayout()
 
-                                            binding.emailInp.visibility = View.GONE
-                                            binding.emailInp.visibility = View.GONE
-                                            binding.confirmInp.visibility = View.GONE
-                                            binding.button.visibility = View.GONE
+                                                showVerificationLayout()
+
+                                                binding.emailInp.visibility = View.GONE
+                                                binding.emailInp.visibility = View.GONE
+                                                binding.confirmInp.visibility = View.GONE
+                                                binding.button.visibility = View.GONE
+//
+//
+                                                AddOTP()
 
 
-                                            AddOTP()
                                         } else {
                                             Toast.makeText(
                                                 this,
@@ -165,7 +169,7 @@ class SignupActivity : AppCompatActivity() {
                 editor.putString("userEmail", email)
                 editor.apply()
 
-                CheckOrCreateUserDocument(userID, email)
+                CreateReveralCode(userID, email)
 
                 val intent = Intent(this, RegistrasiSuccesActivity::class.java)
                 startActivity(intent)
@@ -176,51 +180,113 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    fun CheckOrCreateUserDocument(userID: String, email: String) {
-        val userDocument = db.collection("users").document(userID)
+    fun generateRandomCode(): String {
+        val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        val codeLength = 6 // 3 huruf + 3 angka
 
-        userDocument.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val document = task.result
-                if (document != null && document.exists()) {
-                    // Dokumen dengan userID sebagai document ID sudah ada, lewati proses.
-                    // Anda dapat menambahkan logika atau tindakan lain di sini jika diperlukan.
+        val random = Random.Default
+        return (1..codeLength)
+            .map { characters[random.nextInt(0, characters.length)] }
+            .joinToString("")
+    }
+
+    fun CreateReveralCode(userID: String, email: String) {
+        val code = generateRandomCode()
+
+        try {
+            val userDocument = db.collection("ReveralCode").document(code)
+
+            userDocument.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (document != null && document.exists()) {
+
+                        CreateReveralCode(userID, email)
+                    } else {
+                        // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
+                        val userData = hashMapOf(
+                            "userId" to userID
+                        )
+                        userDocument.set(userData)
+                            .addOnSuccessListener {
+                                CheckOrCreateUserDocument(userID, email, code)
+
+                                val editor = sharedPreferences.edit()
+                                editor.putString("userReveral", code)
+                                editor.apply()
+                            }
+                            .addOnFailureListener { error ->
+                                // Gagal membuat dokumen baru, tangani error jika diperlukan.
+                                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 } else {
-                    // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
-                    val userData = hashMapOf(
-                        "name" to email,
-                        "email" to email,
-                        "gender" to null, // Field gender dengan tipe data string yang masih null
-                        "telepon" to null, // Field telepon dengan tipe data string yang masih null
-                        "tanggalLahir" to null, // Field telepon dengan tipe data string yang masih null
-                        "historyvpn" to null, // Field historyvpn dengan tipe data array string yang masih null
-                        "activityHistory" to null, // Field activityHistory dengan tipe data array string yang masih null
-                        "deteksijarak" to null, // Field deteksijarak dengan tipe data array string yang masih null
-                        "screeningHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
-                        "dailyPoint" to null, // Field screeningHistory dengan tipe data array int yang masih null
-                        "linkHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
-                        "screeningSatu" to false,
-                        "screeningDua" to false,
-                        "screeningTiga" to false,
-                        "screeningEmpat" to false,
-                        "nilaiScreening1" to 0,
-                        "nilaiScreening2" to 0,
-                        "nilaiScreening3" to 0,
-                        "nilaiScreening4" to 0
-                    )
-                    userDocument.set(userData)
-                        .addOnSuccessListener {
-                            // Berhasil membuat dokumen baru.
-                        }
-                        .addOnFailureListener { error ->
-                            // Gagal membuat dokumen baru, tangani error jika diperlukan.
-                            Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
-                        }
+                    // Gagal mendapatkan dokumen, tangani error jika diperlukan.
+                    Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                // Gagal mendapatkan dokumen, tangani error jika diperlukan.
-                Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT).show()
             }
+        }catch (e : Exception){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun CheckOrCreateUserDocument(userID: String, email: String, reveralCode : String) {
+
+        try {
+            val userDocument = db.collection("users").document(userID)
+
+            userDocument.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (document != null && document.exists()) {
+                        // Dokumen dengan userID sebagai document ID sudah ada, lewati proses.
+                        // Anda dapat menambahkan logika atau tindakan lain di sini jika diperlukan.
+                    } else {
+                        // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
+                        val userData = hashMapOf(
+                            "name" to email,
+                            "email" to email,
+                            "gender" to null, // Field gender dengan tipe data string yang masih null
+                            "telepon" to null, // Field telepon dengan tipe data string yang masih null
+                            "tanggalLahir" to null, // Field telepon dengan tipe data string yang masih null
+                            "historyvpn" to null, // Field historyvpn dengan tipe data array string yang masih null
+                            "activityHistory" to null, // Field activityHistory dengan tipe data array string yang masih null
+                            "deteksijarak" to null, // Field deteksijarak dengan tipe data array string yang masih null
+                            "screeningHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                            "dailyPoint" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                            "linkHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                            "screeningSatu" to false,
+                            "screeningDua" to false,
+                            "screeningTiga" to false,
+                            "screeningEmpat" to false,
+                            "nilaiScreening1" to 0,
+                            "nilaiScreening2" to 0,
+                            "nilaiScreening3" to 0,
+                            "nilaiScreening4" to 0,
+                            "reveralKode" to reveralCode,
+                            "activePhone" to null,
+                            "historyAplikasi" to null,
+                            "durasiAplikasi" to null,
+                            "aplikasiAktif" to null,
+                            "moodHariIni" to null,
+                            "terakhirAktif" to null
+                        )
+                        userDocument.set(userData)
+                            .addOnSuccessListener {
+                                // Berhasil membuat dokumen baru.
+                            }
+                            .addOnFailureListener { error ->
+                                // Gagal membuat dokumen baru, tangani error jika diperlukan.
+                                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                } else {
+                    // Gagal mendapatkan dokumen, tangani error jika diperlukan.
+                    Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }catch (e : Exception){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

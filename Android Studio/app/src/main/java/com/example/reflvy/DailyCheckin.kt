@@ -1,16 +1,14 @@
 package com.example.reflvy
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reflvy.data.ActiveLogin
 import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.databinding.ActivityDailyCheckinBinding
-import com.example.reflvy.databinding.FooterStyle1Binding
 import com.example.reflvy.utils.ApplicationManager
 import me.tankery.lib.circularseekbar.CircularSeekBar
 import java.text.SimpleDateFormat
@@ -104,6 +102,11 @@ class DailyCheckin : AppCompatActivity() {
             if(binding.moodText.text.toString().trim() == "Pilih Mood Mu"){
                 Toast.makeText(this@DailyCheckin, "Silahkan pilih mood mu hari ini", Toast.LENGTH_SHORT).show()
             }else{
+
+                if(ActiveLogin.infoActive.totalActive > 0){
+                    ApplicationManager.instance.ResetHistoryActivity(this)
+                }
+
                 val mood: String = binding.moodText.text.toString()
 
                 val currentDate = Calendar.getInstance().time
@@ -136,36 +139,126 @@ class DailyCheckin : AppCompatActivity() {
 
     private fun GetNotifChat(mood : String){
         if(mood == "Gelisah"){
-            val chat1 = NotifyChat("Kamu Gelisah Hari Ini? Apa karena masalah akademik atau masalah dalam diri kamu?", "bot", true, false, "", false, "")
+            val chat1 = NotifyChat("Aku tahu kadang-kadang hidup bisa membuat kita merasa gelisah. Cobalah untuk bernapas dalam-dalam dan fokus pada hal-hal positif. Kamu juga bisa mencoba meditasi singkat untuk merilekskan diri.  Kalau kamu mau, ceritakan padaku apa yang membuat kamu merasa senang.", "bot", true, false, "", false, "", true, 0)
             NotifyChat.notifChat.add(chat1)
 
-            val chat2 = NotifyChat("Aku Saranin kamu membaca artikel berikut. Mungkin setelah membaca ini rasa gelisah kamu mereda. <i><b>Klik Disini</b></i>.", "bot", false, false, "", true, "artikel")
+            val chat2 = NotifyChat("Mau mencoba mendengarkan podcast yang menenangkan?. Mungkin setelah mendengar podcast rasa gelisah kamu mereda. <i><b>Klik Disini</b></i>.", "bot", false, false, "", true, "music", true, 0)
             NotifyChat.notifChat.add(chat2)
 
             val time : String = GetTime()
-            val chat3 = NotifyChat("Atau Mungkin Kamu butuh teman untuk berbagi cerita, aku bisa dengerin curhatan kamu.", "bot", false, true, time, false, "")
+            val chat3 = NotifyChat("Atau Mungkin Kamu butuh teman untuk berbagi cerita, aku bisa dengerin curhatan kamu.", "bot", false, true, time, false, "", true, 0)
             NotifyChat.notifChat.add(chat3)
 
             ApplicationManager.instance.ActiveNotif(this)
             ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Marah"){
+            val chat1 = NotifyChat("Aku mengerti perasaan marah bisa sulit dikendalikan. Cobalah untuk menenangkan diri kamu atau lakukan aktivitas fisik untuk melepaskan energi negatif. Kalau kamu mau curhat kenapa kamu marah aku siap dengerin nih.", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val chat2 = NotifyChat("Bagaimana jika kamu mencoba aktivitas fisik seperti berlari? Kamu bisa membuat rencana aktivitasnya di . <i><b>Daily Activity</b></i>.", "bot", false, false, "", true, "penjadwalan", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            val time : String = GetTime()
+            val chat3 = NotifyChat("Atau Mungkin Kamu butuh teman untuk berbagi cerita, aku bisa dengerin curhatan kamu.", "bot", false, true, time, false, "", true, 0)
+            NotifyChat.notifChat.add(chat3)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Sedih"){
+            val chat1 = NotifyChat("Saat kita sedih, terkadang penting untuk mengizinkan diri kita merasakannya.", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val chat2 = NotifyChat("Mau mendengarkan musik yang dapat mengangkat semangat? Kamu bisa mendengar music relax di . <i><b>Music Playlist</b></i>.", "bot", false, false, "", true, "music", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            val time : String = GetTime()
+            val chat3 = NotifyChat("Kalau kamu mau, ceritakan padaku apa yang membuat kamu merasa sedih.", "bot", false, true, time, false, "", true, 0)
+            NotifyChat.notifChat.add(chat3)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Kecewa"){
+            val chat1 = NotifyChat("Kecewa memang bisa sulit. Ingatlah bahwa kegagalan adalah bagian dari belajar.", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val chat2 = NotifyChat("Mau mencoba membaca artikel tentang mengatasi kekecewaan? Sepertinya artikel ini cocok untukmu. <i><b>artikel</b></i>.", "bot", false, false, "", true, "music", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            val time : String = GetTime()
+            val chat3 = NotifyChat("Kalau kamu mau, ceritakan padaku apa yang membuat kamu merasa kecewa.", "bot", false, true, time, false, "", true, 0)
+            NotifyChat.notifChat.add(chat3)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Bosan"){
+            val chat1 = NotifyChat("Bosan bisa menjadi peluang untuk mencoba hal-hal baru. Apakah kamu punya hobi atau aktivitas yang ingin kamu coba?", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val time : String = GetTime()
+            val chat2 = NotifyChat("Bosan bisa menjadi peluang untuk mencoba hal-hal baru. Apa hobi atau aktivitas yang ingin kamu coba? Yuk buat rencana aktivitasmu di sini <i><b>Daily Activity</b></i>.", "bot", false, true, time, true, "penjadwalan", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Seperti Biasa"){
+            val chat1 = NotifyChat("Sepertinya kamu perlu melakukan aktivitas baru supaya hari-harimu lebih seru.", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val time : String = GetTime()
+            val chat2 = NotifyChat("Kamu bisa membuat rencana aktivitasmy di ->daily activy supaya hari-harimu tidak monoton. <i><b>Daily Activity</b></i>.", "bot", false, true, time, true, "penjadwalan", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Senang"){
+            val chat1 = NotifyChat("Aku jadi ikut senang mendengarnya! Apa yang membuat kamu merasa senang hari ini? Kalau kamu mau, ceritakan padaku apa yang membuat kamu merasa senang.", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val time : String = GetTime()
+            val chat2 = NotifyChat("Kamu bisa selesaikan semua aktifitas yang belum kamu kerjakan di <i><b>Daily Activity</b></i>.", "bot", false, true, time, true, "penjadwalan", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Bersemangat"){
+            val chat1 = NotifyChat("Semangat kamu menular nih! Apa yang membuatkan bersemangat hari ini?", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val time : String = GetTime()
+            val chat2 = NotifyChat("Kamu bisa selesaikan semua aktifitas yang belum kamu kerjakan di <i><b>Daily Activity</b></i>.", "bot", false, true, time, true, "penjadwalan", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Riang"){
+            val chat1 = NotifyChat("Aku jadi ikut senang mendengarnya! Apa yang membuat kamu merasa riang hari ini? Kalau kamu mau, ceritakan padaku apa yang membuat kamu merasa riang.", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val time : String = GetTime()
+            val chat2 = NotifyChat("Kamu bisa selesaikan semua aktifitas yang belum kamu kerjakan di <i><b>Daily Activity</b></i>.", "bot", false, true, time, true, "penjadwalan", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else if(mood == "Bahagia"){
+            val chat1 = NotifyChat("Aku jadi ikut senang mendengarnya! Apa yang membuat kamu merasa bahagia hari ini? Kalau kamu mau, ceritakan padaku apa yang membuat kamu merasa bahagia.", "bot", true, false, "", false, "", true, 0)
+            NotifyChat.notifChat.add(chat1)
+
+            val time : String = GetTime()
+            val chat2 = NotifyChat("Atau kamu bisa selesaikan semua aktifitas yang belum kamu kerjakan di <i><b>Daily Activity</b></i>.", "bot", false, true, time, true, "penjadwalan", true, 0)
+            NotifyChat.notifChat.add(chat2)
+
+            ApplicationManager.instance.ActiveNotif(this)
+            ApplicationManager.instance.SaveNotifPrefs(this)
 
         }else{
 

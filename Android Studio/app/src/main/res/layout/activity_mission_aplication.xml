@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/martel"
+        android:fontFamily="@font/jost"
         android:text="Ekspedisi Pertama"
         android:textSize="14sp"
         android:gravity="center"
@@ -78,7 +78,7 @@
                         android:layout_height="match_parent"
                         android:text="S1"
                         android:gravity="center"
-                        android:fontFamily="@font/martel"
+                        android:fontFamily="@font/jost"
                         style="@style/fontcolor1"
                         android:textSize="14sp"/>
 

@@ -3,22 +3,22 @@ package com.example.reflvy
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.ConnectivityManager
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reflvy.data.ActiveLogin
 import com.example.reflvy.data.DataDaily
 import com.example.reflvy.data.DataNotification
+import com.example.reflvy.data.GameStatusManager
 import com.example.reflvy.data.Music
 import com.example.reflvy.data.News
 import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.data.User
 import com.example.reflvy.data.YoutubeVideo
 import com.example.reflvy.utils.ApplicationManager
+import com.example.reflvy.utils.GameEventManager
+import com.example.reflvy.utils.GameManager
 import com.example.reflvy.utils.MusicService
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -36,34 +36,15 @@ class SplashScreen : AppCompatActivity() {
         editor.putBoolean("hasIn", true)
         editor.apply()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getCurrentDnsServers(this)
-        }
-
         ApplicationManager.instance.LoadDataLogin(this)
+        ApplicationManager.instance.LoadDataHistoryActivity(this)
+        ApplicationManager.instance.LoadTotalHistoryActivity(this)
 
-//        Toast.makeText(this, "tanggal kemarin" + ActiveLogin.infoActive.lastActive, Toast.LENGTH_SHORT).show()
 
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val tglNow = dateFormat.format(currentDate).trim()
 
-//        Toast.makeText(this, "tanggal sekarang" + tglNow, Toast.LENGTH_SHORT).show()
-
-        if(ActiveLogin.infoActive.lastActive == tglNow){
-
-        }else{
-            ActiveLogin.infoActive.activeNow = false
-            for (data in DataDaily.dataKegiatan) {
-                data.proses = false
-            }
-
-            NotifyChat.notifChat.clear()
-            ApplicationManager.instance.ClearNotifChat(this)
-            ApplicationManager.instance.clearSharedPreferencesNotif(this)
-            ApplicationManager.instance.UpdateStatusIfCompleted()
-            ApplicationManager.instance.SaveKegiatan(this@SplashScreen)
-        }
 
 
         val screeningSharedPreferences = getSharedPreferences("SCREENING_DATA", Context.MODE_PRIVATE)
@@ -87,7 +68,32 @@ class SplashScreen : AppCompatActivity() {
             ApplicationManager.instance.LoadNotifChat(this)
             ApplicationManager.instance.LoadNotifPrefs(this)
 
+            GameStatusManager.dragonStatus.LoadDataStatus(this)
+            //GameManager.instance.updateEfekNow(this)
+
+            GameStatusManager.dragonStatus.LoadDataPoint(this)
+            GameManager.instance.LoadDataConditionStatus(this)
+
+            GameEventManager.instance.LoadEventStatus(this)
         }
+
+        if(ActiveLogin.infoActive.lastActive == tglNow){
+
+        }else{
+            ActiveLogin.infoActive.activeNow = false
+            for (data in DataDaily.dataKegiatan) {
+                data.proses = false
+                data.tampilkanNotif = false
+                data.terlewat = false
+            }
+
+            NotifyChat.notifChat.clear()
+            ApplicationManager.instance.ClearNotifChat(this)
+            ApplicationManager.instance.clearSharedPreferencesNotif(this)
+            ApplicationManager.instance.UpdateStatusIfCompleted()
+            ApplicationManager.instance.SaveKegiatan(this@SplashScreen)
+        }
+
 
         //ApplicationManager.instance.OnClearData()
 
@@ -110,6 +116,8 @@ class SplashScreen : AppCompatActivity() {
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
 
+                    GetNotifDataDaily()
+
                 }else{
                     val intent = Intent(this, ScreeningSatuActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -129,14 +137,51 @@ class SplashScreen : AppCompatActivity() {
         }, 3000)
     }
 
-    fun getCurrentDnsServers(context: Context) {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork
-        val linkProperties = connectivityManager.getLinkProperties(network)
+    fun GetNotifDataDaily(){
+        val dataHariIni = DataDaily.dataKegiatan.filter { dailyData ->
+            val calendar = Calendar.getInstance()
+            val currentDay = calendar.get(Calendar.DAY_OF_WEEK)
 
-        val dnsServers = linkProperties?.dnsServers
-        for (dnsServer in dnsServers!!) {
-            Toast.makeText(this, dnsServer.toString(), Toast.LENGTH_SHORT).show()
+            when (currentDay) {
+                Calendar.MONDAY -> dailyData.senin
+                Calendar.TUESDAY -> dailyData.selasa
+                Calendar.WEDNESDAY -> dailyData.rabu
+                Calendar.THURSDAY -> dailyData.kamis
+                Calendar.FRIDAY -> dailyData.jumat
+                Calendar.SATURDAY -> dailyData.sabtu
+                Calendar.SUNDAY -> dailyData.minggu
+                else -> false
+            }
+        }
+
+        for (dailyData in dataHariIni) {
+            val calendar = Calendar.getInstance()
+            val currentMinutes = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE)
+
+            // Mengubah nilai tampilkanNotif jika endMinutes telah terlewat
+            if (dailyData.endMinutes < currentMinutes) {
+                if(!dailyData.proses){
+                    if(!dailyData.tampilkanNotif){
+                        dailyData.tampilkanNotif = true
+
+                        val time = ConvertMinutesToTime(dailyData.endMinutes)
+
+                        val chat = NotifyChat("Kamu Melewatkan Jadwal ${dailyData.namaKegiatan}", "bot", true, true, time, false, "dailyNotif", false, dailyData.dataNomor - 1)
+                        NotifyChat.notifChat.add(chat)
+
+                        ApplicationManager.instance.ActiveNotif(this)
+                        ApplicationManager.instance.SaveNotifPrefs(this)
+                    }
+                }
+                ApplicationManager.instance.SaveKegiatan(this)
+            }
         }
     }
+
+    fun ConvertMinutesToTime(minutes: Int): String {
+        val hours = minutes / 60
+        val minutesPart = minutes % 60
+        return String.format("%02d:%02d", hours, minutesPart)
+    }
+
 }

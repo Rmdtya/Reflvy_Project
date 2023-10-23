@@ -9,6 +9,8 @@ data class DataDaily(
     var waktuMulai : String,
     var waktuSelesai : String,
     var proses : Boolean,
+    var terlewat : Boolean,
+    var tampilkanNotif : Boolean,
     var progresNow : Int,
     var senin : Boolean,
     var selasa : Boolean,

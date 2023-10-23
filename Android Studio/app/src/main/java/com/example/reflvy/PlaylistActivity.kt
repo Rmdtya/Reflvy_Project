@@ -1,8 +1,6 @@
 package com.example.reflvy
 
-import com.example.reflvy.utils.SliderAdapter
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -10,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -18,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.reflvy.data.Music
 import com.example.reflvy.data.NotifyChat
+import com.example.reflvy.utils.SliderAdapter
 import com.example.reflvy.utils.SliderModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -60,10 +60,8 @@ class PlaylistActivity : AppCompatActivity() {
         adapter= SliderAdapter(isList, this)
 
         isList.clear()
-        isList.add(SliderModel(0, "https://wallpapers.com/images/hd/fantasy-anime-1920-x-1200-wallpaper-6impaobr94ya0lho.jpg"))
+        isList.add(SliderModel(0, "https://drive.google.com/uc?export=view&id=1a9RusYz-Wfs0cnfuXAGlMa8F18Y1s92q"))
         isList.add(SliderModel(1, "https://images3.alphacoders.com/778/778062.png"))
-        isList.add(SliderModel(2, "https://wallpapers.com/images/hd/fantasy-anime-1920-x-1200-wallpaper-6impaobr94ya0lho.jpg"))
-        isList.add(SliderModel(3, "https://images3.alphacoders.com/778/778062.png"))
 
 
         adapter.notifyDataSetChanged()
@@ -251,6 +249,12 @@ class PlaylistActivity : AppCompatActivity() {
         }else{
             notifIcon.visibility = View.INVISIBLE
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MenuActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 }
 

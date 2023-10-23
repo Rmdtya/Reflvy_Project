@@ -1,7 +1,6 @@
 package com.example.reflvy
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reflvy.data.DataDaily
 import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.fragment.FilterActivity
@@ -267,7 +267,7 @@ class OldDailyActivity : AppCompatActivity(), FilterActivityListener {
             img.setImageResource(R.drawable.dailyicom_08beribadah)
         }else if (kategori == "bermain game"){
             img.setImageResource(R.drawable.dailyicom_09bermaingame)
-        }else if (kategori == "hiburan digital"){
+        }else if (kategori == "akses handphone"){
             img.setImageResource(R.drawable.dailyicom_10hiburandigital)
         }else if (kategori == "operasi komputer"){
             img.setImageResource(R.drawable.dailyicom_11operasikomputer)
@@ -324,5 +324,4 @@ class OldDailyActivity : AppCompatActivity(), FilterActivityListener {
             notifIcon.visibility = View.INVISIBLE
         }
     }
-
 }

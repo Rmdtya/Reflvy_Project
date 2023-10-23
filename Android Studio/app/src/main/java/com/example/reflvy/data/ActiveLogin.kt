@@ -6,6 +6,7 @@ data class ActiveLogin(
     var lastActive : String,
     var moodNow : String,
     var totalSpendTime : Int,
+    var notifTerlewat : Boolean,
     var kegiatan1Bekerja : Int,
     var kegiatan2BelajarFormal : Int,
     var kegiatan3Membaca : Int,
@@ -26,7 +27,7 @@ data class ActiveLogin(
     var kegiatan18Lainnya : Int,
 ){
     companion object {
-        var infoActive = ActiveLogin(0, false, "", "", 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0)
+        var infoActive = ActiveLogin(0, false, "", "", 0, false,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0)
     }
 }
 

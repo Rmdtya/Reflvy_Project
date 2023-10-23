@@ -4,23 +4,26 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reflvy.data.DataMisi
 import com.example.reflvy.data.User
 import com.example.reflvy.databinding.ActivitySigninBinding
 import com.example.reflvy.utils.ApplicationManager
+import com.example.reflvy.utils.GameEventManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
+import kotlin.random.Random
 
 class SigninActivity : AppCompatActivity() {
 
@@ -67,54 +70,20 @@ class SigninActivity : AppCompatActivity() {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if(it.isSuccessful){
 
-                        val sharedPreferencesUser = getSharedPreferences("USER_INFO", Context.MODE_PRIVATE)
-                        User.userData.loadFromSharedPreferences(sharedPreferencesUser)
+                        val currentUser = firebaseAuth.currentUser
+                        val userID = currentUser?.uid ?: ""
+                        val email = currentUser?.email ?: "" // Dapatkan email dari hasil sign in
 
-                        if(User.userData.screeningSatu){
-                            startActivity(Intent(this, MenuActivity::class.java))
-                            val sharedPreferencesLogin = getSharedPreferences("login_status", Context.MODE_PRIVATE)
-                            val editorLogin = sharedPreferencesLogin.edit()
-                            editorLogin.putBoolean("isLoggedIn", true)
-                            editorLogin.apply()
+                        ApplicationManager.instance.AddFirstMissionApplication(this)
+                        ApplicationManager.instance.SaveDataMisiAplkasi(this)
+                        ApplicationManager.instance.LoadDataMisiAplikasi(this)
 
-                            ApplicationManager.instance.AddFirstMissionApplication(this)
+                        GameEventManager.instance.SaveEventStatus(this)
 
-                            if (DataMisi.dataMisiAplikasi.isNotEmpty()) {
-                                val newDataMisi = DataMisi.dataMisiAplikasi[0].copy(statusMisi = DataMisi.dataMisiAplikasi[0].statusMisi.toMutableList().apply {
-                                    this[0] = true
-                                })
+                        CheckOrCreateUserDocument(userID, email)
 
-                                DataMisi.dataMisiAplikasi[0] = newDataMisi
-                            }
-
-                            if (DataMisi.dataMisiAplikasi.isNotEmpty()) {
-                                val newDataProgres = DataMisi.dataMisiAplikasi[0].copy(progresNow = DataMisi.dataMisiAplikasi[0].progresNow.toMutableList().apply {
-                                    this[0] = 1
-                                })
-
-                                DataMisi.dataMisiAplikasi[0] = newDataProgres
-                            }
-
-                            ApplicationManager.instance.SaveDataMisiAplkasi(this)
-
-                            UpdateInfoUser()
-
-                            finishAffinity()
-                        }else{
-                            startActivity(Intent(this, ScreeningSatuActivity::class.java))
-                            val sharedPreferencesLogin = getSharedPreferences("login_status", Context.MODE_PRIVATE)
-                            val editorLogin = sharedPreferencesLogin.edit()
-                            editorLogin.putBoolean("isLoggedIn", true)
-                            editorLogin.apply()
-
-                            ApplicationManager.instance.AddFirstMissionApplication(this)
-
-                            UpdateInfoUser()
-
-                            finishAffinity()
-                        }
                     }else{
-                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
             }else{
@@ -168,9 +137,9 @@ class SigninActivity : AppCompatActivity() {
                 ApplicationManager.instance.SaveDataMisiAplkasi(this)
                 ApplicationManager.instance.LoadDataMisiAplikasi(this)
 
-                Toast.makeText(this, DataMisi.dataMisiAplikasi.size.toString(), LENGTH_SHORT).show()
-                CheckOrCreateUserDocument(userID, email)
+                GameEventManager.instance.SaveEventStatus(this)
 
+                CheckOrCreateUserDocument(userID, email)
             }
             .addOnFailureListener{
                 error -> Toast.makeText(this, error.localizedMessage, LENGTH_SHORT).show()
@@ -198,6 +167,7 @@ class SigninActivity : AppCompatActivity() {
                     val nilaiScreening2 = documentSnapshot.getLong("nilaiScreening2")?.toInt() ?: 0
                     val nilaiScreening3 = documentSnapshot.getLong("nilaiScreening3")?.toInt() ?: 0
                     val nilaiScreening4 = documentSnapshot.getLong("nilaiScreening4")?.toInt() ?: 0
+                    val reveralCode = documentSnapshot.getString("reveralKode") ?: ""
 
                     val gson = Gson()
                     val screeningJson = gson.toJson(screening)
@@ -218,6 +188,7 @@ class SigninActivity : AppCompatActivity() {
                     editor.putInt("nilaiScreening2", nilaiScreening2)
                     editor.putInt("nilaiScreening3", nilaiScreening3)
                     editor.putInt("nilaiScreening4", nilaiScreening4)
+                    editor.putString("userReveral", reveralCode)
                     editor.apply()
 
                     val sharedPreferencesUser = getSharedPreferences("USER_INFO", Context.MODE_PRIVATE)
@@ -261,54 +232,127 @@ class SigninActivity : AppCompatActivity() {
             }
     }
 
-    fun CheckOrCreateUserDocument(userID: String, email: String) {
-        val userDocument = db.collection("users").document(userID)
+    fun generateRandomCode(): String {
+        val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        val codeLength = 6 // 3 huruf + 3 angka
 
-        userDocument.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val document = task.result
-                if (document != null && document.exists()) {
-                    // Dokumen dengan userID sebagai document ID sudah ada, lewati proses.
-                    // Anda dapat menambahkan logika atau tindakan lain di sini jika diperlukan.
-                    LoadDataFromFirestore(userID, email)
+        val random = Random.Default
+        return (1..codeLength)
+            .map { characters[random.nextInt(0, characters.length)] }
+            .joinToString("")
+    }
+
+    fun CreateReveralCode(userID: String, email: String) {
+        val code = generateRandomCode()
+
+        try {
+            val userDocument = db.collection("ReveralCode").document(code)
+
+            userDocument.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (document != null && document.exists()) {
+                        CreateReveralCode(userID, email)
+                    } else {
+                        // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
+                        val userData = hashMapOf(
+                            "userId" to userID
+                        )
+                        userDocument.set(userData)
+                            .addOnSuccessListener {
+
+                                val documentReference = db.collection("users").document(userID)
+
+                                val updateData = hashMapOf(
+                                    "reveralKode" to code
+                                )
+
+                                documentReference.set(updateData, SetOptions.merge())
+                                    .addOnSuccessListener {
+
+                                    }
+                                    .addOnFailureListener {
+                                        // Gagal mengganti data
+                                    }
+
+                                LoadDataFromFirestore(userID, email)
+                            }
+                            .addOnFailureListener { error ->
+                                // Gagal membuat dokumen baru, tangani error jika diperlukan.
+                                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 } else {
-                    // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
-                    val userData = hashMapOf(
-                        "name" to email,
-                        "email" to email,
-                        "gender" to null, // Field gender dengan tipe data string yang masih null
-                        "telepon" to null, // Field telepon dengan tipe data string yang masih null
-                        "tanggalLahir" to null, // Field telepon dengan tipe data string yang masih null
-                        "historyvpn" to null, // Field historyvpn dengan tipe data array string yang masih null
-                        "activityHistory" to null, // Field activityHistory dengan tipe data array string yang masih null
-                        "deteksijarak" to null, // Field deteksijarak dengan tipe data array string yang masih null
-                        "screeningHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
-                        "dailyPoint" to null, // Field screeningHistory dengan tipe data array int yang masih null
-                        "linkHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
-                        "screeningSatu" to false,
-                        "screeningDua" to false,
-                        "screeningTiga" to false,
-                        "screeningEmpat" to false,
-                        "nilaiScreening1" to 0,
-                        "nilaiScreening2" to 0,
-                        "nilaiScreening3" to 0,
-                        "nilaiScreening4" to 0
-                    )
-                    userDocument.set(userData)
-                        .addOnSuccessListener {
-                            // Berhasil membuat dokumen baru.
-                            LoadDataFromFirestore(userID, email)
-                        }
-                        .addOnFailureListener { error ->
-                            // Gagal membuat dokumen baru, tangani error jika diperlukan.
-                            Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
-                        }
+                    // Gagal mendapatkan dokumen, tangani error jika diperlukan.
+                    Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                // Gagal mendapatkan dokumen, tangani error jika diperlukan.
-                Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT).show()
             }
+        }catch (e:Exception){
+            Toast.makeText(this, e.toString(), LENGTH_SHORT).show()
         }
+    }
+
+    fun CheckOrCreateUserDocument(userID: String, email: String) {
+
+        try {
+            val userDocument = db.collection("users").document(userID)
+
+            userDocument.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (document != null && document.exists()) {
+                        // Dokumen dengan userID sebagai document ID sudah ada, lewati proses.
+                        // Anda dapat menambahkan logika atau tindakan lain di sini jika diperlukan.
+                        LoadDataFromFirestore(userID, email)
+                    } else {
+                        // Dokumen dengan userID sebagai document ID belum ada, buat dokumen baru.
+                        val userData = hashMapOf(
+                            "name" to email,
+                            "email" to email,
+                            "gender" to null, // Field gender dengan tipe data string yang masih null
+                            "telepon" to null, // Field telepon dengan tipe data string yang masih null
+                            "tanggalLahir" to null, // Field telepon dengan tipe data string yang masih null
+                            "historyvpn" to null, // Field historyvpn dengan tipe data array string yang masih null
+                            "activityHistory" to null, // Field activityHistory dengan tipe data array string yang masih null
+                            "deteksijarak" to null, // Field deteksijarak dengan tipe data array string yang masih null
+                            "screeningHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                            "dailyPoint" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                            "linkHistory" to null, // Field screeningHistory dengan tipe data array int yang masih null
+                            "screeningSatu" to false,
+                            "screeningDua" to false,
+                            "screeningTiga" to false,
+                            "screeningEmpat" to false,
+                            "nilaiScreening1" to 0,
+                            "nilaiScreening2" to 0,
+                            "nilaiScreening3" to 0,
+                            "nilaiScreening4" to 0,
+                            "reveralKode" to null,
+                            "activePhone" to null,
+                            "historyAplikasi" to null,
+                            "durasiAplikasi" to null,
+                            "aplikasiAktif" to null,
+                            "moodHariIni" to null,
+                            "terakhirAktif" to null
+                        )
+                        userDocument.set(userData)
+                            .addOnSuccessListener {
+                                // Berhasil membuat dokumen baru.
+                                CreateReveralCode(userID, email)
+                            }
+                            .addOnFailureListener { error ->
+                                // Gagal membuat dokumen baru, tangani error jika diperlukan.
+                                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                } else {
+                    // Gagal mendapatkan dokumen, tangani error jika diperlukan.
+                    Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }catch (e:Exception){
+            Toast.makeText(this, e.toString(), LENGTH_SHORT).show()
+        }
+
     }
 
     fun SetEmailUser(){

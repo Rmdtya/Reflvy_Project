@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/mainscreen"
-    tools:context=".BotActivity">
+    tools:context=".ScreeningTiga">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,8 +20,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:padding="4dp"
         android:rotation="180"
+        android:padding="4dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/verticalglstart"
         app:layout_constraintTop_toBottomOf="@id/horizontaltop"
@@ -38,17 +38,16 @@
         app:layout_constraintEnd_toEndOf="@id/namegl"
         app:layout_constraintTop_toBottomOf="@id/horizontaltop"
         app:layout_constraintBottom_toTopOf="@id/horizontal02"
-        app:srcCompat="@drawable/icon_bot"/>
+        app:srcCompat="@drawable/bot_icon1"/>
 
     <TextView
         android:id="@+id/cahtbot_name"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/martel"
-        android:text="ChatBot Chat"
+        android:fontFamily="@font/jost"
+        android:text="Igor Bot"
         android:textSize="40px"
-        android:paddingTop="2dp"
         android:gravity="center_vertical"
         android:textStyle="bold"
         android:maxLines="2"
@@ -57,108 +56,74 @@
         app:layout_constraintTop_toTopOf="@id/horizontaltop"
         app:layout_constraintBottom_toTopOf="@id/horizontal02"/>
 
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
+        android:layout_height="0dp"
+        android:gravity="top"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="@id/verticalglstart"
         app:layout_constraintEnd_toEndOf="@id/verticalglend"
-        app:layout_constraintTop_toTopOf="@id/horizontal03">
+        app:layout_constraintTop_toBottomOf="@id/horizontal03"
+        app:layout_constraintBottom_toTopOf="@id/container_jawab">
 
-        <LinearLayout
-            android:id="@+id/chat_container"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/schroll_container"
+            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="200dp"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/chat_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    </ScrollView>
+    </RelativeLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/container_jawab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/horizontalbottom"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:orientation="vertical"
         android:gravity="center"
-        style="@style/footerbg">
-
-        <EditText
-            android:id="@+id/quest_inp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_chatbox"
-            android:ems="10"
-            android:fontFamily="@font/martel"
-            android:inputType="textMultiLine"
-            android:maxLength="1000"
-            android:maxLines="10"
-            android:paddingLeft="12dp"
-            android:gravity="center"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textAlignment="textStart"
-            tools:ignore="MissingConstraints,RtlCompat"
-            android:textSize="12sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="15dp"
-            android:hint="Ketikan Pesan Disini"
-            android:layout_weight="0.8"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/bg_send"/>
+        style="@style/mainscreen"
+        app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
 
         <LinearLayout
-            android:id="@+id/bg_send"
-            android:layout_width="wrap_content"
+            android:id="@+id/jawab_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/roundedsendchat_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <ImageView
-                android:id="@+id/send_button"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:padding="1dp"
-                android:src="@drawable/icon_sendchat" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
             style="@style/mainscreen"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <LinearLayout
-                android:id="@+id/jawab_container"
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                style="@style/mainscreen">
-
-            </LinearLayout>
+            app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalglstart"
@@ -224,15 +189,47 @@
         app:layout_constraintGuide_percent="0.26" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/progline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/progline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/presentase_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.88" />
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalbottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_end="60dp"/>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalbottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="120dp"/>
+
     <include
         android:id="@+id/footer"
-        layout="@layout/footer_style2"/>
-
+        layout="@layout/footer_style1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

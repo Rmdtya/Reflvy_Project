@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.reflvy.data.ActiveLogin
 import com.example.reflvy.data.DataDaily
+import com.example.reflvy.data.DataHistoryActivity
 import com.example.reflvy.data.DataMisi
 import com.example.reflvy.data.DataNotification
 import com.example.reflvy.data.EventScreening
@@ -39,7 +40,7 @@ class ApplicationManager : Application() {
     }
 
     fun cekFunction() {
-        Toast.makeText(this, "Help Me", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Help Me", Toast.LENGTH_SHORT).show()
     }
 
     fun getEmail(): String {
@@ -232,6 +233,7 @@ class ApplicationManager : Application() {
         editor.putBoolean("activeNow", ActiveLogin.infoActive.activeNow)
         editor.putString("lastActive", ActiveLogin.infoActive.lastActive)
         editor.putString("moodNow", ActiveLogin.infoActive.moodNow)
+        editor.putBoolean("notifTerlewat", ActiveLogin.infoActive.notifTerlewat)
 
         editor.apply()
     }
@@ -243,14 +245,16 @@ class ApplicationManager : Application() {
         val activeNow = sharedPreferences.getBoolean("activeNow", false)
         val lastActive = sharedPreferences.getString("lastActive", "")
         val moodNow = sharedPreferences.getString("moodNow", "")
+        val notifTerlewat = sharedPreferences.getBoolean("notifTerlewat", false)
 
         ActiveLogin.infoActive.totalActive = totalActive
         ActiveLogin.infoActive.activeNow = activeNow
         ActiveLogin.infoActive.lastActive = lastActive.toString()
         ActiveLogin.infoActive.moodNow = moodNow.toString()
+        ActiveLogin.infoActive.notifTerlewat = notifTerlewat
     }
 
-    fun SaveDataDailyActivity(context: Context){
+    fun SaveDataHistoryActivity(context: Context){
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
@@ -277,7 +281,7 @@ class ApplicationManager : Application() {
         editor.apply()
     }
 
-    fun LoadDataDailyActivity(context: Context) {
+    fun LoadDataHistoryActivity(context: Context) {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("LoginInfo", Context.MODE_PRIVATE)
 
         val totalSpendTime = sharedPreferences.getInt("totalSpendTime", 0)
@@ -320,6 +324,60 @@ class ApplicationManager : Application() {
         ActiveLogin.infoActive.kegiatan17Liburan = k17
         ActiveLogin.infoActive.kegiatan18Lainnya = k18
     }
+
+    fun ResetHistoryActivity(context: Context){
+
+        val data = ActiveLogin.infoActive
+
+        val dataSebelumnya = DataHistoryActivity(data.lastActive, data.moodNow, data.totalSpendTime, data.kegiatan1Bekerja, data.kegiatan2BelajarFormal,
+            data.kegiatan3Membaca, data.kegiatan4Bersantai, data.kegiatan5Istirahat, data.kegiatan6Belanja, data.kegiatan7Bermusik,
+            data.kegiatan8Beribadah, data.kegiatan9BermainGame, data.kegiatan10HiburanDigital, data.kegiatan11OperasiKomputer,
+            data.kegiatan12PekerjaanRumah, data.kegiatan13Komunitas, data.kegiatan14Bersosialisasi, data.kegiatan15Healing,
+            data.kegiatan16Olahraga, data.kegiatan17Liburan, data.kegiatan18Lainnya)
+
+        DataHistoryActivity.dataHistoryActivity.add(dataSebelumnya)
+
+        SaveTotalHistoryActivity(context)
+
+        var resetData = ActiveLogin(data.totalActive, false, data.lastActive, "", 0, false,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0)
+
+        ActiveLogin.infoActive = resetData
+    }
+
+    fun SaveTotalHistoryActivity(context: Context) {
+
+        clearTotalHistorySharedPreferences(context) // Hapus semua data sebelum menyimpan
+
+        val sharedPreferences = context.getSharedPreferences("datahistoryactivity_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        val gson = Gson()
+        val dataHistoryJson = gson.toJson(DataHistoryActivity.dataHistoryActivity)
+        editor.putString("data_history", dataHistoryJson)
+
+        editor.apply()
+    }
+
+    fun LoadTotalHistoryActivity(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datahistoryactivity_preferences", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val dataHistoryJson = sharedPreferences.getString("data_history", null)
+
+        if (dataHistoryJson != null) {
+            val type = object : TypeToken<List<DataHistoryActivity>>() {}.type
+            val dataHistoryList: List<DataHistoryActivity> = gson.fromJson(dataHistoryJson, type)
+            DataHistoryActivity.dataHistoryActivity.clear()
+            DataHistoryActivity.dataHistoryActivity.addAll(dataHistoryList)
+        }
+    }
+
+    fun clearTotalHistorySharedPreferences(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("datahistoryactivity_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
+
 
 
     fun UpdateStatusIfCompleted() {

@@ -102,7 +102,7 @@ class ManualChatBotActivity : AppCompatActivity() {
 
         if(response == "idk"){
             GetResponse(question)
-            Toast.makeText(this, "Bot Processing", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Bot Processing", Toast.LENGTH_SHORT).show()
         }else {
             BotResponse(response)
         }

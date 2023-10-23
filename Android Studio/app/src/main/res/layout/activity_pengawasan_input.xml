@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/mainscreen"
+    tools:context=".PengawasanInputActivity">
+
+        <ImageView
+            android:id="@+id/icon_back"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:padding="4dp"
+            android:contentDescription="Back"
+            android:onClick="goBack"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@id/verticalglstart"
+            app:layout_constraintTop_toTopOf="@id/horizontaltop"
+            app:layout_constraintBottom_toTopOf="@id/horizontal02"
+            app:srcCompat="@drawable/back_icon"/>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/jost"
+            android:text="Pengawasan Orang Tua"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="10dp"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeStepGranularity="8dp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            style="@style/fontcolor2"
+            app:layout_constraintStart_toStartOf="@id/ver2"
+            app:layout_constraintEnd_toEndOf="@id/verticalglend"
+            app:layout_constraintTop_toTopOf="@id/horizontaltop"
+            app:layout_constraintBottom_toTopOf="@id/horizontal02"/>
+
+        <LinearLayout
+            android:id="@+id/con1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@id/verticalglstart"
+            app:layout_constraintEnd_toEndOf="@id/verticalglend"
+            app:layout_constraintTop_toTopOf="@id/horizontal03"
+            app:layout_constraintBottom_toTopOf="@id/horizontal04">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Invite Your Children"
+                style="@style/fontcolor2"
+                android:textSize="25dp"
+                android:fontFamily="@font/jost"
+                android:gravity="center"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="Pantau aktifitas smartphone anak-anakmu"
+                style="@style/fontcolor2"
+                android:textSize="18dp"
+                android:fontFamily="@font/jost"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/verticalglstart"
+            app:layout_constraintEnd_toEndOf="@id/verticalglend"
+            app:layout_constraintTop_toBottomOf="@id/horizontal04"
+            app:layout_constraintBottom_toTopOf="@id/horizontal05"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:src="@drawable/pengawasan_img2"
+                android:scaleType="fitCenter" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@id/vertext1"
+            app:layout_constraintEnd_toEndOf="@id/vertext2"
+            app:layout_constraintTop_toTopOf="@id/horizontal05">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Atur smartphone anakmu dan nyalakan fitur pengawasan orang tua. Salin dan masukan kodenya"
+                style="@style/fontcolor2"
+                android:textSize="16dp"
+                android:fontFamily="@font/jost"
+                android:gravity="center"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintStart_toStartOf="@id/vertext1"
+            app:layout_constraintEnd_toEndOf="@id/vertext2"
+            app:layout_constraintBottom_toTopOf="@id/horizontalbottom">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:background="@drawable/kuis_bgjenis1">
+
+                <EditText
+                    android:id="@+id/text_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Input Code"
+                    android:textSize="16sp"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/jost"
+                    android:layout_marginStart="10dp"
+                    android:textColorHint="@color/white"
+                    android:inputType="text"
+                    android:background="@null"
+                    style="@style/fontcolor1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_invite"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="@drawable/pengawasan_bgkanan">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Invite"
+                    android:textSize="16sp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/jost"
+                    style="@style/fontcolor1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalglstart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalglend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.94" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ver1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ver2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontaltop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.09" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.11" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/footertop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="60dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="60dp"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <include
+            android:id="@+id/footer"
+            layout="@layout/footer_style1"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

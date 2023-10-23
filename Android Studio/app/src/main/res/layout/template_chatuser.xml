@@ -22,7 +22,7 @@
                 android:id="@+id/answer_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:background="@drawable/roundedchatuser_bg"
                 android:padding="8dp"
                 android:layout_gravity="end"
@@ -31,14 +31,14 @@
                 android:layout_weight="1"
                 android:text="Baik, Mari Mulai Sekarang"
                 android:textStyle="bold"
-                android:textSize="10sp"
+                android:textSize="11sp"
                 tools:ignore="RtlCompat" />
 
             <TextView
                 android:id="@+id/time_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:padding="3dp"
                 android:textColor="@color/font_timescreening"
                 android:text="12.13 am"

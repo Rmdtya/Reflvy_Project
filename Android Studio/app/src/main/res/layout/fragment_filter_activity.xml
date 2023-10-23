@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Filter Kegiatan"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:textSize="18dp"
             android:textStyle="bold"
             android:layout_marginStart="20dp"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Status Kegiatan"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:textSize="13dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -73,12 +73,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Semua"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/semua"
@@ -106,12 +105,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Selesai"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/selesai"
@@ -139,12 +137,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="On-Progres"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/progres"
@@ -167,7 +164,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hari Kegiatan"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:textSize="13dp"
             android:layout_marginTop="15dp"
             android:layout_marginStart="20dp"
@@ -202,12 +199,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Senin"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/senin"
@@ -235,12 +231,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Selasa"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/selasa"
@@ -268,12 +263,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Rabu"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/rabu"
@@ -301,12 +295,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Kamis"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/kamis"
@@ -343,12 +336,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Jumat"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/jumat"
@@ -376,12 +368,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Sabtu"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/sabtu"
@@ -409,12 +400,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Minggu"
-                        android:paddingTop="2dp"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/minggu"
@@ -437,7 +427,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/roundedbutton"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:gravity="center"
             android:text="Konfirmasi"
             android:textColorHighlight="#952222"
@@ -445,7 +435,7 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textAllCaps="false"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"/>
@@ -455,12 +445,13 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/transparant"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:gravity="center"
             android:text="Kembali"
             android:textColorHighlight="#952222"
             android:textColorLink="#000000"
             android:textStyle="bold"
+            android:textSize="14sp"
             android:textAllCaps="false"
             android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"

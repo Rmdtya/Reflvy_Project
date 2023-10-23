@@ -3,7 +3,6 @@ package com.example.reflvy
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,15 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import com.example.reflvy.data.EventScreening
 import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.data.SaveDataScreening
 import com.example.reflvy.data.Screening
 import com.example.reflvy.data.User
+import com.example.reflvy.fragment.TingkatKecanduanFragment
+import com.example.reflvy.utils.GameEventManager
 import com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
@@ -40,6 +44,19 @@ class ScreeningActivity : AppCompatActivity() {
     private lateinit var persentasiBar: TextView
     private lateinit var template_nilai : ConstraintLayout
     private lateinit var textNilai : TextView
+    private lateinit var textTingkat : TextView
+    private lateinit var textKeterangan : TextView
+    private lateinit var btn_selengkapnya : TextView
+    private lateinit var btnSelesai : LinearLayout
+
+    private lateinit var templateUlangi : ConstraintLayout
+    private lateinit var textNilaiUlangi : TextView
+    private lateinit var textTingkatUlangi : TextView
+    private lateinit var textKeteranganUlangi : TextView
+    private lateinit var btnYesUlangi : TextView
+    private lateinit var btnNoUlangi : TextView
+    private lateinit var btnSelengkapnyaUlangi : TextView
+
     private var historyChat : MutableList<String> = mutableListOf()
     private var fromBot : MutableList<Boolean> = mutableListOf()
     private var timeText : MutableList<Boolean> = mutableListOf()
@@ -47,6 +64,8 @@ class ScreeningActivity : AppCompatActivity() {
     private var showIcon : MutableList<Boolean> = mutableListOf()
     private var loadTimeIndex: Int = 0
     private val db = Firebase.firestore
+
+    private lateinit var schrollCotainer : NestedScrollView
 
     val handler = Handler(Looper.getMainLooper())
 
@@ -69,9 +88,37 @@ class ScreeningActivity : AppCompatActivity() {
         jawabContainerBawah = findViewById(R.id.jawab_containerbawah)
         inflater = LayoutInflater.from(this)
         seekBar = findViewById(R.id.progres_bar)
+        schrollCotainer = findViewById(R.id.schroll_container)
 
         template_nilai = findViewById(R.id.template_nilai)
         textNilai = findViewById(R.id.text_nilai)
+        textTingkat = findViewById(R.id.text_tingkat)
+        textKeterangan = findViewById(R.id.text_keterangantingkat)
+        btn_selengkapnya = findViewById(R.id.btn_selengkapnya)
+
+        btn_selengkapnya.setOnClickListener {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            val filterFragment = TingkatKecanduanFragment()
+            fragmentTransaction.replace(R.id.fragment_container, filterFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        templateUlangi = findViewById(R.id.template_ulangi)
+        textNilaiUlangi = findViewById(R.id.text_nilaiulangi)
+        textTingkatUlangi = findViewById(R.id.text_tingkatulangi)
+        textKeteranganUlangi = findViewById(R.id.text_keterangantingkatulangi)
+        btnYesUlangi = findViewById(R.id.ulangi_yes)
+        btnNoUlangi = findViewById(R.id.ulangi_no)
+        btnSelengkapnyaUlangi = findViewById(R.id.btn_selengkapnyaulangi)
+
+        btnSelengkapnyaUlangi.setOnClickListener {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            val filterFragment = TingkatKecanduanFragment()
+            fragmentTransaction.replace(R.id.fragment_container, filterFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
 
         persentasiBar = findViewById(R.id.persentasi)
         persentasiBar.text = "0%"
@@ -79,7 +126,6 @@ class ScreeningActivity : AppCompatActivity() {
         indexKe = 0
         maxValue = Screening.screenData.size
 
-        Toast.makeText(this, maxValue.toString(), Toast.LENGTH_SHORT).show()
 
         template_nilai.visibility = View.GONE
 
@@ -90,9 +136,44 @@ class ScreeningActivity : AppCompatActivity() {
 
         iconBot.setOnClickListener {
             SharedPrefsUtil.RemoveDataByKey(this)
-            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show()
             indexKe = 0
         }
+
+
+        if (User.userData.screeningDua){
+            templateUlangi.visibility = View.VISIBLE
+
+            val nilai = User.userData.nilaiScreening2
+            textNilaiUlangi.text = nilai.toString()
+
+            btnNoUlangi.setOnClickListener {
+                templateUlangi.visibility = View.GONE
+            }
+
+            btnYesUlangi.setOnClickListener {
+                SharedPrefsUtil.RemoveDataByKey(this)
+
+                UpdateUserInfo(0, false)
+                nilaiScreening = 0
+
+                indexKe = 0
+
+                val intent = Intent(this, ScreeningActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
+
+                UpdateUserInfo(nilaiScreening, false)
+            }
+        }
+
+        btnSelesai =findViewById(R.id.btn_selesai)
+        btnSelesai.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
+
     }
 
     private fun ShowTemplateBot(text : String, icon : Boolean, time : Boolean){
@@ -199,6 +280,10 @@ class ScreeningActivity : AppCompatActivity() {
         historyTime.add(GetTime())
         showIcon.add(false)
 
+        schrollCotainer.post {
+            schrollCotainer.fullScroll(ScrollView.FOCUS_DOWN)
+        }
+
         handler.postDelayed({
             // Fungsi yang akan dijalankan setelah jeda 2 detik
             NextEventDialog(ind, ke)
@@ -251,6 +336,10 @@ class ScreeningActivity : AppCompatActivity() {
         }
 
         CheckNextIndex(ind)
+
+        schrollCotainer.post {
+            schrollCotainer.fullScroll(ScrollView.FOCUS_DOWN)
+        }
     }
 
     private fun ShowEventRespon1(ind : Int){
@@ -284,6 +373,10 @@ class ScreeningActivity : AppCompatActivity() {
         }
 
         CheckNextIndex(ind)
+
+        schrollCotainer.post {
+            schrollCotainer.fullScroll(ScrollView.FOCUS_DOWN)
+        }
     }
 
     private fun ShowEventRespon2(ind : Int){
@@ -318,49 +411,14 @@ class ScreeningActivity : AppCompatActivity() {
 
             CheckNextIndex(ind)
         }
-    }
 
-//    private fun JawabEventSoal(ind : Int){
-//        for (i in EventScreening.eventScreenData[ind].opsiRespon.indices) {
-//            val templateJawab : View = inflater.inflate(R.layout.template_jawabchat, null)
-//            jawabContainer.addView(templateJawab)
-//
-//            val textJawab : TextView = templateJawab.findViewById(R.id.jawaban)
-//            textJawab.text = EventScreening.eventScreenData[ind].opsiRespon[i]
-//
-//            templateJawab.setOnClickListener{
-//                TampilkanEventJawaban(ind, i)
-//                jawabContainer.removeAllViews()
-//            }
-//        }
-//    }
-//
-//    private fun TampilkanEventJawaban(ind : Int , ke : Int){
-//        val templateChatuser: View = inflater.inflate(R.layout.template_chatuser, null)
-//        linearContainer.addView(templateChatuser)
-//
-//        var theText = EventScreening.eventScreenData[ind].tampilanRespon[ke]
-//        val text : TextView = templateChatuser.findViewById(R.id.answer_user)
-//        text.text = theText
-//
-//        val textTime : TextView = templateChatuser.findViewById(R.id.time_user)
-//        textTime.text = GetTime()
-//
-//        historyChat.add(theText)
-//        fromBot.add(false)
-//        timeText.add(true)
-//        historyTime.add(GetTime())
-//        showIcon.add(false)
-//
-//        handler.postDelayed({
-//            // Fungsi yang akan dijalankan setelah jeda 2 detik
-//            CheckNextIndex(ind)
-//        }, 2000)
-//    }
+        schrollCotainer.post {
+            schrollCotainer.fullScroll(ScrollView.FOCUS_DOWN)
+        }
+    }
 
     private fun CheckNextIndex(ind : Int){
         indexKe++
-        Toast.makeText(this, indexKe.toString(), Toast.LENGTH_SHORT).show()
         handler.postDelayed({
             SetProgresSeekbar(indexKe)
 
@@ -378,46 +436,70 @@ class ScreeningActivity : AppCompatActivity() {
 
     private fun SetProgresSeekbar(ind : Int){
         seekBar.progress = ind
-        persentasiBar.text = GetPersentase(ind, maxValue).toString() + "%"
+        persentasiBar.text = GetPersentase(ind, maxValue) + "%"
     }
 
-    fun GetPersentase(currentValue: Int, maxValue: Int): Double {
+    fun GetPersentase(currentValue: Int, maxValue: Int): String {
         if (currentValue < 0 || maxValue <= 0) {
             throw IllegalArgumentException("Nilai saat ini dan nilai maksimal harus lebih besar dari 0")
         }
         val percentage = (currentValue.toDouble() / maxValue) * 100
-        return if (percentage > 100.0) 100.0 else percentage
+        val formattedPercentage = if (percentage > 100.0) 100.0 else percentage
+        return formattedPercentage.toInt().toString()
     }
+
 
     fun TampilkanNilai(){
         template_nilai.visibility = View.VISIBLE
         textNilai.text = nilaiScreening.toString()
 
+        if (nilaiScreening <= 25){
+            textTingkat.text = "Kamu Normal, Keren :)"
+            textKeterangan.text = "Kamu tidak perlu khawatir karena rasa ingin tahu itu manusiawi dan kamu masih dalam batas wajar. Namun, tetap waspada ya! jangan sampai kamu terjebak dalam bahaya kecanduan pornografi."
+        }else if(nilaiScreening >= 26 && nilaiScreening <= 49){
+            textTingkat.text = "Hati-hati, kamu mulai kecanduan loh:("
+            textKeterangan.text = "Kamu dianjurkan untuk melakukan pembatasan aktivitas online, nih. Coba juga yuk belajar pencegahan bahaya kecanduan pornografi melalui dialog terbuka dengan para profesional klinis."
+        }else if(nilaiScreening >= 50 && nilaiScreening <= 69){
+            textTingkat.text = "Kamu Terdeteksi Kecanduann nih:("
+            textKeterangan.text = "kamu perlu perawatan untuk mencegah kecanduan yang lebih luas juga pemantauan yang cermat terhadap perilaku online, nih. Jangan ragu untuk melanjutkan ke tahap treatment berikutnya, ya!"
+        }else if(nilaiScreening >= 70){
+            textTingkat.text = "Kecanduanmu sudah tinggi, nih:("
+            textKeterangan.text = "Kamu sangat dianjurkan untuk melakukan perawatan dan pemantauan untuk menghentikan kecanduan dengan bantuan para profesional, nih. Jangan ragu untuk melanjutkan ke tahap treatment berikutnya, ya!"
+        }
 
-        val documentReference = db.collection("users").document(User.userData.userID)
+        try {
+            val documentReference = db.collection("users").document(User.userData.userID)
 
-        val updateData = hashMapOf(
-            "screeningDua" to true,
-            "nilaiScreening2" to nilaiScreening
-        )
+            val updateData = hashMapOf(
+                "screeningDua" to true,
+                "nilaiScreening2" to nilaiScreening
+            )
 
-        documentReference.set(updateData, SetOptions.merge())
-            .addOnSuccessListener {
-                //UpdateUserInfo(uname, tlp, tgl, selectedGender)
-                //UpdateLayout()
-                UpdateUserInfo(nilaiScreening)
-            }
-            .addOnFailureListener {
-                // Gagal mengganti data
-            }
+            documentReference.set(updateData, SetOptions.merge())
+                .addOnSuccessListener {
+                    //UpdateUserInfo(uname, tlp, tgl, selectedGender)
+                    //UpdateLayout()
+                    UpdateUserInfo(nilaiScreening, true)
+                }
+                .addOnFailureListener {
+                    // Gagal mengganti data
+                }
+        }catch (e:Exception){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+
+        GameEventManager.instance.CekEventKegiatanNegatif(this)
     }
 
-    private fun UpdateUserInfo(nilai : Int){
+    private fun UpdateUserInfo(nilai : Int, status : Boolean){
 
         val sharedPreferences = getSharedPreferences("USER_INFO", Context.MODE_PRIVATE)
 
+        User.userData.nilaiScreening2 = nilai
+        User.userData.screeningDua = status
         val editor = sharedPreferences.edit()
-        editor.putBoolean("screening2", true)
+        editor.putBoolean("screening2", status)
         editor.putInt("nilaiScreening2", nilai)
         editor.apply()
 
@@ -638,5 +720,12 @@ class ScreeningActivity : AppCompatActivity() {
         }else{
             notifIcon.visibility = View.INVISIBLE
         }
+    }
+
+    override fun onBackPressed() {
+            super.onBackPressed()
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
     }
 }

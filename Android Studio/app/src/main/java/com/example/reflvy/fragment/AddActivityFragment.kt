@@ -4,22 +4,18 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.InputType
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.reflvy.R
-import com.example.reflvy.SchedullingActivity
 import com.example.reflvy.data.DataDaily
 import com.example.reflvy.databinding.FragmentAddActivityBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AddActivityFragment : Fragment() {
-
 
     private lateinit var binding: FragmentAddActivityBinding
     private var listener: AddActivityListener? = null

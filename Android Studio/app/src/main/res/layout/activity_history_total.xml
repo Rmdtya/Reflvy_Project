@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/mainscreen"
+    tools:context=".HistoryTotalActivity">
+
+    <ImageView
+        android:id="@+id/icon_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:padding="4dp"
+        android:contentDescription="History Activity"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@id/verticalglstart"
+        app:layout_constraintTop_toTopOf="@id/horizontaltop"
+        app:layout_constraintBottom_toTopOf="@id/horizontal02"
+        app:srcCompat="@drawable/back_icon"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/jost"
+        android:text="Riwayat Aktifitas"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10dp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeStepGranularity="8dp"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        style="@style/fontcolor2"
+        app:layout_constraintStart_toStartOf="@id/ver2"
+        app:layout_constraintEnd_toEndOf="@id/verticalglend"
+        app:layout_constraintTop_toTopOf="@id/horizontaltop"
+        app:layout_constraintBottom_toTopOf="@id/horizontal02"/>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="top"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintStart_toStartOf="@id/verticalglstart"
+        app:layout_constraintEnd_toEndOf="@id/verticalglend"
+        app:layout_constraintTop_toBottomOf="@id/horizontal03"
+        app:layout_constraintBottom_toBottomOf="@id/horizontalbottom">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/menubg4"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Total Keaktifan Kamu"
+                            style="@style/fontcolor1"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="16sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/text_totalspendtime"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Belum Ada Kegiatan"
+                            style="@style/fontcolor1"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="24sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_totalactive"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:text="Bahagia"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="start|bottom"
+                            android:fontFamily="@font/jost"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="Total Kegiatanmu"
+                        style="@style/fontcolor3"
+                        android:gravity="start"
+                        android:fontFamily="@font/jost"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/btn_selengkapnya"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="History Mood"
+                        style="@style/fontcolor3"
+                        android:gravity="end"
+                        android:fontFamily="@font/jost"
+                        android:textSize="15sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="15dp"
+                            android:src="@drawable/dailyicom_01bekerja"/>
+
+                        <TextView
+                            android:id="@+id/total_k1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="15dp"
+                            android:src="@drawable/dailyicom_02belajarformal"/>
+
+                        <TextView
+                            android:id="@+id/total_k2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="15dp"
+                            android:src="@drawable/dailyicom_03membaca"/>
+
+                        <TextView
+                            android:id="@+id/total_k3"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicom_04bersantai"/>
+
+                        <TextView
+                            android:id="@+id/total_k4"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicom_05istirahat"/>
+
+                        <TextView
+                            android:id="@+id/total_k5"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicom_06belanja"/>
+
+                        <TextView
+                            android:id="@+id/total_k6"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="12dp"
+                            android:src="@drawable/dailyicom_07bermusik"/>
+
+                        <TextView
+                            android:id="@+id/total_k7"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="12dp"
+                            android:src="@drawable/dailyicom_08beribadah"/>
+
+                        <TextView
+                            android:id="@+id/total_k8"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="12dp"
+                            android:src="@drawable/dailyicom_09bermaingame"/>
+
+                        <TextView
+                            android:id="@+id/total_k9"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="15dp"
+                            android:src="@drawable/dailyicom_10hiburandigital"/>
+
+                        <TextView
+                            android:id="@+id/total_k10"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="14dp"
+                            android:src="@drawable/dailyicom_11operasikomputer"/>
+
+                        <TextView
+                            android:id="@+id/total_k11"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="12dp"
+                            android:src="@drawable/dailyicom_12pekerjaanrumah"/>
+
+                        <TextView
+                            android:id="@+id/total_k12"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="12dp"
+                            android:src="@drawable/dailyicom_13komunitas"/>
+
+                        <TextView
+                            android:id="@+id/total_k13"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicom_14bersosialisasi"/>
+
+                        <TextView
+                            android:id="@+id/total_k14"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicom_15healing"/>
+
+                        <TextView
+                            android:id="@+id/total_k15"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicom_16olahraga"/>
+
+                        <TextView
+                            android:id="@+id/total_k16"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicom_17liburan"/>
+
+                        <TextView
+                            android:id="@+id/total_k17"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/menubg5"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:padding="10dp"
+                            android:src="@drawable/dailyicon_lainnya"/>
+
+                        <TextView
+                            android:id="@+id/total_k18"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:text="0 Menit"
+                            style="@style/fontcolor1"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/jost"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalglend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.94" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ver2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontaltop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/footertop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="60dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalbottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="60dp"/>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_style1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

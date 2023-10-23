@@ -29,14 +29,14 @@
             android:id="@+id/answer_bot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:background="@drawable/roundedchat_bg"
             android:padding="8dp"
             android:layout_marginStart="13dp"
             style="@style/fontcolor1"
             android:text=""
             android:textStyle="bold"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
     </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:id="@+id/time_bot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:padding="3dp"
             android:layout_marginStart="53dp"
             android:textColor="@color/font_timescreening"

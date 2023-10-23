@@ -19,15 +19,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import com.example.reflvy.data.DataMisi
 import com.example.reflvy.data.EventScreening
-import com.example.reflvy.data.SaveDataScreening
 import com.example.reflvy.data.Screening
 import com.example.reflvy.data.User
 import com.example.reflvy.utils.ApplicationManager
-import com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -73,6 +70,8 @@ class ScreeningSatuActivity : AppCompatActivity() {
         seekBar = findViewById(R.id.progres_bar)
         buttonSelesai = findViewById(R.id.btn_selesai)
 
+        schrollCotainer = findViewById(R.id.schroll_container)
+
         template_nilai = findViewById(R.id.template_nilai)
         textNilai = findViewById(R.id.text_nilai)
 
@@ -82,7 +81,6 @@ class ScreeningSatuActivity : AppCompatActivity() {
         indexKe = 0
         maxValue = Screening.screenningSatuData.size
 
-        Toast.makeText(this, maxValue.toString(), Toast.LENGTH_SHORT).show()
 
         template_nilai.visibility = View.GONE
 
@@ -95,7 +93,6 @@ class ScreeningSatuActivity : AppCompatActivity() {
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
-        Toast.makeText(this, User.userData.userID, Toast.LENGTH_SHORT).show()
     }
 
     private fun ShowTemplateBot(text : String, icon : Boolean, time : Boolean){
@@ -279,7 +276,6 @@ class ScreeningSatuActivity : AppCompatActivity() {
 
     private fun CheckNextIndex(ind : Int){
         indexKe++
-        Toast.makeText(this, indexKe.toString(), Toast.LENGTH_SHORT).show()
         handler.postDelayed({
             SetProgresSeekbar(indexKe)
 
@@ -297,21 +293,23 @@ class ScreeningSatuActivity : AppCompatActivity() {
 
     private fun SetProgresSeekbar(ind : Int){
         seekBar.progress = ind
-        persentasiBar.text = GetPersentase(ind, maxValue).toString() + "%"
+        persentasiBar.text = GetPersentase(ind, maxValue) + "%"
     }
 
-    fun GetPersentase(currentValue: Int, maxValue: Int): Double {
-//        if (currentValue < 0 || maxValue <= 0) {
-//            throw IllegalArgumentException("Nilai saat ini dan nilai maksimal harus lebih besar dari 0")
-//        }
+    fun GetPersentase(currentValue: Int, maxValue: Int): String {
+        if (currentValue < 0 || maxValue <= 0) {
+            throw IllegalArgumentException("Nilai saat ini dan nilai maksimal harus lebih besar dari 0")
+        }
         val percentage = (currentValue.toDouble() / maxValue) * 100
-        return if (percentage > 100.0) 100.0 else percentage
+        val formattedPercentage = if (percentage > 100.0) 100.0 else percentage
+        return formattedPercentage.toInt().toString()
     }
 
     fun TampilkanNilai(){
         template_nilai.visibility = View.VISIBLE
         textNilai.text = nilaiScreening.toString()
 
+        try {
             val documentReference = db.collection("users").document(User.userData.userID)
 
             val updateData = hashMapOf(
@@ -329,14 +327,16 @@ class ScreeningSatuActivity : AppCompatActivity() {
                     // Gagal mengganti data
                 }
 
-        DataMisi.dataMisiAplikasi[0].statusMisi = DataMisi.dataMisiAplikasi[0].statusMisi.toMutableList().apply {
-            set(0, true) // Mengganti nilai pada indeks 0 dengan `true`
-        }
+            DataMisi.dataMisiAplikasi[0].statusMisi = DataMisi.dataMisiAplikasi[0].statusMisi.toMutableList().apply {
+                set(0, true) // Mengganti nilai pada indeks 0 dengan `true`
+            }
 
-        DataMisi.dataMisiAplikasi[0].progresNow = DataMisi.dataMisiAplikasi[0].progresNow.toMutableList().apply {
-            set(0, 1) // Mengganti nilai pada indeks 0 dengan `true`
+            DataMisi.dataMisiAplikasi[0].progresNow = DataMisi.dataMisiAplikasi[0].progresNow.toMutableList().apply {
+                set(0, 1) // Mengganti nilai pada indeks 0 dengan `true`
+            }
+        }catch (e : Exception){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
-
 
         ApplicationManager.instance.SaveDataMisiAplkasi(this)
     }

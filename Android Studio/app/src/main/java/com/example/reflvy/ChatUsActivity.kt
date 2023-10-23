@@ -1,10 +1,10 @@
 package com.example.reflvy
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reflvy.data.NotifyChat
 
 class ChatUsActivity : AppCompatActivity() {
@@ -50,6 +50,5 @@ class ChatUsActivity : AppCompatActivity() {
         }else{
             notifIcon.visibility = View.INVISIBLE
         }
-
     }
 }

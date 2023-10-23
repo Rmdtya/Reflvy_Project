@@ -1,13 +1,11 @@
 package com.example.reflvy
 
 import UserViewModel
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.Button
@@ -16,7 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.data.User
@@ -24,7 +22,8 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -61,23 +60,24 @@ class EditProfileActivity : AppCompatActivity() {
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         // Observasi LiveData dan perbarui UI saat data berubah
-        userViewModel.userLiveData.observe(this, { updatedUser ->
+        userViewModel.userLiveData.observe(this) { updatedUser ->
             emailUser.text = Editable.Factory.getInstance().newEditable(updatedUser.email)
             userName.text = Editable.Factory.getInstance().newEditable(updatedUser.userName)
             noTelepon.text = Editable.Factory.getInstance().newEditable(updatedUser.telepon)
-            editTextDateOfBirth.text = Editable.Factory.getInstance().newEditable(updatedUser.tanggalLahir)
+            editTextDateOfBirth.text =
+                Editable.Factory.getInstance().newEditable(updatedUser.tanggalLahir)
             selectedGender = updatedUser.gender
 
-            if(selectedGender != null || selectedGender.isNotEmpty() || selectedGender != ""){
+            if (selectedGender != null || selectedGender.isNotEmpty() || selectedGender != "") {
                 if (selectedGender == "pria") {
                     radioGroupGender.check(R.id.radioButtonMale)
                 } else if (selectedGender == "wanita") {
                     radioGroupGender.check(R.id.radioButtonFemale)
                 }
-            }else{
+            } else {
                 radioGroupGender.clearCheck()
             }
-        })
+        }
 
         radioGroupGender.setOnCheckedChangeListener { group, checkedId ->
             val selectedRadioButton: RadioButton = findViewById(checkedId)
@@ -94,28 +94,33 @@ class EditProfileActivity : AppCompatActivity() {
         userViewModel.updateUserData(sharedPreferences)
 
         editButton.setOnClickListener{
-            val documentReference = db.collection("users").document(User.userData.userID)
+            try {
+                val documentReference = db.collection("users").document(User.userData.userID)
 
-            val uname : String = userName.text.toString()
-            val tgl : String = editTextDateOfBirth.text.toString()
-            val tlp : String = noTelepon.text.toString()
+                val uname : String = userName.text.toString()
+                val tgl : String = editTextDateOfBirth.text.toString()
+                val tlp : String = noTelepon.text.toString()
 
 
-            val updateData = hashMapOf(
-                "name" to uname,
-                "tanggalLahir" to tgl,
-                "telepon" to tlp,
-                "gender" to selectedGender
-            )
+                val updateData = hashMapOf(
+                    "name" to uname,
+                    "tanggalLahir" to tgl,
+                    "telepon" to tlp,
+                    "gender" to selectedGender
+                )
 
-            documentReference.set(updateData, SetOptions.merge())
-                .addOnSuccessListener {
-                    UpdateUserInfo(uname, tlp, tgl, selectedGender)
-                    UpdateLayout()
-                }
-                .addOnFailureListener {
-                    // Gagal mengganti data
-                }
+                documentReference.set(updateData, SetOptions.merge())
+                    .addOnSuccessListener {
+                        UpdateUserInfo(uname, tlp, tgl, selectedGender)
+                        UpdateLayout()
+                    }
+                    .addOnFailureListener {
+                        // Gagal mengganti data
+                    }
+            }catch (e:Exception){
+                //Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
@@ -154,23 +159,24 @@ class EditProfileActivity : AppCompatActivity() {
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         // Observasi LiveData dan perbarui UI saat data berubah
-        userViewModel.userLiveData.observe(this, { updatedUser ->
+        userViewModel.userLiveData.observe(this) { updatedUser ->
             emailUser.text = Editable.Factory.getInstance().newEditable(updatedUser.email)
             userName.text = Editable.Factory.getInstance().newEditable(updatedUser.userName)
             noTelepon.text = Editable.Factory.getInstance().newEditable(updatedUser.telepon)
-            editTextDateOfBirth.text = Editable.Factory.getInstance().newEditable(updatedUser.tanggalLahir)
+            editTextDateOfBirth.text =
+                Editable.Factory.getInstance().newEditable(updatedUser.tanggalLahir)
             selectedGender = updatedUser.gender
 
-            if(selectedGender != null || selectedGender.isNotEmpty() || selectedGender != ""){
+            if (selectedGender != null || selectedGender.isNotEmpty() || selectedGender != "") {
                 if (selectedGender == "pria") {
                     radioGroupGender.check(R.id.radioButtonMale)
                 } else if (selectedGender == "wanita") {
                     radioGroupGender.check(R.id.radioButtonFemale)
                 }
-            }else{
+            } else {
                 radioGroupGender.clearCheck()
             }
-        })
+        }
     }
 
     fun updateUserData() {

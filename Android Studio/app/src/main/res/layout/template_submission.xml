@@ -68,9 +68,9 @@
                     android:layout_height="wrap_content"
                     android:text="Selesaikan Screening Pertama"
                     android:maxLines="1"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/text_progres"
@@ -78,9 +78,9 @@
                     android:layout_height="wrap_content"
                     android:text="Status : 0/1"
                     android:gravity="end"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
-                    android:textSize="11sp"/>
+                    android:textSize="12sp"/>
 
 
             </LinearLayout>

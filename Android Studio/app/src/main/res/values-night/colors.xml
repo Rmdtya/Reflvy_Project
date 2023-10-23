@@ -68,6 +68,15 @@
     <color name="mission_templatetext">#FFFFFF</color>
     <color name="mission_fontcolor1">#3E6DD1</color>
 
+    <color name="historyactivity_positif">#2EE01F</color>
+    <color name="historyactivity_negatif">#B51919</color>
+
+    <color name="gamestatus_bar1">#A21212</color>
+    <color name="gamestatus_bar2">#FF8310</color>
+    <color name="gamestatus_bar3">#FFE500</color>
+    <color name="gamestatus_bar4">#15DB1D</color>
+    <color name="gamestatus_bar5">#18B167</color>
+
 
 </resources>
 

@@ -152,5 +152,9 @@ dependencies {
     implementation 'me.tankery.lib:circularSeekBar:1.4.2'
 
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    implementation 'me.relex:circleindicator:2.1.4'
+
+
 }
 

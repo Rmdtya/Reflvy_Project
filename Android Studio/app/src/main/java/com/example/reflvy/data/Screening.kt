@@ -1,7 +1,5 @@
 package com.example.reflvy.data
 
-import com.google.gson.Gson
-
 data class Screening(
     val pertanyaan : Int,
     val soalbot: List<String> = emptyList(),
@@ -14,6 +12,7 @@ data class Screening(
     companion object {
         val screenningSatuData = mutableListOf<Screening>()
         val screenData = mutableListOf<Screening>()
+        val screeningTiga = mutableListOf<Screening>()
 
         init {
 

@@ -35,11 +35,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Olahraga"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="bottom"
+                    android:layout_marginBottom="2dp"
                     android:textStyle="bold"
-                    android:textSize="12sp"/>
+                    android:textSize="13sp"/>
 
                 <TextView
                     android:id="@+id/text_duration"
@@ -47,11 +48,12 @@
                     android:layout_height="match_parent"
                     android:text="2 / 7 Hari"
                     android:layout_marginEnd="25dp"
-                    android:fontFamily="@font/martel"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor1"
                     android:gravity="bottom|end"
                     android:textStyle="bold"
-                    android:textSize="12sp"/>
+                    android:textSize="13sp"/>
 
             </LinearLayout>
 

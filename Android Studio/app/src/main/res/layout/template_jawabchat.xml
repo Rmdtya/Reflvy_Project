@@ -11,7 +11,7 @@
             android:id="@+id/jawaban"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:background="@drawable/rounded_jawab"
             android:padding="10dp"
             android:textAlignment="center"
@@ -19,6 +19,6 @@
             android:layout_weight="1"
             android:text="Tidak Pernah"
             android:textStyle="bold"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
 </LinearLayout>

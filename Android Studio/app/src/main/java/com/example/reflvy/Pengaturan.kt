@@ -3,11 +3,11 @@ package com.example.reflvy
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Switch
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.reflvy.data.NotifyChat
 import com.example.reflvy.utils.MyBackgroundService
@@ -18,6 +18,9 @@ class Pengaturan : AppCompatActivity() {
     private lateinit var switchTheme: Switch
     private lateinit var switchVPN: Switch
 
+    private lateinit var switch2 : Switch
+    private lateinit var switch3 : Switch
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pengaturan)
@@ -26,6 +29,12 @@ class Pengaturan : AppCompatActivity() {
 
         switchVPN = findViewById(R.id.switch1)
         switchTheme = findViewById(R.id.switch4)
+
+        switch2 = findViewById(R.id.switch2)
+        switch3 = findViewById(R.id.switch3)
+
+        switch2.isChecked = true
+        switch3.isChecked = true
 
         sharedPreferences = getSharedPreferences("PENGATURAN", Context.MODE_PRIVATE)
 

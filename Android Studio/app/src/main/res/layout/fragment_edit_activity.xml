@@ -41,8 +41,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tambah Aktivitas"
-            android:fontFamily="@font/martel"
+            android:text="Edit Aktivitas"
+            android:fontFamily="@font/jost"
             android:textSize="18dp"
             android:textStyle="bold"
             android:layout_marginStart="20dp"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nama Aktivitas"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:textSize="13dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -68,7 +68,7 @@
             android:layout_weight="0.6"
             android:background="@drawable/edit_text1"
             android:ems="10"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:inputType="text"
             android:labelFor="@id/textView2"
             android:padding="10dp"
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lama Aktivitas"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:textSize="13dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -99,7 +99,7 @@
             android:layout_weight="0.6"
             android:background="@drawable/edit_text1"
             android:ems="10"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:inputType="number"
             android:labelFor="@id/textView2"
             android:padding="10dp"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="Mulai Aktivitas"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:textSize="13dp"
                 android:layout_marginBottom="5dp"
                 style="@style/fontcolor2"/>
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="Aktivitas Selesai"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:textSize="13dp"
                 android:layout_marginBottom="5dp"
                 style="@style/fontcolor2"/>
@@ -162,7 +162,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:layout_marginEnd="3dp"
                     android:background="@drawable/edit_text1"
                     android:maxLength="1"/>
@@ -174,7 +174,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:layout_marginEnd="3dp"
                     android:background="@drawable/edit_text1"
                     android:maxLength="1"/>
@@ -184,7 +184,7 @@
                     android:layout_height="match_parent"
                     android:text=":"
                     android:textSize="26sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:textStyle="bold"/>
 
                 <EditText
@@ -194,7 +194,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:layout_marginStart="3dp"
                     android:layout_marginEnd="3dp"
                     android:background="@drawable/edit_text1"
@@ -207,7 +207,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:background="@drawable/edit_text1"
                     android:maxLength="1"/>
 
@@ -227,7 +227,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:layout_marginEnd="3dp"
                     android:background="@drawable/edit_text1"
                     android:maxLength="1"/>
@@ -239,7 +239,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:layout_marginEnd="3dp"
                     android:background="@drawable/edit_text1"
                     android:maxLength="1"/>
@@ -249,7 +249,7 @@
                     android:layout_height="match_parent"
                     android:text=":"
                     android:textSize="26sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:textStyle="bold"/>
 
                 <EditText
@@ -259,7 +259,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:layout_marginStart="3dp"
                     android:layout_marginEnd="3dp"
                     android:background="@drawable/edit_text1"
@@ -272,7 +272,7 @@
                     android:inputType="number"
                     android:gravity="center"
                     android:textSize="13sp"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     android:background="@drawable/edit_text1"
                     android:maxLength="1"/>
 
@@ -292,7 +292,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hari Aktivitas"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:textSize="13dp"
                 android:layout_marginBottom="5dp"
                 style="@style/fontcolor2"/>
@@ -328,12 +328,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="S"
-                        android:paddingTop="4dp"
                         android:textSize="15sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/senin"
@@ -361,12 +360,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="S"
-                        android:paddingTop="4dp"
                         android:textSize="15sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/selasa"
@@ -394,12 +392,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="R"
-                        android:paddingTop="4dp"
                         android:textSize="15sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/rabu"
@@ -427,12 +424,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="K"
-                        android:paddingTop="4dp"
                         android:textSize="15sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/kamis"
@@ -460,12 +456,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="J"
-                        android:paddingTop="4dp"
                         android:textSize="15sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/jumat"
@@ -493,12 +488,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="S"
-                        android:paddingTop="4dp"
                         android:textSize="15sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/sabtu"
@@ -526,12 +520,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="M"
-                        android:paddingTop="4dp"
                         android:textSize="15sp"
                         android:gravity="center"
                         android:textStyle="bold"
                         style="@style/fontcolor2"
-                        android:fontFamily="@font/martel"/>
+                        android:fontFamily="@font/jost"/>
 
                     <CheckBox
                         android:id="@+id/minggu"
@@ -554,7 +547,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/roundedbutton"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:gravity="center"
             android:text="Konfirmasi"
             android:textColorHighlight="#952222"
@@ -562,7 +555,7 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textAllCaps="false"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:layout_marginTop="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"/>
@@ -572,12 +565,13 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/roundedredbutton"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:gravity="center"
             android:text="Delete"
             android:textColorHighlight="#952222"
             android:textColorLink="#000000"
             android:textStyle="bold"
+            android:textSize="14sp"
             android:textAllCaps="false"
             android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"

@@ -37,6 +37,7 @@
                     android:src="@drawable/roadmap_framestatus"/>
 
                 <ImageView
+                    android:id="@+id/img_dragon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="60dp"
@@ -58,23 +59,26 @@
                 android:text="Ancient Dragon Egg"
                 android:textSize="23sp"
                 style="@style/fontcolor2"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:textStyle="bold"
                 android:gravity="center"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
 
                 <TextView
-                    android:layout_width="30dp"
+                    android:id="@+id/text_progres"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:text="10"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor2"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:textSize="12sp"
                     android:layout_marginStart="25dp"
                     android:textStyle="bold"/>
@@ -87,7 +91,7 @@
                     android:padding="5dp">
 
                     <ProgressBar
-                        android:id="@+id/bar_banar"
+                        android:id="@+id/bar_progres"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         style="@android:style/Widget.ProgressBar.Horizontal"
@@ -105,15 +109,35 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="30dp"
+                    android:id="@+id/textmax_progres"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:text="10"
-                    android:fontFamily="@font/martel"
+                    android:fontFamily="@font/jost"
                     style="@style/fontcolor2"
-                    android:gravity="center"
+                    android:gravity="end"
                     android:textSize="12sp"
                     android:layout_marginEnd="25dp"
                     android:textStyle="bold"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/btn_selengkapnya"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Lihat Status Lengkapnya"
+                    style="@style/fontcolor3"
+                    android:fontFamily="@font/jost"
+                    android:gravity="end"/>
 
             </LinearLayout>
 
@@ -124,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/roundedbutton"
-            android:fontFamily="@font/martel"
+            android:fontFamily="@font/jost"
             android:gravity="center"
             android:text="Evolusi Dragon"
             android:textColorHighlight="#952222"
@@ -132,8 +156,8 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:textAllCaps="false"
-            android:textSize="13sp"
-            android:layout_marginTop="40dp"
+            android:textSize="14sp"
+            android:layout_marginTop="30dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"/>
 

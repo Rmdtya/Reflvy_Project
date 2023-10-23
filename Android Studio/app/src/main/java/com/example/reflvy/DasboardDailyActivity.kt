@@ -1,7 +1,6 @@
 package com.example.reflvy
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reflvy.data.ActiveLogin
 import com.example.reflvy.data.DataDaily
 import com.example.reflvy.data.NotifyChat
@@ -21,6 +21,7 @@ class DasboardDailyActivity : AppCompatActivity() {
     private lateinit var containerSudah : LinearLayout
     private lateinit var inflater: LayoutInflater
     private lateinit var textMood : TextView
+    private lateinit var dashboardList : LinearLayout
 
     private lateinit var btn_all : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +35,7 @@ class DasboardDailyActivity : AppCompatActivity() {
         containerBelum = findViewById(R.id.container_belum)
         containerSudah = findViewById(R.id.container_sudah)
         textMood = findViewById(R.id.mood_text)
+        dashboardList = findViewById(R.id.btn_dashboard)
 
         textMood.text = ActiveLogin.infoActive.moodNow
 
@@ -43,6 +45,11 @@ class DasboardDailyActivity : AppCompatActivity() {
 
         btn_all.setOnClickListener {
             val intent = Intent(this, OldDailyActivity::class.java)
+            startActivity(intent)
+        }
+
+        dashboardList.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
         }
     }
@@ -195,7 +202,6 @@ class DasboardDailyActivity : AppCompatActivity() {
         progressBar.progress = progres
         progressBar.max = lama
 
-//        Toast.makeText(this, progres.toString() + " / " + lama.toString(), Toast.LENGTH_SHORT).show()
 
 
 
@@ -220,7 +226,6 @@ class DasboardDailyActivity : AppCompatActivity() {
         progressBar.progress = progres
         progressBar.max = lama
 
-        Toast.makeText(this, lama.toString() + " / " + progres.toString(), Toast.LENGTH_SHORT).show()
 
         textName.text = namaKegiatan
         textTime.text = progres.toString() + " / " + lama.toString() + " Hari"
@@ -274,7 +279,7 @@ class DasboardDailyActivity : AppCompatActivity() {
             img.setImageResource(R.drawable.dailyicom_08beribadah)
         }else if (kategori == "bermain game"){
             img.setImageResource(R.drawable.dailyicom_09bermaingame)
-        }else if (kategori == "hiburan digital"){
+        }else if (kategori == "akses handphone"){
             img.setImageResource(R.drawable.dailyicom_10hiburandigital)
         }else if (kategori == "operasi komputer"){
             img.setImageResource(R.drawable.dailyicom_11operasikomputer)

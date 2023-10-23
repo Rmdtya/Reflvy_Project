@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -18,20 +17,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.reflvy.data.News
 import com.example.reflvy.data.NotifyChat
-import com.example.reflvy.data.Screening
 import com.example.reflvy.data.YoutubeVideo
-import com.example.reflvy.utils.NonScrollWebView
 import com.example.reflvy.utils.YouTubeApiService
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
@@ -91,9 +84,8 @@ class VideoActivity : AppCompatActivity() {
 
         customViewContainer = findViewById<FrameLayout>(R.id.customView)
 
-        Toast.makeText(this, YoutubeVideo.videoList.size.toString(), Toast.LENGTH_SHORT).show()
 
-        currentVideoId = intent.getStringExtra("url") ?: "6Z6o5VlyLHQ"
+        currentVideoId = intent.getStringExtra("url") ?: "059l2UHqZ3s"
         currentIndex = intent.getIntExtra("index", 0)
 
         SetWebView(currentVideoId)

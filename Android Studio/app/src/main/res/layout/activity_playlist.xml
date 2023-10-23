@@ -25,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/martel"
+        android:fontFamily="@font/jost"
         android:text="Podcast Player"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="8dp"

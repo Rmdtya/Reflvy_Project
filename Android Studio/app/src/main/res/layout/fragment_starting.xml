@@ -159,7 +159,7 @@
                                     android:textSize="11sp"
                                     android:textStyle="bold"
                                     android:gravity="center_vertical"
-                                    android:fontFamily="@font/martel"/>
+                                    android:fontFamily="@font/jost"/>
 
                             </LinearLayout>
 
@@ -294,7 +294,7 @@
                                     android:textSize="11sp"
                                     android:textStyle="bold"
                                     android:gravity="center_vertical"
-                                    android:fontFamily="@font/martel"/>
+                                    android:fontFamily="@font/jost"/>
 
                             </LinearLayout>
 
@@ -352,7 +352,7 @@
                                     android:textSize="11sp"
                                     android:textStyle="bold"
                                     android:gravity="center_vertical"
-                                    android:fontFamily="@font/martel"/>
+                                    android:fontFamily="@font/jost"/>
 
                             </LinearLayout>
 
@@ -442,13 +442,10 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/container_hint4"
                         android:visibility="visible"
-                        android:layout_marginBottom="-95dp"
+                        android:layout_marginTop="85dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -601,7 +598,7 @@
                                     android:textSize="11sp"
                                     android:textStyle="bold"
                                     android:gravity="center_vertical"
-                                    android:fontFamily="@font/martel"/>
+                                    android:fontFamily="@font/jost"/>
 
                             </LinearLayout>
 
@@ -684,13 +681,92 @@
 
                     </LinearLayout>
 
-
                     <LinearLayout
                         android:id="@+id/hint6"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:visibility="invisible"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/menu_roadmaps"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/menubg4"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.8"
+                                android:src="@drawable/menu_icon6"
+                                android:padding="15dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.3"
+                                android:text="Dengarkan Berbagai Macam Podcast"
+                                android:textSize="13sp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/jost"
+                                style="@style/fontcolor1"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/menu_kuis"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/menubg2"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.8"
+                                android:src="@drawable/menu_icon7"
+                                android:layout_marginEnd="5dp"
+                                android:padding="15dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.3"
+                                android:text="Akses Berbagai Info Edukasi Terbaru"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/jost"
+                                style="@style/fontcolor3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/hint7"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
                         android:visibility="invisible">
 
                         <LinearLayout
@@ -796,7 +872,7 @@
                 android:layout_height="match_parent"
                 android:text="Sebelumnya"
                 android:textSize="14sp"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 style="@style/fontcolor1"
                 android:gravity="center"/>
 
@@ -816,7 +892,7 @@
                 android:text="Selanjutnya"
                 android:textSize="14sp"
                 style="@style/fontcolor1"
-                android:fontFamily="@font/martel"
+                android:fontFamily="@font/jost"
                 android:gravity="center"/>
 
         </LinearLayout>
