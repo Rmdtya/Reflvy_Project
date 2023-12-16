@@ -299,13 +299,13 @@
             >
 
             <LinearLayout
+                android:id="@+id/rounded_nilai"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/rounded_angkascreen"
                 android:orientation="vertical"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:id="@+id/text_nilai"
@@ -326,6 +326,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="15sp"
                 android:paddingEnd="15sp"
+                android:layout_marginTop="20dp"
                 android:text="Kecanduanmu sudah tinggi, nih:("
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -344,6 +345,7 @@
                 android:textSize="12sp"
                 style="@style/fontcolor2"
                 android:fontFamily="@font/jost"
+                android:layout_marginBottom="25dp"
                 android:gravity="center"/>
 
             <TextView
@@ -356,7 +358,6 @@
                 style="@style/fontcolor3"
                 android:paddingStart="20sp"
                 android:paddingEnd="20sp"
-                android:layout_marginTop="25dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"/>
 

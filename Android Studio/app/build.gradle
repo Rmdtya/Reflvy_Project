@@ -14,15 +14,15 @@ android {
             keyPassword 'Rama123456'
         }
     }
-    namespace 'com.example.reflvy'
+    namespace 'com.crysure.reflvy'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.reflvy"
+        applicationId "com.crysure.reflvy"
         minSdk 24
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName '1.1'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <com.example.reflvy.utils.NonScrollableNestedScrollView
+            <com.crysure.reflvy.utils.NonScrollableNestedScrollView
                 android:id="@+id/scroll_container"
                 android:layout_centerInParent="true"
                 android:layout_width="match_parent"
@@ -844,7 +844,7 @@
 
                 </LinearLayout>
 
-            </com.example.reflvy.utils.NonScrollableNestedScrollView>
+            </com.crysure.reflvy.utils.NonScrollableNestedScrollView>
 
         </RelativeLayout>
 

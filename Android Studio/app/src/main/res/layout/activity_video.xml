@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@id/horizontal02"
         tools:ignore="WebViewLayout">
 
-        <com.example.reflvy.utils.NonScrollWebView
+        <com.crysure.reflvy.utils.NonScrollWebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="210dp"
